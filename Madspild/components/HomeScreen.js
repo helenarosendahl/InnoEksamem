@@ -1,12 +1,12 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 
-const MapScreen = () => {
+const HomeScreen = () => {
   return (
     <View>
-      <Text>map Page</Text>
+      <Text>HomeScreen Page</Text>
     </View>
   );
 };
 
-export default MapScreen;
+export default HomeScreen;

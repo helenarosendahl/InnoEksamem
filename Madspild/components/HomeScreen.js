@@ -1,12 +1,38 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Button, StyleSheet } from 'react-native';
 
-const HomeScreen = () => {
+// Denne komponent kan slettes senere, bruger den lige til navigering
+
+const HomeScreen = ({ navigation }) => {
   return (
-    <View>
-      <Text>HomeScreen Page</Text>
+    <View style={styles.container}>
+      <Button
+        title="Go to Profile"
+        onPress={() => navigation.navigate('Profile')}
+      />
+      <Button
+        title="Go to SalesScreen"
+        onPress={() => navigation.navigate('SalesScreen')}
+      />
+   
+      <Button
+        title="Go to SearchScreen"
+        onPress={() => navigation.navigate('SearchScreen')}
+      />
+      <Button
+        title="Go to MapScreen"
+        onPress={() => navigation.navigate('MapScreen')}
+      />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+});
 
 export default HomeScreen;

@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import { getFirestore, collection, addDoc } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth'; // Importere FirebaseAuth, så userUID kan knyttes til produktet
 
-// API key - virkelig dårlig sikkerhedsmæssigt at have den liggende her, så vi skal måske lige undersøge om der er smartere mådere at gemme den på
-const GEOCODING_API_KEY = 'AIzaSyCfV3r616nHsjc68xFRkAlNCQlz8XZDKRw';
 
 const UploadProduct = () => {
   const [productName, setProductName] = useState('');
@@ -15,6 +14,14 @@ const UploadProduct = () => {
   const db = getFirestore();
   const productsRef = collection(db, "products");
 
+   // Firebase Auth for at hente userUID
+   const auth = getAuth();
+   const userUID = auth.currentUser ? auth.currentUser.uid : null;
+
+   // API key - virkelig dårlig sikkerhedsmæssigt at have den liggende her, så vi skal måske lige undersøge om der er smartere mådere at gemme den på
+const GEOCODING_API_KEY = 'AIzaSyCfV3r616nHsjc68xFRkAlNCQlz8XZDKRw';
+
+   // geocoding funktion
   const fetchCoordinates = async (address) => {
     const response = await fetch(
       `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${GEOCODING_API_KEY}`
@@ -25,6 +32,7 @@ const UploadProduct = () => {
       throw new Error(`Geocoding API returned status: ${data.status}`);
     }
 
+    // forklar dette for-loop
     if (data.results && data.results.length > 0) {
       return data.results[0].geometry.location;
     } else {
@@ -33,6 +41,13 @@ const UploadProduct = () => {
   };
 
   const handleProductUpload = async () => {
+
+    // sikre at man skal være logget (bør ikke kune ske at man ikke er)
+    if (!userUID) {
+      Alert.alert("Error", "You must be logged in to upload a product.");
+      return;
+    }
+
     try {
       const location = await fetchCoordinates(address);
       if (location) {
@@ -41,7 +56,8 @@ const UploadProduct = () => {
           price: Number(price),
           expirationDate,
           address,
-          location
+          location,
+          userUID //tilknytter bruger id
         });
         Alert.alert("Product uploaded successfully!");
         // Reset fields or navigate to another screen

@@ -21,14 +21,8 @@ const HomeScreen = ({ navigation }) => {
       />
    
    
-      <Button
-        title="Go to SearchScreen"
-        onPress={() => navigation.navigate('SearchScreen')}
-      />
-      <Button
-        title="Go to MapScreen"
-        onPress={() => navigation.navigate('MapScreen')}
-      />
+ 
+    
     </View>
   );
 };

@@ -3,43 +3,49 @@ import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import { getAuth } from 'firebase/auth';
 import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
 
+
+//En bruger oprettes først i systemet, når de manuelt går ind og indsætter oplysninger
 const UserProfile = () => {
   const [userProfile, setUserProfile] = useState({
     biography: '',
     address: '',
-    points: 0, // Initialize points as 0
-    name: ''
+    points: 0, // point initieres på 0
+    name: '', 
+    userUID: '' // hentes fra firebase authentication (getAuth) 
   });
 
+  // Firebase connection
   const auth = getAuth();
   const firestore = getFirestore();
   const user = auth.currentUser;
+
+  // Ensure userUID is set when the component mounts or user changes
+  useEffect(() => {
+    if (user) {
+      setUserProfile(prevState => ({ ...prevState, userUID: user.uid }));
+    }
+  }, [user]);
+
   const userDocRef = doc(firestore, "users", user.uid);
 
   useEffect(() => {
-    // Fetch user profile data from Firestore
     const fetchUserProfile = async () => {
       const docSnap = await getDoc(userDocRef);
       if (docSnap.exists()) {
-        setUserProfile(docSnap.data());
-      } else {
-        // Initialize with default points if no document exists
-        setUserProfile(prevState => ({ ...prevState, points: 0 }));
+        setUserProfile({ ...docSnap.data(), userUID: user.uid });
       }
     };
 
     fetchUserProfile();
-  }, [userDocRef]);
+  }, [userDocRef, user.uid]);
 
   const handleInputChange = (name, value) => {
     setUserProfile({ ...userProfile, [name]: value });
   };
 
   const handleSave = async () => {
-    // Exclude points from saving, as it's not editable
-    const { points, ...profileData } = userProfile;
     try {
-      await setDoc(userDocRef, profileData);
+      await setDoc(userDocRef, userProfile);
       alert('Profile saved successfully!');
     } catch (error) {
       alert('Error saving profile:', error.message);
@@ -66,7 +72,6 @@ const UserProfile = () => {
         onChangeText={(text) => handleInputChange('address', text)}
         style={styles.input}
       />
-      {/* Displaying points */}
       <Text style={styles.pointsDisplay}>Points: {userProfile.points}</Text>
       <Button title="Save Profile" onPress={handleSave} />
     </View>
@@ -88,7 +93,7 @@ const styles = StyleSheet.create({
   pointsDisplay: {
     fontSize: 18,
     marginBottom: 10,
-  },
+  }
 });
 
 export default UserProfile;

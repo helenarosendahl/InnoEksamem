@@ -6,7 +6,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 import './firebaseConfig'; 
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 // Import af mine komponenter 
-import MapScreen from './components/MapScreen';
 import LoginScreen from './components/LoginScreen';
 import UserProfile from './components/UserProfile';
 import SalesScreen from './components/SalesScreen';
@@ -45,7 +44,6 @@ export default function App() {
         <Stack.Screen name="SalesScreen" component={SalesScreen} options={{ title: 'Køb' }} />
         <Stack.Screen name="SignUpScreen" component={SignUpScreen} options={{ title: 'Opret bruger' }} />
         <Stack.Screen name="SearchScreen" component={SearchScreen} options={{ title: 'Søg' }} />
-        <Stack.Screen name="MapScreen" component={MapScreen} options={{ title: 'kort' }} />
         <Stack.Screen name="UploadProduct" component={UploadProduct} options={{ title: 'Sælg produkt' }} />
 
         </>

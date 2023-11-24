@@ -1,20 +1,13 @@
-// Import af diverse React-dependencies
+// Importerer firebase konfigurations-filen
+import './firebaseConfig'; 
 import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native'; 
 import { createStackNavigator } from '@react-navigation/stack';
-// Import firebaseConfig.js first to ensure Firebase is initialized
-import './firebaseConfig'; 
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-// Import af mine komponenter 
+// Importerer de komponenter som skal bruges
 import LoginScreen from './components/LoginScreen';
-import UserProfile from './components/UserProfile';
-import SalesScreen from './components/SalesScreen';
 import SignUpScreen from './components/SignUpScreen';
-import SearchScreen from './components/SalesScreen';
-import HomeScreen from './components/HomeScreen';
-import UploadProduct from './components/UploadProduct';
-import RequestScreen from './components/RequestScreen';
-
+import AppNavigator from './components/AppNavigator'; // BottomTab Navigator
 
 const Stack = createStackNavigator();
 
@@ -28,45 +21,22 @@ export default function App() {
       console.log("Current user set to:", user ? user.email : 'No user');
     });
 
-    // Clean up the subscription on unmount
     return () => unsubscribe();
   }, []);
 
-  // Conditional rendering based on the authentication state
-  const renderScreens = () => {
-    if (currentUser) {
-      console.log("Sender bruger videre til autentiserede komponenter");
-
-      return (
-        <>
-      <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'Hjem' }} />
-        <Stack.Screen name="Login" component={LoginScreen} options={{ title: 'Login' }} />
-        <Stack.Screen name="Profile" component={UserProfile} options={{ title: 'Min profil' }} />
-        <Stack.Screen name="SalesScreen" component={SalesScreen} options={{ title: 'Køb' }} />
-        <Stack.Screen name="SignUpScreen" component={SignUpScreen} options={{ title: 'Opret bruger' }} />
-        <Stack.Screen name="SearchScreen" component={SearchScreen} options={{ title: 'Søg' }} />
-        <Stack.Screen name="UploadProduct" component={UploadProduct} options={{ title: 'Sælg produkt' }} />
-        <Stack.Screen name="RequestsScreen" component={RequestScreen} options={{ title: 'Requests' }} />
-
-        </>
-      );
-    } else {
-      console.log("Rendering login/signup screens");
-
-      return (
-        <>
-          <Stack.Screen name="Login" component={LoginScreen} options={{ title: 'Login' }} />
-          <Stack.Screen name="SignUpScreen" component={SignUpScreen} options={{ title: 'Opret bruger' }} />
-        </>
-      );
-    }
-  };
-
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
-        {renderScreens()}
-      </Stack.Navigator>
+      {currentUser ? (
+        // Gengiver AppNavigator når en bruger at logget ind
+        <AppNavigator />
+      ) : (
+        // Stack Navigator når de ikke er logget ind
+        <Stack.Navigator initialRouteName="Login">
+          <Stack.Screen name="Login" component={LoginScreen} options={{ title: 'Login' }} />
+          <Stack.Screen name="SignUpScreen" component={SignUpScreen} options={{ title: 'Opret bruger' }} />
+        </Stack.Navigator>
+      )}
     </NavigationContainer>
   );
 }
+

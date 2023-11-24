@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Button, FlatList, Text, StyleSheet, Alert } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { getFirestore, collection, getDocs, addDoc } from 'firebase/firestore';
-import { getAuth } from 'firebase/auth'; // Make sure to import getAuth
+import { getAuth } from 'firebase/auth'; 
 
 const SalesScreen = () => {
   const [products, setProducts] = useState([]);
@@ -51,7 +51,7 @@ const SalesScreen = () => {
       <Text>Expiration Date: {item.expirationDate}</Text>
       <Text>Address: {item.address}</Text>
       <Button
-        title="Request to Buy"
+        title="Anmod om produkt"
         onPress={() => handleBuyRequest(item.id, item.userUID)}
       />
     </View>

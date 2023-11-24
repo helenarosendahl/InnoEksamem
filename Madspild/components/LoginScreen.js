@@ -16,7 +16,6 @@ const LoginScreen = ({ navigation }) => {
         const user = userCredential.user;
         Alert.alert("Success", "Logged in successfully!");
         console.log(`User logged in: ${user.email}`)
-        navigation.navigate('Home'); // Navigerer til startskærm
       })
       .catch((error) => {
         const errorCode = error.code;

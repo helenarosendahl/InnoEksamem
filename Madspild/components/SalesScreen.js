@@ -1,64 +1,48 @@
 import React, { useState, useEffect } from 'react';
 import { View, Button, FlatList, Text, StyleSheet, Alert } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
-import { getFirestore, collection, getDocs, doc, deleteDoc, updateDoc, getDoc } from 'firebase/firestore';
-
+import { getFirestore, collection, getDocs, addDoc } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth'; // Make sure to import getAuth
 
 const SalesScreen = () => {
   const [products, setProducts] = useState([]);
   const [viewMode, setViewMode] = useState('list'); // 'list' or 'map'
 
   const db = getFirestore();
+  const auth = getAuth(); // Initialize Firebase Auth
   const productsRef = collection(db, "products");
+  const buyRequestsRef = collection(db, "buyRequests"); // Reference to buyRequests collection
 
   useEffect(() => {
     const fetchProducts = async () => {
-      try {
-        const querySnapshot = await getDocs(productsRef);
-        const productList = querySnapshot.docs.map(doc => ({
-          id: doc.id, 
-          ...doc.data()
-        }));
-        console.log("Fetched products:", productList);
-        setProducts(productList);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-        // Handle the error appropriately, maybe set an error state and show it in the UI
-      }
+      const querySnapshot = await getDocs(productsRef);
+      const productList = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      setProducts(productList);
     };
-  
+
     fetchProducts();
   }, []);
 
-
-  // Funktion til at håndtere en bruger "køber" et produkt, og at uploaderen af produktet får 50 point for at "sælge" det
-  const handleProductPurchase = async (product) => {
-    try {
-      // Delete the product from Firestore
-      await deleteDoc(doc(db, "products", product.id));
-
-      // Update user points
-      const userDocRef = doc(db, "users", product.userUID);
-      const userDoc = await getDoc(userDocRef);
-      
-      if (userDoc.exists()) {
-        const userData = userDoc.data();
-        const currentPoints = userData.points || 0;
-        await updateDoc(userDocRef, { points: currentPoints + 50 });
-      } else {
-        console.error("User document not found for UID:", product.userUID);
+  const handleBuyRequest = async (productId, sellerUID) => {
+    if (auth.currentUser) {
+      const buyerUID = auth.currentUser.uid;
+      if (buyerUID === sellerUID) {
+        Alert.alert("Error", "You cannot buy your own product.");
+        return;
       }
 
-      Alert.alert("Product purchased successfully, 50 points awarded to the seller!");
+      await addDoc(buyRequestsRef, {
+        productId: productId,
+        buyerUID: buyerUID,
+        sellerUID: sellerUID,
+        status: 'pending'
+      });
 
-      // Optionally refresh the products list
-      // fetchProducts();
-    } catch (error) {
-      console.error("Error processing purchase:", error);
-      Alert.alert("Error:", error.message);
+      Alert.alert("Request Sent", "Your request to buy this product has been sent.");
+    } else {
+      Alert.alert("Error", "You must be logged in to send a buy request.");
     }
   };
-
 
   const renderProduct = ({ item }) => (
     <View style={styles.item}>
@@ -66,7 +50,10 @@ const SalesScreen = () => {
       <Text>Price: {item.price}</Text>
       <Text>Expiration Date: {item.expirationDate}</Text>
       <Text>Address: {item.address}</Text>
-      <Button title="Hent produkt" onPress={() => handleProductPurchase(item)} /> {/* Knap til at "købe" produkt - når trykkes, slettes produktet fra database*/}
+      <Button
+        title="Request to Buy"
+        onPress={() => handleBuyRequest(item.id, item.userUID)}
+      />
     </View>
   );
 
@@ -83,15 +70,15 @@ const SalesScreen = () => {
     initialRegion={zoomIndPaaDk}
     >
       {products.map((product, index) => {
-        // Detaljeret log
+        // Detailed logging
         console.log("Rendering product:", product.name, "at", product.location);
-  
+
         // Updated check for valid location data
         if (!product.location || !isFinite(product.location.lat) || !isFinite(product.location.lng)) {
           console.error("Invalid location for product:", product.name);
           return null; // Skip rendering this marker
         }
-  
+
         return (
           <Marker
             key={index}
@@ -105,7 +92,6 @@ const SalesScreen = () => {
       })}
     </MapView>
   );
-  
 
 
   return (
@@ -126,7 +112,6 @@ const SalesScreen = () => {
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1

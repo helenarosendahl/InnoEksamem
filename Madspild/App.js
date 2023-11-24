@@ -13,6 +13,7 @@ import SignUpScreen from './components/SignUpScreen';
 import SearchScreen from './components/SalesScreen';
 import HomeScreen from './components/HomeScreen';
 import UploadProduct from './components/UploadProduct';
+import RequestScreen from './components/RequestScreen';
 
 
 const Stack = createStackNavigator();
@@ -45,6 +46,7 @@ export default function App() {
         <Stack.Screen name="SignUpScreen" component={SignUpScreen} options={{ title: 'Opret bruger' }} />
         <Stack.Screen name="SearchScreen" component={SearchScreen} options={{ title: 'Søg' }} />
         <Stack.Screen name="UploadProduct" component={UploadProduct} options={{ title: 'Sælg produkt' }} />
+        <Stack.Screen name="RequestsScreen" component={RequestScreen} options={{ title: 'Requests' }} />
 
         </>
       );

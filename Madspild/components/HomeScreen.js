@@ -19,6 +19,10 @@ const HomeScreen = ({ navigation }) => {
         title="Go to SalesScreen"
         onPress={() => navigation.navigate('SalesScreen')}
       />
+   <Button
+        title="Go to request manager"
+        onPress={() => navigation.navigate('RequestsScreen')}
+      />
    
    
  

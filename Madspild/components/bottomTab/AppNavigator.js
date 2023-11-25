@@ -4,6 +4,8 @@ import RequestScreen from '../donations/RequestScreen';
 import SalesScreen from '../donations/SalesScreen'; 
 import UploadProduct from '../donations/UploadProduct'; 
 import UserProfile from '../UserProfile'; 
+import SponsScreen from '../sponsor/SponsScreen'; 
+
 
 
 
@@ -16,6 +18,8 @@ const AppNavigator = () => {
         <Tab.Screen name="Anmodninger" component={RequestScreen} />
         <Tab.Screen name="Doner mad" component={UploadProduct} />
         <Tab.Screen name="Bio" component={UserProfile} />
+        <Tab.Screen name="Sponsorer" component={SponsScreen} />
+
       </Tab.Navigator>
     
   );

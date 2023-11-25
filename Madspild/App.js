@@ -9,6 +9,7 @@ import LoginScreen from './components/authentication/LoginScreen';
 import SignUpScreen from './components/authentication/SignUpScreen';
 import AppNavigator from './components/bottomTab/AppNavigator'; // BottomTab Navigator
 
+
 const Stack = createStackNavigator();
 
 export default function App() {

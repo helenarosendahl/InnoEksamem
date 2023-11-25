@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, Alert, Image } from 'react-native';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import firebaseApp from '../../firebaseConfig'; // assuming firebaseConfig.js is in the same directory
 
@@ -28,6 +28,10 @@ const SignUpScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <Image 
+        source={require('../../assets/appLogo.png')}
+        style={styles.logo}
+      />
       <TextInput
         placeholder="Email"
         value={email}
@@ -41,7 +45,7 @@ const SignUpScreen = ({ navigation }) => {
         secureTextEntry
         style={styles.input}
       />
-      <Button title="Sign Up" onPress={handleSignUp} />
+      <Button title="Opret din bruger!" onPress={handleSignUp} />
     </View>
   );
 };
@@ -58,7 +62,12 @@ const styles = StyleSheet.create({
     height: 40,
     borderBottomWidth: 1,
     marginBottom: 10
-  }
+  },
+  logo: {
+    width: 400, 
+    height: 400, 
+    marginBottom: 1, 
+  },
 });
 
 export default SignUpScreen;

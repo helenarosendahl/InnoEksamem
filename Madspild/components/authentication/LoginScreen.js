@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet, Alert, TouchableOpacity, Text } from 'react-native';
+import { View, TextInput, Button, StyleSheet, Alert, TouchableOpacity, Text, Image } from 'react-native';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import firebaseApp from '../../firebaseConfig' 
 
@@ -27,6 +27,10 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+         <Image 
+        source={require('../../assets/appLogo.png')}
+        style={styles.logo}
+      />
       <TextInput
         placeholder="Email"
         value={email}
@@ -65,7 +69,12 @@ const styles = StyleSheet.create({
   signupText: {
     marginTop: 20,
     color: 'blue'
-  }
+  },
+  logo: {
+    width: 400, 
+    height: 400, 
+    marginBottom: 1, 
+  },
 });
 
 export default LoginScreen;

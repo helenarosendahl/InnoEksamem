@@ -5,9 +5,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 // Importerer de komponenter som skal bruges
-import LoginScreen from './components/LoginScreen';
-import SignUpScreen from './components/SignUpScreen';
-import AppNavigator from './components/AppNavigator'; // BottomTab Navigator
+import LoginScreen from './components/authentication/LoginScreen';
+import SignUpScreen from './components/authentication/SignUpScreen';
+import AppNavigator from './components/bottomTab/AppNavigator'; // BottomTab Navigator
 
 const Stack = createStackNavigator();
 

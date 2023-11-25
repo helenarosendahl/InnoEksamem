@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
-import firebaseApp from '../firebaseConfig'; // assuming firebaseConfig.js is in the same directory
+import firebaseApp from '../../firebaseConfig'; // assuming firebaseConfig.js is in the same directory
 
 const SignUpScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');

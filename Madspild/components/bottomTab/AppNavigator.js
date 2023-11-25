@@ -1,10 +1,9 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
-import RequestScreen from './RequestScreen'; 
-import SalesScreen from './SalesScreen'; 
-import UploadProduct from './UploadProduct'; 
-import UserProfile from './UserProfile'; 
+import RequestScreen from '../donations/RequestScreen'; 
+import SalesScreen from '../donations/SalesScreen'; 
+import UploadProduct from '../donations/UploadProduct'; 
+import UserProfile from '../UserProfile'; 
 
 
 

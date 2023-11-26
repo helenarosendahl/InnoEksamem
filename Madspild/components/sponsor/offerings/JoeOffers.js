@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, ScrollView, Text, Image, Button, StyleSheet, Alert } from 'react-native';
-import { getFirestore, doc, getDoc } from 'firebase/firestore';
+import { getFirestore, doc, getDoc, collection, setDoc, updateDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 
 const JoeOffers = () => {
@@ -11,27 +11,37 @@ const JoeOffers = () => {
   const offerings = [
     {
       id: 1,
-      image: require('../../../assets/joe-kaffid.jpg'), // Local image or remote URL
+      image: require('../../../assets/joe-kaffid.jpg'), // path
       name: 'Double Espresso',
       description: 'From a solar powered, fully organic, coffee farm.',
-      points: 50, // Cost in points
+      points: 50, // hvor mange point produktet koster
     },
     {
       id: 2,
-      image: require('../../../assets/joeLogo.png'), // Local image or remote URL
+      image: require('../../../assets/joeLogo.png'), // path
       name: 'Product 2',
       description: 'Description of Product 1',
-      points: 1, // Cost in points
+      points: 1, // // hvor mange point produktet koster
     },
     {
       id: 3,
-      image: require('../../../assets/joeLogo.png'), // Local image or remote URL
+      image: require('../../../assets/joeLogo.png'), // path
       name: 'Product 3',
       description: 'Description of Product 1',
-      points: 1, // Cost in points
+      points: 1, // hvor mange point produktet koster
     },
-    // ... more offers
   ];
+
+  const saveDiscountCode = async (code, productName) => {
+    if (auth.currentUser) {
+      const discountDocRef = doc(collection(db, "discountCodes"));
+      await setDoc(discountDocRef, {
+        code: code,
+        userUID: auth.currentUser.uid,
+        productName: productName
+      });
+    }
+  };
 
     // Display hvor mange point brugeren har
   useEffect(() => {
@@ -50,21 +60,27 @@ const JoeOffers = () => {
     fetchUserPoints();
   }, []);
 
-  const handleRedeemOffer = (offer) => {
+  const handleRedeemOffer = async (offer) => {
     if (userPoints >= offer.points) {
       const discountCode = generateDiscountCode();
-      Alert.alert("Success", `Your discount code: ${discountCode}`);
-      // Deduct points from user's account and update in Firebase
+      Alert.alert("Succes!", `Din discount kode: ${discountCode}`);
+      
+      await saveDiscountCode(discountCode, offer.name);
+
+
+      // Fjern point fra brugerens point-total, efter de har bestil rabartkode
+      const newPoints = userPoints - offer.points;
+      await updateUserPoints(newPoints);
+      setUserPoints(newPoints); // Update på siden
     } else {
       Alert.alert("Error", "Du har ikke nok point til at bruge dette tilbud");
     }
   };
   
   const generateDiscountCode = () => {
-    // Generate and return a discount code
-    return 'DISCOUNT123'; // Example code
+    return 'DISCOUNT' + Math.random().toString(36).substr(2, 9).toUpperCase();
   };
-
+  
   const updateUserPoints = async (newPoints) => {
     if (auth.currentUser) {
       const userDocRef = doc(db, "users", auth.currentUser.uid);
@@ -73,6 +89,9 @@ const JoeOffers = () => {
       });
     }
   };
+
+ 
+  
 
   return (
     <View style={styles.container}>
@@ -86,7 +105,7 @@ const JoeOffers = () => {
         horizontal={true} 
         showsHorizontalScrollIndicator={false} 
         style={styles.offersContainer}
-        contentContainerStyle={styles.offersContentContainer} // Added for inner content styling
+        contentContainerStyle={styles.offersContentContainer} 
       >
         {offerings.map((offer) => (
           <View key={offer.id} style={styles.offerBox}>
@@ -116,40 +135,39 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding: 10,
     borderRadius: 10,
-    zIndex: 1, // Ensures it's on top of other elements
+    zIndex: 1, 
   },
-  // Add a new style for the top text
   topText: {
     fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginVertical: 10, // Adds space above and below the text
+    marginVertical: 10, 
   },
   offersContainer: {
-    // Reduced the flex value to take lesser space
-    flex: 0.3, // Adjust this value as needed
+  
+    flex: 0.3, 
     backgroundColor: '#fffff0',
     borderRadius: 10,
     borderWidth: 2,
     borderColor: 'pink',
-    height: 300, // Adjusted height
+    height: 300,
   },
   offersContentContainer: {
-    paddingHorizontal: 20, // Add padding for the inner content of the ScrollView
+    paddingHorizontal: 20, 
   },
   offerBox: {
     flex: 0.5,
     width: 250,
     height: 300,
-    marginHorizontal: 10, // Adjusted for horizontal margins
+    marginHorizontal: 10, 
     padding: 10,
     backgroundColor: '#ffe4e1',
     borderRadius: 10,
-    alignItems: 'center', // Center the items horizontally
+    alignItems: 'center', 
   },
   offerImage: {
     width: '100%',
-    height: 150, // Ensure this height works with your images
+    height: 150, 
     resizeMode: 'contain',
   },
   offerName: {

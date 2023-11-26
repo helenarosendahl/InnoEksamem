@@ -1,79 +1,63 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
-import { getAuth } from 'firebase/auth';
-import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
+import { View, Text, Image, StyleSheet } from 'react-native';
+import { getFirestore, doc, getDoc } from 'firebase/firestore';
+import { getStorage, ref, getDownloadURL } from 'firebase/storage';
 
-
-//En bruger oprettes først i systemet, når de manuelt går ind og indsætter oplysninger
-const UserProfile = () => {
-  const [userProfile, setUserProfile] = useState({
-    biography: '',
-    address: '',
-    points: 0, // point initieres på 0
-    name: '', 
-    userUID: '' // hentes fra firebase authentication (getAuth) 
-  });
-
-  // Firebase connection
-  const auth = getAuth();
-  const firestore = getFirestore();
-  const user = auth.currentUser;
-
-  // Ensure userUID is set when the component mounts or user changes
-  useEffect(() => {
-    if (user) {
-      setUserProfile(prevState => ({ ...prevState, userUID: user.uid }));
-    }
-  }, [user]);
-
-  const userDocRef = doc(firestore, "users", user.uid);
+const UserProfile = ({ userUID }) => {
+  const [userInfo, setUserInfo] = useState({ name: '', address: '', biography: '' });
+  const [userPhotoURL, setUserPhotoURL] = useState(null);
+  const [discountCodes, setDiscountCodes] = useState([]);
 
   useEffect(() => {
-    const fetchUserProfile = async () => {
+    const firestore = getFirestore();
+    const userDocRef = doc(firestore, 'users', userUID);
+
+    // Fetch user info
+    const fetchUserInfo = async () => {
       const docSnap = await getDoc(userDocRef);
       if (docSnap.exists()) {
-        setUserProfile({ ...docSnap.data(), userUID: user.uid });
+        setUserInfo(docSnap.data());
       }
     };
 
-    fetchUserProfile();
-  }, [userDocRef, user.uid]);
+    // Fetch user photo
+    const fetchUserPhoto = async () => {
+      const storage = getStorage();
+      const photoRef = ref(storage, `profile_pictures/${userUID}`);
+      try {
+        const url = await getDownloadURL(photoRef);
+        setUserPhotoURL(url);
+      } catch (error) {
+        console.error('Error fetching photo:', error);
+      }
+    };
 
-  const handleInputChange = (name, value) => {
-    setUserProfile({ ...userProfile, [name]: value });
-  };
+    // Fetch discount codes
+    const fetchDiscountCodes = async () => {
+      // Replace this with your method of fetching discount codes from Firestore
+    };
 
-  const handleSave = async () => {
-    try {
-      await setDoc(userDocRef, userProfile);
-      alert('Profile saved successfully!');
-    } catch (error) {
-      alert('Error saving profile:', error.message);
-    }
-  };
+    fetchUserInfo();
+    fetchUserPhoto();
+    fetchDiscountCodes();
+  }, [userUID]);
 
   return (
     <View style={styles.container}>
-      <TextInput
-        placeholder="Name"
-        value={userProfile.name}
-        onChangeText={(text) => handleInputChange('name', text)}
-        style={styles.input}
-      />
-      <TextInput
-        placeholder="Biography"
-        value={userProfile.biography}
-        onChangeText={(text) => handleInputChange('biography', text)}
-        style={styles.input}
-      />
-      <TextInput
-        placeholder="Address"
-        value={userProfile.address}
-        onChangeText={(text) => handleInputChange('address', text)}
-        style={styles.input}
-      />
-      <Text style={styles.pointsDisplay}>Points: {userProfile.points}</Text>
-      <Button title="Save Profile" onPress={handleSave} />
+      <Text style={styles.header}>User Profile</Text>
+      {userPhotoURL && <Image source={{ uri: userPhotoURL }} style={styles.image} />}
+      <Text>Name: {userInfo.name}</Text>
+      <Text>Address: {userInfo.address}</Text>
+      <Text>Biography: {userInfo.biography}</Text>
+      
+      <Text style={styles.header}>Discount Codes</Text>
+      {/* Map through discount codes and display them */}
+      {discountCodes.map((code, index) => (
+        <View key={index}>
+          <Text>Product Name: {code.productName}</Text>
+          <Text>Code: {code.code}</Text>
+        </View>
+      ))}
     </View>
   );
 };
@@ -83,17 +67,18 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
     justifyContent: 'center',
+    alignItems: 'center',
   },
-  input: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 10,
+  header: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginVertical: 10,
   },
-  pointsDisplay: {
-    fontSize: 18,
-    marginBottom: 10,
-  }
+  image: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+  },
 });
 
 export default UserProfile;

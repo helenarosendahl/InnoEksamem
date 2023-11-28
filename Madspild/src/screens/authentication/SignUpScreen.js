@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert, Image } from 'react-native';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import firebaseApp from '../../../firebaseConfig'; 
+import AppLogo from '../../components/Logo/AppLogo';
+
 
 const SignUpScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -28,10 +30,7 @@ const SignUpScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Image 
-        source={require('../../assets/appLogo.png')}
-        style={styles.logo}
-      />
+       <AppLogo source={require('../../assets/logos/appLogo.png')} />
       <TextInput
         placeholder="Email"
         value={email}

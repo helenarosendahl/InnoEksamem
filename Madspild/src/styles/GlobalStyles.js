@@ -51,9 +51,10 @@ export const globalStyles = {
     borderColor: colors.black,
   },
   sponsorLogo: {
-    width: 300,
+    width: 280,
     height: 100,
     resizeMode: 'contain',
+    
   },
   sponsorHeadText: {
     textAlign: 'center',
@@ -85,11 +86,13 @@ export const globalStyles = {
   },
   pointsContainer: { // Bruges på xxxOffers.js
     position: 'absolute',
-    top: 10,
+    top: 0,
     right: 10,
-    backgroundColor: 'white',
+    backgroundColor: 'pink',
     padding: 10,
     borderRadius: 10,
+    borderColor: 'black',
+    borderWidth: 2,
     zIndex: 1, 
   },
   offersContainer: { // Bruges på xxxOffers.js
@@ -102,5 +105,17 @@ export const globalStyles = {
   },
   offersContentContainer: { // Bruges på xxxOffers.js
     paddingHorizontal: 20, 
+  },
+  textBox: { // Boks med informations tekst i
+    backgroundColor: 'lightgreen',
+    padding: 15,
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: 'black',
+    marginVertical: 10,
+  },
+  linkText: { // Hvis vi laver et link
+    color: 'blue',
+    textDecorationLine: 'underline',
   },
 };

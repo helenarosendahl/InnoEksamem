@@ -4,8 +4,9 @@ import { getFirestore, doc, getDoc, collection, setDoc, updateDoc } from 'fireba
 import { getAuth } from 'firebase/auth';
 import OfferItem from '../../../components/Lists/OfferItem'; // Import the new component
 import { globalStyles } from '../../../styles/GlobalStyles';
+import TextBox from '../../../components/Forms/TextBox'; // Import the new component
 
-const CofocoOffers = () => {
+const JoeOffers = () => {
   const [userPoints, setUserPoints] = useState(0);
   const db = getFirestore();
   const auth = getAuth();
@@ -15,22 +16,22 @@ const CofocoOffers = () => {
       id: 1,
       image: require('../../../assets/joe-kaffid.jpg'), // path
       name: 'Double Espresso',
-      description: 'From a solar powered, fully organic, coffee farm.',
+      description: 'Fra en solcelledrevet, fuldt økologisk kaffefarm.',
       points: 50, // hvor mange point produktet koster
     },
     {
       id: 2,
-      image: require('../../../assets/joeLogo.png'), // path
-      name: 'Product 2',
-      description: 'Description of Product 1',
-      points: 1, // // hvor mange point produktet koster
+      image: require('../../../assets/greenTea.jpg'), // path
+      name: 'Grøn Mandarin Te',
+      description: 'Økologisk Te',
+      points: 50, // // hvor mange point produktet koster
     },
     {
       id: 3,
-      image: require('../../../assets/joeLogo.png'), // path
-      name: 'Product 3',
-      description: 'Description of Product 1',
-      points: 1, // hvor mange point produktet koster
+      image: require('../../../assets/gingerShot.jpg'), // path
+      name: 'Ingefær shot',
+      description: 'Med økologisk æble og ingefær',
+      points: 50, // hvor mange point produktet koster
     },
   ];
 
@@ -94,28 +95,20 @@ const CofocoOffers = () => {
 
  
 
-    const missionUrl = 'https://www.joejuice.com/impact';
+  
 
   return (
     <View style={globalStyles.container}>
       <View style={globalStyles.pointsContainer}>
         <Text style={[globalStyles.text, globalStyles.pointsText]}>Points: {userPoints}</Text>
       </View>
-      <Text style={globalStyles.text}>
-      Velkommen til vores tilbud til brugere af 'For Godt Til Skrot'!
-      Velkommen til vores tilbud til brugere af 'For Godt Til Skrot'!
-      Velkommen til vores tilbud til brugere af 'For Godt Til Skrot'!
-      {' '}
-      Læs mere om vores mission
-      {' '}
-      <Text
-        style={[globalStyles.topText, { color: 'blue', textDecorationLine: 'underline' }]}
-        onPress={() => Linking.openURL(missionUrl)}
-      >
-        her
-      </Text>
-      .
-    </Text>
+
+
+      <TextBox
+  text="Velkommen til vores tilbud til brugere af 'For Godt Til Skrot'! Her har vi samlet et nøje udvalg af vores produkter, som kan bestilles og afhentes i en af vores mange caféer. For at bruge rabatkoden, skal du bruge vores App. Hvis du ikke allerede har den, kan den downloades "
+  linkText="her."
+  linkUrl='https://apps.apple.com/dk/app/joe-the-juice/id1347116229?_branch_match_id=1258168894973534393&utm_source=Website&utm_campaign=Loyalty&utm_medium=URL&_branch_referrer=H4sIAAAAAAAAA8soKSkottLXz8pPTcxLKclIzSrNTE7VSywo0MvJzMvWN3I3KirNDispMwYAZNL9rioAAAA%3D'
+/>      
 
       <ScrollView 
         horizontal={true} 
@@ -136,4 +129,4 @@ const CofocoOffers = () => {
 };
 
 
-export default CofocoOffers;
+export default JoeOffers;

@@ -5,6 +5,8 @@ import {
   writeBatch, getDoc, increment 
 } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
+import RequestItem from '../../components/Lists/RequestItem'; // Assuming this is the path
+import { globalStyles } from '../../styles/GlobalStyles';
 
 
 
@@ -70,16 +72,15 @@ const RequestScreen = () => {
   };
 
   const renderItem = ({ item }) => (
-    <View style={styles.item}>
-      <Text>Product Name: {item.productName}</Text>
-      <Text>Buyer Name: {item.buyerName}</Text>
-      <Button title="Accept" onPress={() => handleRequestResponse(item.id, true)} />
-      <Button title="Decline" onPress={() => handleRequestResponse(item.id, false)} />
-    </View>
+    <RequestItem 
+      item={item} 
+      onAccept={() => handleRequestResponse(item.id, true)} 
+      onDecline={() => handleRequestResponse(item.id, false)} 
+    />
   );
 
   return (
-    <View style={styles.container}>
+    <View style={globalStyles.container}>
       <FlatList
         data={requests}
         renderItem={renderItem}

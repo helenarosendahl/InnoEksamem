@@ -1,16 +1,16 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import RequestScreen from '../donations/RequestScreen'; 
-import SalesScreen from '../donations/SalesScreen'; 
-import UploadProduct from '../donations/UploadProduct'; 
-import UserProfile from '../profile/UserProfile'; 
-import SponsScreen from '../sponsor/SponsScreen'; 
+import RequestScreen from '../screens/donations/RequestScreen'; 
+import SalesScreen from '../screens/donations/SalesScreen'; 
+import UploadProduct from '../screens/donations/UploadProduct'; 
+import UserProfile from '../screens/profile/UserProfile'; 
+import SponsScreen from '../screens/sponsor/SponsScreen'; 
 import { createStackNavigator } from '@react-navigation/stack';
 // Tilbud fra sponsorer
-import JoeOffers from '../sponsor/offerings/JoeOffers'
-import AldiOffers from '../sponsor/offerings/AldiOffers'
-import CofocoOffers from '../sponsor/offerings/CofocoOffers'
-import UpdateUserProfile from '../profile/UpdateUserProfile'
+import JoeOffers from '../screens/sponsor/offerings/JoeOffers'
+import AldiOffers from '../screens/sponsor/offerings/AldiOffers'
+import CofocoOffers from '../screens/sponsor/offerings/CofocoOffers'
+import UpdateUserProfile from '../screens/profile/UpdateUserProfile'
 
 const SponsStack = createStackNavigator();
 

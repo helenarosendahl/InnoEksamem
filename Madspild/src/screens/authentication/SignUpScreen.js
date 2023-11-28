@@ -1,33 +1,34 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet, Alert, TouchableOpacity, Text, Image } from 'react-native';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import firebaseApp from '../../firebaseConfig' 
+import { View, Text, TextInput, Button, StyleSheet, Alert, Image } from 'react-native';
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import firebaseApp from '../../../firebaseConfig'; 
 
-const LoginScreen = ({ navigation }) => {
+const SignUpScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const auth = getAuth(firebaseApp);
 
-  const handleLogin = () => {
-    signInWithEmailAndPassword(auth, email, password)
+  const handleSignUp = () => {
+    createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        // Logger ind her
+        // Opretter bruger
         const user = userCredential.user;
-        Alert.alert("Success", "Logged in successfully!");
-        console.log(`User logged in: ${user.email}`)
+        
+        Alert.alert("Success", "User created successfully!");
+        navigation.navigate('Login'); // Bruger returneres til LoginScreen.js
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        // Returnerer errorMessage, hvis login fejler
+        // Error handling
         Alert.alert("Error", errorMessage);
       });
   };
 
   return (
     <View style={styles.container}>
-         <Image 
+      <Image 
         source={require('../../assets/appLogo.png')}
         style={styles.logo}
       />
@@ -44,16 +45,12 @@ const LoginScreen = ({ navigation }) => {
         secureTextEntry
         style={styles.input}
       />
-      <Button title="Log ind" onPress={handleLogin} />
-      <TouchableOpacity onPress={() => navigation.navigate('SignUpScreen')}>
-        <Text style={styles.signupText}>Ikke allerede bruger? Tildmeld dig her!
-      </Text>
-      </TouchableOpacity>
+      <Button title="Opret din bruger!" onPress={handleSignUp} />
     </View>
   );
 };
 
-// Midltertid style.sheet
+// Midlertidigt
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -66,10 +63,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     marginBottom: 10
   },
-  signupText: {
-    marginTop: 20,
-    color: 'blue'
-  },
   logo: {
     width: 400, 
     height: 400, 
@@ -77,5 +70,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginScreen;
-
+export default SignUpScreen;

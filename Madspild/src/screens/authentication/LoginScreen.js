@@ -1,34 +1,33 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert, Image } from 'react-native';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
-import firebaseApp from '../../firebaseConfig'; // assuming firebaseConfig.js is in the same directory
+import { View, TextInput, Button, StyleSheet, Alert, TouchableOpacity, Text, Image } from 'react-native';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import firebaseApp from '../../../firebaseConfig' 
 
-const SignUpScreen = ({ navigation }) => {
+const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const auth = getAuth(firebaseApp);
 
-  const handleSignUp = () => {
-    createUserWithEmailAndPassword(auth, email, password)
+  const handleLogin = () => {
+    signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        // Opretter bruger
+        // Logger ind her
         const user = userCredential.user;
-        
-        Alert.alert("Success", "User created successfully!");
-        navigation.navigate('Login'); // Bruger returneres til LoginScreen.js
+        Alert.alert("Success", "Logged in successfully!");
+        console.log(`User logged in: ${user.email}`)
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        // Error handling
+        // Returnerer errorMessage, hvis login fejler
         Alert.alert("Error", errorMessage);
       });
   };
 
   return (
     <View style={styles.container}>
-      <Image 
+         <Image 
         source={require('../../assets/appLogo.png')}
         style={styles.logo}
       />
@@ -45,12 +44,16 @@ const SignUpScreen = ({ navigation }) => {
         secureTextEntry
         style={styles.input}
       />
-      <Button title="Opret din bruger!" onPress={handleSignUp} />
+      <Button title="Log ind" onPress={handleLogin} />
+      <TouchableOpacity onPress={() => navigation.navigate('SignUpScreen')}>
+        <Text style={styles.signupText}>Ikke allerede bruger? Tildmeld dig her!
+      </Text>
+      </TouchableOpacity>
     </View>
   );
 };
 
-// Midlertidigt
+// Midltertid style.sheet
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -63,6 +66,10 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     marginBottom: 10
   },
+  signupText: {
+    marginTop: 20,
+    color: 'blue'
+  },
   logo: {
     width: 400, 
     height: 400, 
@@ -70,4 +77,5 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignUpScreen;
+export default LoginScreen;
+

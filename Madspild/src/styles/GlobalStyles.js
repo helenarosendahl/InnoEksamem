@@ -118,4 +118,9 @@ export const globalStyles = {
     color: 'blue',
     textDecorationLine: 'underline',
   },
+  image: { // bruger profil billede
+    width: 200, // Adjust as needed
+    height: 200, // Adjust as needed
+    borderRadius: 50, // Optional: if you want a circular image
+  },
 };

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Image, StyleSheet } from 'react-native';
+import { View, Image } from 'react-native';
 import { getAuth } from 'firebase/auth';
 import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
 import * as ImagePicker from 'expo-image-picker';
@@ -111,7 +111,7 @@ const UpdateUserProfile = () => {
       />
       <SecondaryButton title="Upload billede af dig selv" onPress={selectImage} />
       {userProfile.photoURL && (
-        <Image source={{ uri: userProfile.photoURL }} style={styles.image} />
+        <Image source={{ uri: userProfile.photoURL }} style={globalStyles.image} />
       )}
       <PrimaryButton title="Save Profile" onPress={handleSave} />
     </View>

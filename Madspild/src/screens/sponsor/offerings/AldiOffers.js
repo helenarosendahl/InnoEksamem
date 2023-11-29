@@ -14,21 +14,21 @@ const JoeOffers = () => {
   const offerings = [
     {
       id: 1,
-      image: require('../../../assets/joe-kaffid.jpg'), // path
+      image: require('../../../assets/offers/joe-kaffid.jpg'), // path
       name: 'Double Espresso',
       description: 'Fra en solcelledrevet, fuldt økologisk kaffefarm.',
       points: 50, // hvor mange point produktet koster
     },
     {
       id: 2,
-      image: require('../../../assets/greenTea.jpg'), // path
+      image: require('../../../assets/offers/greenTea.jpg'), // path
       name: 'Grøn Mandarin Te',
       description: 'Økologisk Te',
       points: 50, // // hvor mange point produktet koster
     },
     {
       id: 3,
-      image: require('../../../assets/gingerShot.jpg'), // path
+      image: require('../../../assets/offers/gingerShot.jpg'), // path
       name: 'Ingefær shot',
       description: 'Med økologisk æble og ingefær',
       points: 50, // hvor mange point produktet koster

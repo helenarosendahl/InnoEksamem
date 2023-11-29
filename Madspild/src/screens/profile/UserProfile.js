@@ -1,84 +1,43 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
-import { getFirestore, doc, getDoc } from 'firebase/firestore';
+import { View, Image, Text, StyleSheet } from 'react-native';
+import { getAuth } from 'firebase/auth';
 import { getStorage, ref, getDownloadURL } from 'firebase/storage';
+import { globalStyles } from '../../styles/GlobalStyles';
 
-const UserProfile = ({ userUID }) => {
-  const [userInfo, setUserInfo] = useState({ name: '', address: '', biography: '' });
-  const [userPhotoURL, setUserPhotoURL] = useState(null);
-  const [discountCodes, setDiscountCodes] = useState([]);
+const UserProfile = () => {
+  const [photoURL, setPhotoURL] = useState(null);
+
+  const auth = getAuth();
+  const user = auth.currentUser;
 
   useEffect(() => {
-    const firestore = getFirestore();
-    const userDocRef = doc(firestore, 'users', userUID);
+    const fetchImageURL = async () => {
+      if (user) {
+        const storage = getStorage();
+        const imageRef = ref(storage, `profile_pictures/${user.uid}`);
 
-    // Fetch user info
-    const fetchUserInfo = async () => {
-      const docSnap = await getDoc(userDocRef);
-      if (docSnap.exists()) {
-        setUserInfo(docSnap.data());
+        try {
+          const url = await getDownloadURL(imageRef);
+          setPhotoURL(url);
+        } catch (error) {
+          console.error("Error fetching image URL:", error);
+        }
       }
     };
 
-    // Fetch user photo
-    const fetchUserPhoto = async () => {
-      const storage = getStorage();
-      const photoRef = ref(storage, `profile_pictures/${userUID}`);
-      try {
-        const url = await getDownloadURL(photoRef);
-        setUserPhotoURL(url);
-      } catch (error) {
-        console.error('Error fetching photo:', error);
-      }
-    };
-
-    // Fetch discount codes
-    const fetchDiscountCodes = async () => {
-      // Replace this with your method of fetching discount codes from Firestore
-    };
-
-    fetchUserInfo();
-    fetchUserPhoto();
-    fetchDiscountCodes();
-  }, [userUID]);
+    fetchImageURL();
+  }, [user]);
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>User Profile</Text>
-      {userPhotoURL && <Image source={{ uri: userPhotoURL }} style={styles.image} />}
-      <Text>Name: {userInfo.name}</Text>
-      <Text>Address: {userInfo.address}</Text>
-      <Text>Biography: {userInfo.biography}</Text>
-      
-      <Text style={styles.header}>Discount Codes</Text>
-      {/* Map through discount codes and display them */}
-      {discountCodes.map((code, index) => (
-        <View key={index}>
-          <Text>Product Name: {code.productName}</Text>
-          <Text>Code: {code.code}</Text>
-        </View>
-      ))}
+    <View style={globalStyles.container}>
+      {photoURL ? (
+        <Image source={{ uri: photoURL }} style={globalStyles.image} />
+      ) : (
+        <Text>No profile image available</Text>
+      )}
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  header: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginVertical: 10,
-  },
-  image: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-  },
-});
 
 export default UserProfile;

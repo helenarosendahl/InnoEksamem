@@ -12,6 +12,7 @@ import AldiOffers from '../screens/sponsor/offerings/AldiOffers'
 import CofocoOffers from '../screens/sponsor/offerings/CofocoOffers'
 import UpdateUserProfile from '../screens/profile/UpdateUserProfile'
 
+
 const SponsStack = createStackNavigator();
 
 function SponsStackScreen() {
@@ -22,6 +23,7 @@ function SponsStackScreen() {
       <SponsStack.Screen name="AldiOffers" component={AldiOffers} options={{ headerTitle: 'Aldi Danmark' }} />
       <SponsStack.Screen name="CofocoOffers" component={CofocoOffers} options={{ headerTitle: 'Cofoco' }} />
       <SponsStack.Screen name="UpdateUserProfile" component={UpdateUserProfile} options={{ headerTitle: 'Cofoco' }} />
+  
     </SponsStack.Navigator>
   );
 }
@@ -36,6 +38,8 @@ const AppNavigator = () => {
         <Tab.Screen name="Doner mad" component={UploadProduct} />
         <Tab.Screen name="Bio" component={UpdateUserProfile} />
         <Tab.Screen name="Sponsorer" component={SponsStackScreen}/>
+        <Tab.Screen name="bruger" component={UserProfile}/>
+
       </Tab.Navigator>
   );
 };

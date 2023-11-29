@@ -1,16 +1,24 @@
 import React, { useState } from 'react';
-import { View, Alert } from 'react-native';
+import { View, Alert, Image } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
 import { getFirestore, collection, addDoc } from 'firebase/firestore';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { getAuth } from 'firebase/auth';
 import { CustomTextInput } from '../../components/Forms/TextInput';
 import { PrimaryButton } from '../../components/Buttons/PrimaryButton';
 import { globalStyles } from '../../styles/GlobalStyles';
+import TextBox from '../../components/Forms/TextBox';
+
 
 const UploadProduct = () => {
   const [productName, setProductName] = useState('');
-  const [price, setPrice] = useState('');
-  const [expirationDate, setExpirationDate] = useState('');
+  const [expirationDate, setExpirationDate] = useState(''); // skal helst ændres til en datepicker af en art, men kan ikke få dem til at virke 
   const [address, setAddress] = useState('');
+  const [note, setNote] = useState('');
+  const [imageUri, setImageUri] = useState('');
+  const [uploadedImageUrl, setUploadedImageUrl] = useState(null);
+
+
 
   // Firestore reference
   const db = getFirestore();
@@ -42,27 +50,72 @@ const GEOCODING_API_KEY = 'AIzaSyCfV3r616nHsjc68xFRkAlNCQlz8XZDKRw';
     }
   };
 
-  const handleProductUpload = async () => {
+  // Vælg billede laves med Expo imagepicker 
+  const selectImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
 
-    // sikre at man skal være logget (bør ikke kune ske at man ikke er)
+    if (!result.canceled) { 
+        const image = result.assets ? result.assets[0] : null;
+        if (image) {
+            setImageUri(image.uri); 
+        }
+    }
+};
+
+// Håndterer at sende billede til firebase storage
+  const uploadImage = async () => {
+    if (!imageUri || !userUID) return null;
+
+    const storage = getStorage();
+    const filename = `products/${userUID}/${Date.now()}`;
+    const storageRef = ref(storage, filename);
+
+    const response = await fetch(imageUri);
+    const blob = await response.blob();
+
+    await uploadBytes(storageRef, blob);
+    return await getDownloadURL(storageRef);
+  };
+
+
+
+  // Funktion der håndterer hvad der sker når "upload product" trykkes
+  const handleProductUpload = async () => {
     if (!userUID) {
       Alert.alert("Error", "You must be logged in to upload a product.");
       return;
     }
 
+    // Efter produktet er blevet uploadet, genopfriskes siden og værdierne nulstilles 
+    const resetForm = () => {
+      setProductName('');
+      setExpirationDate(new Date()); 
+      setAddress('');
+      setNote('');
+      setImageUri('');
+      setUploadedImageUrl(null);
+    };
+
     try {
-      const location = await fetchCoordinates(address);
+      const location = await fetchCoordinates(address); // bruger fetchCoordinates til at omskrive adresse til lat, lng
+      const imageUrl = await uploadImage(); // prøver at sende billedet til database
       if (location) {
-        await addDoc(productsRef, {
+        await addDoc(productsRef, { // hvad der sendes til firebase database
           name: productName,
-          price: Number(price),
           expirationDate,
           address,
+          note,
           location,
-          userUID //tilknytter bruger id
+          imageUrl, // kan evt ændres
+          userUID
         });
-        Alert.alert("Product uploaded successfully!");
-        // Reset fields or navigate to another screen
+        Alert.alert("Succes!", "Tak for at reducere madspild 🍏");
+        resetForm(); // kalder resetform for at genopfriske
       } else {
         Alert.alert("Invalid address. Unable to geocode.");
       }
@@ -71,30 +124,33 @@ const GEOCODING_API_KEY = 'AIzaSyCfV3r616nHsjc68xFRkAlNCQlz8XZDKRw';
     }
   };
 
+
   return (
     <View style={globalStyles.container}>
+      <TextBox text="Doner dine overskydende madvarer - Du hjælper med at reducere madspild, gør en god gerning, og optjener point du kan bruges hos vores sponsorer! 🍏🍇🥝 " />
       <CustomTextInput
-        placeholder="Product Name"
+        placeholder="Hvad vil du donere?"
         value={productName}
         onChangeText={setProductName}
       />
       <CustomTextInput
-        placeholder="Price"
-        value={price}
-        onChangeText={setPrice}
-        keyboardType="numeric"
+        placeholder="Evt. kommentarer, og afhentningsdato?"
+        value={note}
+        onChangeText={setNote}
       />
       <CustomTextInput
-        placeholder="Expiration Date"
+        placeholder="Udløbsdato"
         value={expirationDate}
         onChangeText={setExpirationDate}
       />
       <CustomTextInput
-        placeholder="Address"
+        placeholder="Adresse"
         value={address}
         onChangeText={setAddress}
       />
-      <PrimaryButton title="Upload Product" onPress={handleProductUpload} />
+      <PrimaryButton title="Upload billede" onPress={selectImage} />
+      {imageUri && <Image source={{ uri: imageUri }} style={{ width: 100, height: 100 }} />}
+      <PrimaryButton title="Send din donation!" onPress={handleProductUpload} />
     </View>
   );
 };

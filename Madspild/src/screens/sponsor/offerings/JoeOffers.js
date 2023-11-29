@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView, Text, Alert, Linking } from 'react-native';
+import { View, ScrollView, Text, Alert } from 'react-native';
 import { getFirestore, doc, getDoc, collection, setDoc, updateDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import OfferItem from '../../../components/Lists/OfferItem'; // Import the new component

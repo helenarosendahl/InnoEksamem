@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Image } from 'react-native';
+import { View, Image, Alert } from 'react-native';
 import { getAuth } from 'firebase/auth';
 import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
 import * as ImagePicker from 'expo-image-picker';
@@ -35,7 +35,10 @@ const UpdateUserProfile = () => {
     const fetchUserProfile = async () => {
       const docSnap = await getDoc(userDocRef);
       if (docSnap.exists()) {
-        setUserProfile({ ...docSnap.data(), userUID: user.uid });
+        // Update the state only if it's empty to prevent overwriting user inputs
+        if (!userProfile.name && !userProfile.biography && !userProfile.address) {
+          setUserProfile({ ...docSnap.data(), userUID: user.uid });
+        }
       }
     };
 
@@ -49,7 +52,7 @@ const UpdateUserProfile = () => {
   const handleSave = async () => {
     try {
       await setDoc(userDocRef, userProfile);
-      alert('Bruger oplysninger gemt');
+      Alert.alert('Succes!', 'Dine oplysninger er opdateret');
     } catch (error) {
       alert('Fejl:', error.message);
     }
@@ -86,6 +89,8 @@ const UpdateUserProfile = () => {
       const downloadURL = await getDownloadURL(storageRef);
       console.log('Download URL:', downloadURL);
       setUserProfile(prevState => ({ ...prevState, photoURL: downloadURL }));
+      Alert.alert('Succes!', 'Dit billede er uploadet. Du ser fantastisk');
+
     } catch (error) {
       console.error('Error uploading image:', error);
     }

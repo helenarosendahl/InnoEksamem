@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, FlatList, Alert } from 'react-native';
+import { View, FlatList, Alert, Image} from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { getFirestore, collection, getDocs, addDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth'; 
 import { globalStyles } from '../../styles/GlobalStyles';
 import { PrimaryButton } from '../../components/Buttons/PrimaryButton';
-import ProductListItem from '../../components/Lists/ProductList'; // Import the new component
+import ProductListItem from '../../components/Lists/ProductList'; 
+import TextBox from '../../components/Forms/TextBox';
 
 const SalesScreen = () => {
   const [products, setProducts] = useState([]);
@@ -13,8 +14,8 @@ const SalesScreen = () => {
 
   const db = getFirestore();
   const auth = getAuth(); // Initialize Firebase Auth
-  const productsRef = collection(db, "products");
-  const buyRequestsRef = collection(db, "buyRequests"); // Reference to buyRequests collection
+  const productsRef = collection(db, "products"); // henter
+  const buyRequestsRef = collection(db, "buyRequests"); // Når man trykker "anmod om produkt", skabes der en anmodning i firebase
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -48,8 +49,20 @@ const SalesScreen = () => {
   };
 
   const renderProduct = ({ item }) => (
-    <ProductListItem item={item} onPress={() => handleBuyRequest(item.id, item.userUID)} />
+    <View>
+      <ProductListItem 
+        item={item}
+        onPress={() => handleBuyRequest(item.id, item.userUID)}
+        // Pass the new fields to the ProductListItem
+        name={item.name}
+        expirationDate={item.expirationDate}
+        address={item.address}
+        note={item.note}
+        imageUrl={item.imageUrl}
+      />
+    </View>
   );
+
 
 
   // Definerer hvor brugeren "starter" på mappen, da den som udgangspunkt er helt zoomet ud.

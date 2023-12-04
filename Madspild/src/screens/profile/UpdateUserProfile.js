@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Image, Alert } from 'react-native';
+import { View, Image, Alert, KeyboardAvoidingView, ScrollView, Platform } from 'react-native';
 import { getAuth } from 'firebase/auth';
 import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
 import * as ImagePicker from 'expo-image-picker';
@@ -97,29 +97,36 @@ const UpdateUserProfile = () => {
   };
 
   return (
-    <View style={globalStyles.container}>
-      <AppLogo source={require('../../assets/logos/appLogo.png')} />
-      <CustomTextInput
-        placeholder="Name"
-        value={userProfile.name}
-        onChangeText={(text) => handleInputChange('name', text)}
-      />
-      <CustomTextInput
-        placeholder="Biography"
-        value={userProfile.biography}
-        onChangeText={(text) => handleInputChange('biography', text)}
-      />
-      <CustomTextInput
-        placeholder="Address"
-        value={userProfile.address}
-        onChangeText={(text) => handleInputChange('address', text)}
-      />
-      <SecondaryButton title="Upload billede af dig selv" onPress={selectImage} />
-      {userProfile.photoURL && (
-        <Image source={{ uri: userProfile.photoURL }} style={globalStyles.image} />
-      )}
-      <PrimaryButton title="Save Profile" onPress={handleSave} />
-    </View>
+    <KeyboardAvoidingView 
+      style={globalStyles.container}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
+      <ScrollView>
+        <View style={globalStyles.innerContainer}>
+          <AppLogo source={require('../../assets/logos/appLogo.png')} />
+          <CustomTextInput
+            placeholder="Name"
+            value={userProfile.name}
+            onChangeText={(text) => handleInputChange('name', text)}
+          />
+          <CustomTextInput
+            placeholder="Biography"
+            value={userProfile.biography}
+            onChangeText={(text) => handleInputChange('biography', text)}
+          />
+          <CustomTextInput
+            placeholder="Address"
+            value={userProfile.address}
+            onChangeText={(text) => handleInputChange('address', text)}
+          />
+          <SecondaryButton title="Upload billede af dig selv" onPress={selectImage} />
+          {userProfile.photoURL && (
+            <Image source={{ uri: userProfile.photoURL }} style={globalStyles.image} />
+          )}
+          <PrimaryButton title="Save Profile" onPress={handleSave} />
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 

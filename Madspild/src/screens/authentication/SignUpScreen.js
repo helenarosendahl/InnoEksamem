@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Alert } from 'react-native';
+import { View, Alert, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import firebaseApp from '../../../firebaseConfig';
 import { CustomTextInput } from '../../components/Forms/TextInput';
@@ -25,21 +25,28 @@ const SignUpScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={globalStyles.container}>
-      <AppLogo source={require('../../assets/logos/appLogo.png')} />
-      <CustomTextInput
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-      />
-      <CustomTextInput
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
-      <PrimaryButton title="Opret din bruger!" onPress={handleSignUp} />
-    </View>
+    <KeyboardAvoidingView 
+      style={globalStyles.container}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
+      <ScrollView>
+        <View style={globalStyles.innerContainer}>
+          <AppLogo source={require('../../assets/logos/appLogo.png')} />
+          <CustomTextInput
+            placeholder="Email"
+            value={email}
+            onChangeText={setEmail}
+          />
+          <CustomTextInput
+            placeholder="Password"
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry
+          />
+          <PrimaryButton title="Opret din bruger!" onPress={handleSignUp} />
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 

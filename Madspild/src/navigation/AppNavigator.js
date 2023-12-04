@@ -7,6 +7,7 @@ import UserProfile from '../screens/profile/UserProfile';
 import SponsScreen from '../screens/sponsor/SponsScreen'; 
 import { createStackNavigator } from '@react-navigation/stack';
 import UpdateUserProfile from '../screens/profile/UpdateUserProfile'; 
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 // Tilbud fra sponsorer
 import JoeOffers from '../screens/sponsor/offerings/JoeOffers'
@@ -45,11 +46,40 @@ const Tab = createBottomTabNavigator();
 
 const AppNavigator = () => {
   return (
-      <Tab.Navigator initialRouteName='Donationer'> 
+      <Tab.Navigator initialRouteName='Donationer' screenOptions={({ route }) => ({
+        tabBarIcon: ({ color, size }) => {
+          let iconName;
+
+          // Definer ikoner baseret på rutenavne
+          switch (route.name) {
+            case 'Anmodninger':
+              iconName = 'mail-unread-outline';
+              break;
+            case 'Doner mad':
+              iconName = 'ios-add-circle-outline';
+              break;
+            case 'Donationer':
+              iconName = 'ios-basket-outline';
+              break;
+            case 'Profil':
+              iconName = 'ios-person-outline';
+              break;
+            case 'Sponsorer':
+              iconName = 'gift-outline';
+              break;
+            default:
+              iconName = 'ios-alert-circle-outline';
+          }
+
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+        tabBarActiveTintColor: '#00563B',
+        tabBarInactiveTintColor: 'gray',
+      })}> 
         <Tab.Screen name="Anmodninger" component={RequestScreen} />
         <Tab.Screen name="Doner mad" component={UploadProduct} />
         <Tab.Screen name="Donationer" component={SalesScreen} />
-        <Tab.Screen name="Profil" component={ProfileStackScreen}/>
+        <Tab.Screen name="Profil" component={ProfileStackScreen} />
         <Tab.Screen name="Sponsorer" component={SponsStackScreen}/>
       </Tab.Navigator>
   );

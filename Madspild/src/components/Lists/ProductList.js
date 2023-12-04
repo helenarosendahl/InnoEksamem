@@ -1,9 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { PrimaryButton } from '../Buttons/PrimaryButton';
+import { globalStyles } from '../../styles/GlobalStyles';
  
 const ProductListItem = ({ item, onPress }) => (
-  <View style={styles.item}>
+  <View style={globalStyles.sponsorItem}>
     <Text style={styles.title}>{item.name}</Text>
     {item.imageUrl && (
       <Image source={{ uri: item.imageUrl }} style={styles.image} />
@@ -17,12 +18,15 @@ const ProductListItem = ({ item, onPress }) => (
 
 const styles = StyleSheet.create({
   item: {
-    backgroundColor: 'lightgreen',
+    backgroundColor: '#e8f4ea',
     padding: 20,
     marginVertical: 8,
     marginHorizontal: 16,
     borderRadius: 5,
     justifyContent: 'center',
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: "#006400",
   },
   title: {
     fontSize: 18,

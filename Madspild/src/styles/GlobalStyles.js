@@ -3,7 +3,7 @@
 // tilføj flere farver herfra: https://reactnative.dev/docs/colors
 export const colors = {
   lightGreen: '#90ee90', // Light green
-  darkGreen: '#006400', // Dark green 
+  darkGreen: '#00563B', // Dark green 
   white: '#FFFFFF', // White
   grey: '#808080', // Grey 
   black: '#000000', // Black
@@ -20,11 +20,13 @@ export const globalStyles = {
   text: {
     color: colors.black,
     fontSize: 16,
+    textAlign: 'center',
   },
   button: {
     padding: 10,
     borderRadius: 5,
     marginBottom: 15, //mellemrum mellem knapperne
+    
   },
   card: {
     borderRadius: 10,
@@ -34,6 +36,7 @@ export const globalStyles = {
     shadowRadius: 2,
     elevation: 3,
     backgroundColor: colors.white,
+    
   },
   input: {
     borderWidth: 1,
@@ -45,10 +48,10 @@ export const globalStyles = {
   sponsorItem: {
     padding: 20,
     marginVertical: 20,
-    backgroundColor: 'lightgreen', // Ivory color
+    backgroundColor: '#e8f4ea', // Lysegrøn
     borderRadius: 10,
     borderWidth: 2,
-    borderColor: colors.black,
+    borderColor: "#006400",
   },
   sponsorLogo: {
     width: 280,
@@ -65,15 +68,15 @@ export const globalStyles = {
     textAlign: 'left',
     color: colors.black,
   },
-  offerBox: { // bruges på xxxOffers.js
-    width: 250, // Adjust this width as needed
+  offerBox: { 
+    width: 250, 
     height: 300,
-    marginHorizontal: 10, // Adjust horizontal margins for spacing between boxes
-    padding: 10, // Adjust padding inside the box
-    backgroundColor: 'pink', // Set background color
-    borderRadius: 10, // Rounded corners
-    alignItems: 'center', // Align items to center
-    // Add shadow or borders if needed
+    marginHorizontal: 10,
+    padding: 10,
+    backgroundColor: 'pink', 
+    borderRadius: 10, 
+    alignItems: 'center', 
+
   },
   offerImage: {
     width: '100%',
@@ -107,11 +110,11 @@ export const globalStyles = {
     paddingHorizontal: 20, 
   },
   textBox: { // Boks med informations tekst i
-    backgroundColor: 'lightgreen',
+    backgroundColor: '#e8f4ea',
     padding: 15,
     borderRadius: 10,
     borderWidth: 2,
-    borderColor: 'black',
+    borderColor: '#006400',
     marginVertical: 10,
   },
   linkText: { // Hvis vi laver et link

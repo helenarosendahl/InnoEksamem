@@ -10,6 +10,6 @@ export const PrimaryButton = ({ title, onPress }) => (
     onPress={onPress}
     style={[globalStyles.button, { backgroundColor: colors.darkGreen }]}
   >
-    <Text style={{ color: colors.white }}>{title}</Text>
+    <Text style={{ textAlign: 'center', color: colors.white }}>{title} </Text>
   </TouchableOpacity>
 );

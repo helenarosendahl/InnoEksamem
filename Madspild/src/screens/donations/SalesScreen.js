@@ -10,10 +10,10 @@ import TextBox from '../../components/Forms/TextBox';
 
 const SalesScreen = () => {
   const [products, setProducts] = useState([]);
-  const [viewMode, setViewMode] = useState('list'); // 'list' or 'map'
+  const [viewMode, setViewMode] = useState('list'); 
 
   const db = getFirestore();
-  const auth = getAuth(); // Initialize Firebase Auth
+  const auth = getAuth(); // Initialiserer Firebase Auth
   const productsRef = collection(db, "products"); // henter
   const buyRequestsRef = collection(db, "buyRequests"); // Når man trykker "anmod om produkt", skabes der en anmodning i firebase
 
@@ -53,7 +53,7 @@ const SalesScreen = () => {
       <ProductListItem 
         item={item}
         onPress={() => handleBuyRequest(item.id, item.userUID)}
-        // Pass the new fields to the ProductListItem
+        // Tilføj til produktlisten
         name={item.name}
         expirationDate={item.expirationDate}
         address={item.address}
@@ -81,10 +81,10 @@ const SalesScreen = () => {
         // Detailed logging
         console.log("Rendering product:", product.name, "at", product.location);
 
-        // Updated check for valid location data
+        // Opdater rigtig lokation
         if (!product.location || !isFinite(product.location.lat) || !isFinite(product.location.lng)) {
           console.error("Invalid location for product:", product.name);
-          return null; // Skip rendering this marker
+          return null; // Skip rendering af denne marker
         }
 
         return (

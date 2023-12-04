@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native'; 
 import { createStackNavigator } from '@react-navigation/stack';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-// Importerer de komponenter som skal bruges
 import LoginScreen from './src/screens/authentication/LoginScreen';
 import SignUpScreen from './src/screens/authentication/SignUpScreen';
 import AppNavigator from './src/navigation/AppNavigator'; // BottomTab Navigator

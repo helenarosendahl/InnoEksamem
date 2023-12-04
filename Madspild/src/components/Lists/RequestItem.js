@@ -18,7 +18,7 @@ const RequestItem = ({ item, onAccept, onDecline }) => (
       borderWidth: 2,
     },
     textWithMargin: {
-      marginBottom: 10, // Adjust this value as needed for spacing
+      marginBottom: 10, 
     },
   });
 

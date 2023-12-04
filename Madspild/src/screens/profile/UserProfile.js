@@ -3,7 +3,7 @@ import { ScrollView, View, Text, Image, StyleSheet } from 'react-native';
 import { getAuth } from 'firebase/auth';
 import { getFirestore, doc, getDoc, collection, query, where, getDocs } from 'firebase/firestore';
 import { getStorage, ref, getDownloadURL } from 'firebase/storage';
-import TextBox from '../../components/Forms/TextBox'; // Assuming you have this component
+import TextBox from '../../components/Forms/TextBox'; 
 import { PrimaryButton } from '../../components/Buttons/PrimaryButton';
 import { globalStyles } from '../../styles/GlobalStyles';
 
@@ -46,7 +46,7 @@ const UserProfile = ({ navigation }) => {
   }, [user]);
 
   const navigateToUpdateProfile = () => {
-    navigation.navigate('UpdateUserProfile'); // Use the route name as a string
+    navigation.navigate('UpdateUserProfile'); // Bruger route name som string
   };
 
   const fetchDiscountCodes = async () => {

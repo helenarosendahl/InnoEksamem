@@ -18,8 +18,8 @@ const styles = {
     flex: 1,
   },
   logo: {
-    width: 350, // You can adjust the size as needed
-    height: 350, // Adjust the height as needed
+    width: 350, 
+    height: 350,
   },
 };
 

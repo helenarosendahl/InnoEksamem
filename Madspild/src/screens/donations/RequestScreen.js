@@ -49,19 +49,19 @@ const RequestScreen = () => {
   const handleRequestResponse = async (requestId, isAccepted) => {
     const batch = writeBatch(db);
 
-    // Reference to the request document
+    // Anmod produktet
     const requestDocRef = doc(db, "buyRequests", requestId);
     const requestData = requests.find(req => req.id === requestId);
 
     if (isAccepted && requestData) {
-      // Delete the product and update seller's points if accepted
+      // Slet produktet og opdater sælgerens point hvis accepteret
       const productDocRef = doc(db, "products", requestData.productId);
       const userDocRef = doc(db, "users", requestData.sellerUID);
       batch.delete(productDocRef);
       batch.update(userDocRef, { points: increment(50) });
     }
 
-    // Delete the request
+    // Slet produktet
     batch.delete(requestDocRef);
 
     await batch.commit();

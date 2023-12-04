@@ -35,7 +35,7 @@ const UpdateUserProfile = () => {
     const fetchUserProfile = async () => {
       const docSnap = await getDoc(userDocRef);
       if (docSnap.exists()) {
-        // Update the state only if it's empty to prevent overwriting user inputs
+    
         if (!userProfile.name && !userProfile.biography && !userProfile.address) {
           setUserProfile({ ...docSnap.data(), userUID: user.uid });
         }

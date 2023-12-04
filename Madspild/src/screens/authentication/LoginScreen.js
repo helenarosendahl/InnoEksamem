@@ -48,13 +48,5 @@ const LoginScreen = ({ navigation }) => {
   );
 };
 
-/* Update the styles to use globalStyles where necessary
-const styles = StyleSheet.create({
-  logo: {
-    width: 300, 
-    height: 400, 
-    marginBottom: 1, 
-  },
-});
-*/
+
 export default LoginScreen;

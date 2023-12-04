@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { View, ScrollView, Text, Alert } from 'react-native';
 import { getFirestore, doc, getDoc, collection, setDoc, updateDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
-import OfferItem from '../../../components/Lists/OfferItem'; // Import the new component
+import OfferItem from '../../../components/Lists/OfferItem'; 
 import { globalStyles } from '../../../styles/GlobalStyles';
-import TextBox from '../../../components/Forms/TextBox'; // Import the new component
+import TextBox from '../../../components/Forms/TextBox'; 
 
 const JoeOffers = () => {
   const [userPoints, setUserPoints] = useState(0);
@@ -14,21 +14,21 @@ const JoeOffers = () => {
   const offerings = [
     {
       id: 1,
-      image: require('../../../assets/offers/joe-kaffid.jpg'), // path
+      image: require('../../../assets/offers/joe-kaffid.jpg'), 
       name: 'Double Espresso',
       description: 'Fra en solcelledrevet, fuldt økologisk kaffefarm.',
       points: 50, // hvor mange point produktet koster
     },
     {
       id: 2,
-      image: require('../../../assets/offers/greenTea.jpg'), // path
+      image: require('../../../assets/offers/greenTea.jpg'), 
       name: 'Grøn Mandarin Te',
       description: 'Økologisk Te',
       points: 50, // // hvor mange point produktet koster
     },
     {
       id: 3,
-      image: require('../../../assets/offers/gingerShot.jpg'), // path
+      image: require('../../../assets/offers/gingerShot.jpg'), 
       name: 'Ingefær shot',
       description: 'Med økologisk æble og ingefær',
       points: 50, // hvor mange point produktet koster
@@ -74,7 +74,7 @@ const JoeOffers = () => {
       // Fjern point fra brugerens point-total, efter de har bestil rabartkode
       const newPoints = userPoints - offer.points;
       await updateUserPoints(newPoints);
-      setUserPoints(newPoints); // Update på siden
+      setUserPoints(newPoints); // Opdater på siden
     } else {
       Alert.alert("Error", "Du har ikke nok point til at bruge dette tilbud");
     }

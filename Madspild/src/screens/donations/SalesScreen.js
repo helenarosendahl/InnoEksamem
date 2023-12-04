@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, FlatList, Alert, Image} from 'react-native';
+import { View, FlatList, Alert, Image, TouchableOpacity, Text} from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { getFirestore, collection, getDocs, addDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth'; 
@@ -17,13 +17,14 @@ const SalesScreen = () => {
   const productsRef = collection(db, "products"); // henter
   const buyRequestsRef = collection(db, "buyRequests"); // Når man trykker "anmod om produkt", skabes der en anmodning i firebase
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      const querySnapshot = await getDocs(productsRef);
-      const productList = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      setProducts(productList);
-    };
+   // Funktion til at indlæse produkter fra databasen
+   const fetchProducts = async () => {
+    const querySnapshot = await getDocs(productsRef);
+    const productList = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    setProducts(productList);
+  };
 
+  useEffect(() => {
     fetchProducts();
   }, []);
 
@@ -107,6 +108,12 @@ const SalesScreen = () => {
       <View style={styles.buttonContainer}>
         <PrimaryButton title="Alle donationer" onPress={() => setViewMode('list')} />
         <PrimaryButton title="Google Maps" onPress={() => setViewMode('map')} />
+         {/* Opdateringsknap */}
+         <TouchableOpacity 
+          style={globalStyles.primaryButton} 
+          onPress={fetchProducts}>
+          <Text style={globalStyles.buttonText}>Opdater</Text>
+        </TouchableOpacity>
       </View>
       {viewMode === 'list' ? (
         <FlatList

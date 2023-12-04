@@ -47,6 +47,8 @@ const Tab = createBottomTabNavigator();
 const AppNavigator = () => {
   return (
       <Tab.Navigator initialRouteName='Donationer' screenOptions={({ route }) => ({
+       
+       //Dette er bare til design af ikonerne i bunden
         tabBarIcon: ({ color, size }) => {
           let iconName;
 
@@ -73,8 +75,8 @@ const AppNavigator = () => {
 
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: '#00563B',
-        tabBarInactiveTintColor: 'gray',
+        tabBarActiveTintColor: '#00563B', // Farvet ikon når man trykker på det
+        tabBarInactiveTintColor: 'gray', // Default grå når der ikke er trykket på ikon
       })}> 
         <Tab.Screen name="Anmodninger" component={RequestScreen} />
         <Tab.Screen name="Doner mad" component={UploadProduct} />

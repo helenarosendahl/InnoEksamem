@@ -27,7 +27,7 @@ const SignUpScreen = ({ navigation }) => {
   return (
     <KeyboardAvoidingView 
       style={globalStyles.container}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      behavior={Platform.OS === "ios" ? "padding" : "height"} // Tastaturet skjules lidt ved indtastning af inputfelter
     >
       <ScrollView>
         <View style={globalStyles.innerContainer}>

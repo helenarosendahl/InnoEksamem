@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ScrollView, View, Text, Image, StyleSheet } from 'react-native';
+import { ScrollView, View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { getAuth } from 'firebase/auth';
 import { getFirestore, doc, getDoc, collection, query, where, getDocs } from 'firebase/firestore';
 import { getStorage, ref, getDownloadURL } from 'firebase/storage';
@@ -22,28 +22,29 @@ const UserProfile = ({ navigation }) => {
   const firestore = getFirestore();
   const user = auth.currentUser;
 
-  useEffect(() => {
-    const fetchImageURL = async () => {
-      if (user) {
-        const storage = getStorage();
-        const imageRef = ref(storage, `profile_pictures/${user.uid}`);
-        try {
-          const url = await getDownloadURL(imageRef);
-          setPhotoURL(url);
-        } catch (error) {
-          console.error("Error fetching image URL:", error);
-        }
+ // Funktion til at indlæse brugerprofil og billede
+ const fetchUserProfile = async () => {
+  if (user) {
+    const storage = getStorage();
+    const imageRef = ref(storage, `profile_pictures/${user.uid}`);
+    try {
+      const url = await getDownloadURL(imageRef);
+      setPhotoURL(url);
+    } catch (error) {
+      console.error("Error fetching image URL:", error);
+    }
 
-        const userDocRef = doc(firestore, "users", user.uid);
-        const docSnap = await getDoc(userDocRef);
-        if (docSnap.exists()) {
-          setUserProfile(docSnap.data());
-        }
-      }
-    };
+    const userDocRef = doc(firestore, "users", user.uid);
+    const docSnap = await getDoc(userDocRef);
+    if (docSnap.exists()) {
+      setUserProfile(docSnap.data());
+    }
+  }
+};
 
-    fetchImageURL();
-  }, [user]);
+useEffect(() => {
+  fetchUserProfile();
+}, [user]);
 
   const navigateToUpdateProfile = () => {
     navigation.navigate('UpdateUserProfile'); // Bruger route name som string
@@ -68,12 +69,18 @@ const UserProfile = ({ navigation }) => {
 
   return (
     <ScrollView style={globalStyles.container}>
-         <View style={styles.headerContainer}>
+      <View style={styles.headerContainer}>
         <Text style={styles.title}>Din profil</Text>
         <PrimaryButton 
           title="Rediger profil" 
           onPress={navigateToUpdateProfile} 
         />
+        {/* Opdateringsknap */}
+        <TouchableOpacity 
+          style={globalStyles.primaryButton} 
+          onPress={fetchUserProfile}>
+          <Text style={globalStyles.buttonText}>Opdater profil</Text>
+        </TouchableOpacity>
       </View>
       <View style={styles.imageContainer}>
         {photoURL ? (
@@ -88,15 +95,15 @@ const UserProfile = ({ navigation }) => {
 
       <PrimaryButton title={showDiscountCodes ? "Skjul rabatkoder" : "Dine rabatkoder"} onPress={toggleDiscountCodes} />
 
-{showDiscountCodes && (
-  <View style={globalStyles.offersContainer}>
-    {discountCodes.map((code, index) => (
-      <TextBox key={index} text={`Produkt: ${code.productName}, Kode: ${code.code}`} />
-    ))}
-  </View>
-)}
-</ScrollView>
-);
+      {showDiscountCodes && (
+        <View style={globalStyles.offersContainer}>
+          {discountCodes.map((code, index) => (
+            <TextBox key={index} text={`Produkt: ${code.productName}, Kode: ${code.code}`} />
+          ))}
+        </View>
+      )}
+    </ScrollView>
+  );
 };
 
 const styles = StyleSheet.create({

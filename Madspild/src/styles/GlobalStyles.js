@@ -126,4 +126,10 @@ export const globalStyles = {
     height: 200, // Adjust as needed
     borderRadius: 50, // Optional: if you want a circular image
   },
+  reloadIcon: {
+    marginRight: 5,
+    marginBottom: 5,
+    marginTop:2,
+    marginLeft: 5,
+  },
 };

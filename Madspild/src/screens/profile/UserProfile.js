@@ -6,6 +6,7 @@ import { getStorage, ref, getDownloadURL } from 'firebase/storage';
 import TextBox from '../../components/Forms/TextBox'; 
 import { PrimaryButton } from '../../components/Buttons/PrimaryButton';
 import { globalStyles } from '../../styles/GlobalStyles';
+import Ionicons from 'react-native-vector-icons/Ionicons'; // Importer Ionicons
 
 
 const UserProfile = ({ navigation }) => {
@@ -79,7 +80,7 @@ useEffect(() => {
         <TouchableOpacity 
           style={globalStyles.primaryButton} 
           onPress={fetchUserProfile}>
-          <Text style={globalStyles.buttonText}>Opdater profil</Text>
+          <Ionicons name="reload-outline" size={30} color="#333" style={globalStyles.reloadIcon} />
         </TouchableOpacity>
       </View>
       <View style={styles.imageContainer}>

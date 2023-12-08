@@ -7,6 +7,8 @@ import { globalStyles } from '../../styles/GlobalStyles';
 import { PrimaryButton } from '../../components/Buttons/PrimaryButton';
 import ProductListItem from '../../components/Lists/ProductList'; 
 import TextBox from '../../components/Forms/TextBox';
+import Ionicons from 'react-native-vector-icons/Ionicons'; // Importer Ionicons
+
 
 const SalesScreen = () => {
   const [products, setProducts] = useState([]);
@@ -112,7 +114,7 @@ const SalesScreen = () => {
          <TouchableOpacity 
           style={globalStyles.primaryButton} 
           onPress={fetchProducts}>
-          <Text style={globalStyles.buttonText}>Opdater</Text>
+          <Ionicons name="reload-outline" size={30} color="#333" style={globalStyles.reloadIcon} />
         </TouchableOpacity>
       </View>
       {viewMode === 'list' ? (

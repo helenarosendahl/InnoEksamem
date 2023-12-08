@@ -72,16 +72,24 @@ useEffect(() => {
     <ScrollView style={globalStyles.container}>
       <View style={styles.headerContainer}>
         <Text style={styles.title}>Din profil</Text>
-        <PrimaryButton 
-          title="Rediger profil" 
-          onPress={navigateToUpdateProfile} 
-        />
+
+        <View style={{ flexDirection: 'row', justifyContent: 'flex-end'}}>
+        {/* Rediger profilknap */}
+        <TouchableOpacity 
+        style={globalStyles.primaryButton} 
+        onPress={navigateToUpdateProfile}>
+        <Ionicons name="create-outline" size={30} color="#333" style={globalStyles.editIcon} />
+        </TouchableOpacity>
+
+        <View style={{ marginRight: 10 }} />
+
         {/* Opdateringsknap */}
         <TouchableOpacity 
           style={globalStyles.primaryButton} 
           onPress={fetchUserProfile}>
           <Ionicons name="refresh-outline" size={30} color="#333" style={globalStyles.reloadIcon} />
         </TouchableOpacity>
+        </View>
       </View>
       <View style={styles.imageContainer}>
         {photoURL ? (

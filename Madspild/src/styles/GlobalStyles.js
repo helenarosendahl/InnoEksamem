@@ -132,4 +132,10 @@ export const globalStyles = {
     marginTop:2,
     marginLeft: 5,
   },
+  editIcon: {
+    marginRight: 5,
+    marginBottom: 5,
+    marginTop:2,
+    marginLeft: 5,
+  },
 };

@@ -9,10 +9,10 @@ import { createStackNavigator } from '@react-navigation/stack';
 // Importerer Firebase Authentication funktioner til login
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
-// Importerer skærme til login/signup og navigationen
+// Importerer skærme til login/signup og navigationen når man er logget ind
 import LoginScreen from './src/screens/authentication/LoginScreen';
 import SignUpScreen from './src/screens/authentication/SignUpScreen';
-import AppNavigator from './src/navigation/AppNavigator'; // BottomTab Navigator
+import AppNavigator from './src/navigation/AppNavigator'; 
 
 
 // Opretter en Stack Navigator

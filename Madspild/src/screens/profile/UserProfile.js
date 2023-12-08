@@ -80,7 +80,7 @@ useEffect(() => {
         <TouchableOpacity 
           style={globalStyles.primaryButton} 
           onPress={fetchUserProfile}>
-          <Ionicons name="reload-outline" size={30} color="#333" style={globalStyles.reloadIcon} />
+          <Ionicons name="refresh-outline" size={30} color="#333" style={globalStyles.reloadIcon} />
         </TouchableOpacity>
       </View>
       <View style={styles.imageContainer}>

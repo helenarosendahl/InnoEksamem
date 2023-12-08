@@ -114,7 +114,7 @@ const SalesScreen = () => {
          <TouchableOpacity 
           style={globalStyles.primaryButton} 
           onPress={fetchProducts}>
-          <Ionicons name="reload-outline" size={30} color="#333" style={globalStyles.reloadIcon} />
+          <Ionicons name="refresh-outline" size={30} color="#333" style={globalStyles.reloadIcon} />
         </TouchableOpacity>
       </View>
       {viewMode === 'list' ? (

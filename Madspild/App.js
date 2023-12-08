@@ -9,7 +9,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 // Importerer Firebase Authentication funktioner til login
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
-// Importerer skærme til login/signup og navigationen når man er logget ind
+// Importerer skærme til login/signup og navigationen hvis man er logget ind
 import LoginScreen from './src/screens/authentication/LoginScreen';
 import SignUpScreen from './src/screens/authentication/SignUpScreen';
 import AppNavigator from './src/navigation/AppNavigator'; 
@@ -41,10 +41,10 @@ export default function App() {
   return (
     <NavigationContainer>
       {currentUser ? (
-        // Gengiver AppNavigator når en bruger at logget ind 
+        // Gengiver AppNavigator når en bruger er logget ind 
         <AppNavigator />
       ) : (
-        // Stack Navigator med login og signup screen når de ikke er logget ind
+        // Stack Navigator med login og signup screen når brugeren ikke er logget ind
         <Stack.Navigator initialRouteName="Login">
           <Stack.Screen name="Login" component={LoginScreen} options={{ title: 'Login' }} />
           <Stack.Screen name="SignUpScreen" component={SignUpScreen} options={{ title: 'Opret bruger' }} />

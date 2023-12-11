@@ -1,23 +1,32 @@
+// Importerer nødvendige React Native komponenter
 import React, { useState, useEffect } from 'react';
 import { View, FlatList, Alert, Image, TouchableOpacity, Text} from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
+
+// Importerer funktioner og auth fra Firebase
 import { getFirestore, collection, getDocs, addDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth'; 
+
+// Importerer brugerdefinerede komponenter og stilarter
 import { globalStyles } from '../../styles/GlobalStyles';
 import { PrimaryButton } from '../../components/Buttons/PrimaryButton';
 import ProductListItem from '../../components/Lists/ProductList'; 
 import TextBox from '../../components/Forms/TextBox';
-import Ionicons from 'react-native-vector-icons/Ionicons'; // Importer Ionicons
 
+// Importer Ionicons
+import Ionicons from 'react-native-vector-icons/Ionicons'; 
 
+// Funktionen for SalesScreen
 const SalesScreen = () => {
+  // Deklarerer variabler for produkter og visningstilstand (list eller map)
   const [products, setProducts] = useState([]);
   const [viewMode, setViewMode] = useState('list'); 
 
+  // Henter Firestore og Authentication instanser fra Firebase
   const db = getFirestore();
   const auth = getAuth(); // Initialiserer Firebase Auth
-  const productsRef = collection(db, "products"); // henter
-  const buyRequestsRef = collection(db, "buyRequests"); // Når man trykker "anmod om produkt", skabes der en anmodning i firebase
+  const productsRef = collection(db, "products"); // Henter reference til products i Firestore
+  const buyRequestsRef = collection(db, "buyRequests"); // Henter reference til buyRequests i Firestore
 
    // Funktion til at indlæse produkter fra databasen
    const fetchProducts = async () => {
@@ -30,6 +39,7 @@ const SalesScreen = () => {
     fetchProducts();
   }, []);
 
+    // Funktion til håndtering af købsanmodning
   const handleBuyRequest = async (productId, sellerUID) => {
     if (auth.currentUser) {
       const buyerUID = auth.currentUser.uid;
@@ -38,6 +48,7 @@ const SalesScreen = () => {
         return;
       }
 
+      // Opretter en købsanmodning i Firestore
       await addDoc(buyRequestsRef, {
         productId: productId,
         buyerUID: buyerUID,
@@ -51,6 +62,7 @@ const SalesScreen = () => {
     }
   };
 
+  // Funktion til at definere, hvordan hvert produkt skal vises i FlatList
   const renderProduct = ({ item }) => (
     <View>
       <ProductListItem 
@@ -65,8 +77,6 @@ const SalesScreen = () => {
       />
     </View>
   );
-
-
 
   // Definerer hvor brugeren "starter" på mappen, da den som udgangspunkt er helt zoomet ud.
   const zoomIndPaaDk = {
@@ -90,6 +100,7 @@ const SalesScreen = () => {
           return null; // Skip rendering af denne marker
         }
 
+        // Returnerer en Marker-komponent for hvert produkt
         return (
           <Marker
             key={index}
@@ -104,7 +115,7 @@ const SalesScreen = () => {
     </MapView>
   );
 
-
+  // Returnerer selve viewet for SalesScreen
   return (
     <View style={globalStyles.container}>
       <View style={styles.buttonContainer}>
@@ -117,6 +128,7 @@ const SalesScreen = () => {
           <Ionicons name="refresh-outline" size={30} color="#333" style={globalStyles.reloadIcon} />
         </TouchableOpacity>
       </View>
+      {/* Betinget rendering af enten FlatList eller MapView baseret på viewMode */}
       {viewMode === 'list' ? (
         <FlatList
           data={products}
@@ -154,4 +166,5 @@ const styles = {
   },
 };
 
+// Eksporterer SalesScreen-komponenten som standard
 export default SalesScreen;

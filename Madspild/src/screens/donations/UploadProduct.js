@@ -1,24 +1,28 @@
+// Importerer nødvendige React Native komponenter
 import React, { useState } from 'react';
 import { View, Alert, Image } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
+
+// Importerer funktioner og auth fra Firebase
 import { getFirestore, collection, addDoc } from 'firebase/firestore';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { getAuth } from 'firebase/auth';
+
+// Importerer brugerdefinerede komponenter og stilarter
 import { CustomTextInput } from '../../components/Forms/TextInput';
 import { PrimaryButton } from '../../components/Buttons/PrimaryButton';
 import { globalStyles } from '../../styles/GlobalStyles';
 import TextBox from '../../components/Forms/TextBox';
 
-
+// Funktionen for UploadProduct
 const UploadProduct = () => {
+  // State til inputfelter og billedet URI
   const [productName, setProductName] = useState('');
   const [expirationDate, setExpirationDate] = useState(''); // skal helst ændres til en datepicker af en art, men kan ikke få dem til at virke 
   const [address, setAddress] = useState('');
   const [note, setNote] = useState('');
   const [imageUri, setImageUri] = useState('');
   const [uploadedImageUrl, setUploadedImageUrl] = useState(null);
-
-
 
   // Firestore reference
   const db = getFirestore();
@@ -28,10 +32,10 @@ const UploadProduct = () => {
    const auth = getAuth();
    const userUID = auth.currentUser ? auth.currentUser.uid : null;
 
-   // API key - virkelig dårlig sikkerhedsmæssigt at have den liggende her, så vi skal måske lige undersøge om der er smartere mådere at gemme den på
-const GEOCODING_API_KEY = 'AIzaSyCfV3r616nHsjc68xFRkAlNCQlz8XZDKRw';
+   // API key - virkelig dårlig sikkerhedsmæssigt at have den liggende her, så vi skal måske lige undersøge om der er smartere måde at gemme den på
+  const GEOCODING_API_KEY = 'AIzaSyCfV3r616nHsjc68xFRkAlNCQlz8XZDKRw';
 
-   // geocoding funktion
+  // Funktion til at oversætte en adresse til koordinater ved hjælp af Google Maps Geocoding API
   const fetchCoordinates = async (address) => {
     const response = await fetch(
       `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${GEOCODING_API_KEY}`
@@ -42,15 +46,17 @@ const GEOCODING_API_KEY = 'AIzaSyCfV3r616nHsjc68xFRkAlNCQlz8XZDKRw';
       throw new Error(`Geocoding API returned status: ${data.status}`);
     }
 
-    // forklar dette for-loop
+    // Tjekker om der er resultater i data.results og om længden af resultaterne (data.results.length) er større end 0. Hvis betingelsen er opfyldt, returneres koordinaterne fra det første resultat; ellers kastes en fejlmeddelelse.
     if (data.results && data.results.length > 0) {
+      // Kører hvis der er resultater og antallet af resultater er større end 0
       return data.results[0].geometry.location;
     } else {
+      // Kører hvis der ikke er nogen resultater eller antallet af resultater er 0
       throw new Error('Failed to fetch coordinates');
     }
   };
 
-  // Vælg billede laves med Expo imagepicker 
+  // Funktion til at vælge et billede fra brugerens enhed ved hjælp af Expo ImagePicker
   const selectImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -67,7 +73,7 @@ const GEOCODING_API_KEY = 'AIzaSyCfV3r616nHsjc68xFRkAlNCQlz8XZDKRw';
     }
 };
 
-// Håndterer at sende billede til firebase storage
+  // Funktion til at uploade billedet til Firebase Storage
   const uploadImage = async () => {
     if (!imageUri || !userUID) return null;
 
@@ -82,9 +88,7 @@ const GEOCODING_API_KEY = 'AIzaSyCfV3r616nHsjc68xFRkAlNCQlz8XZDKRw';
     return await getDownloadURL(storageRef);
   };
 
-
-
-  // Funktion der håndterer hvad der sker når "upload product" trykkes
+  // Funktion, der håndterer upload af produkt til databasen
   const handleProductUpload = async () => {
     if (!userUID) {
       Alert.alert("Error", "You must be logged in to upload a product.");
@@ -102,20 +106,20 @@ const GEOCODING_API_KEY = 'AIzaSyCfV3r616nHsjc68xFRkAlNCQlz8XZDKRw';
     };
 
     try {
-      const location = await fetchCoordinates(address); // bruger fetchCoordinates til at omskrive adresse til lat, lng
-      const imageUrl = await uploadImage(); // prøver at sende billedet til database
+      const location = await fetchCoordinates(address); // Bruger fetchCoordinates til at omskrive adresse til koordinater
+      const imageUrl = await uploadImage(); // Sender billedet til Firebase Storage og henter URL
       if (location) {
-        await addDoc(productsRef, { // hvad der sendes til firebase database
+        await addDoc(productsRef, { // Hvad der sendes til firebase database
           name: productName,
           expirationDate,
           address,
           note,
           location,
-          imageUrl, // kan evt ændres
+          imageUrl, 
           userUID
         });
         Alert.alert("Succes!", "Tak for at reducere madspild 🍏");
-        resetForm(); // kalder resetform for at genopfriske
+        resetForm(); // kalder resetform for at nulstille formularen
       } else {
         Alert.alert("Invalid address. Unable to geocode.");
       }
@@ -124,7 +128,7 @@ const GEOCODING_API_KEY = 'AIzaSyCfV3r616nHsjc68xFRkAlNCQlz8XZDKRw';
     }
   };
 
-
+  // Returnerer selve viewet for UploadProduct
   return (
     <View style={globalStyles.container}>
       <TextBox text="Doner dine overskydende madvarer - Du hjælper med at reducere madspild, gør en god gerning, og optjener point du kan bruges hos vores sponsorer! 🍏🍇🥝 " />
@@ -155,4 +159,5 @@ const GEOCODING_API_KEY = 'AIzaSyCfV3r616nHsjc68xFRkAlNCQlz8XZDKRw';
   );
 };
 
+// Eksporterer UploadProduct-komponenten som standard
 export default UploadProduct;

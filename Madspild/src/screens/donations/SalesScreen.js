@@ -12,7 +12,6 @@ import { getAuth } from 'firebase/auth';
 import { globalStyles } from '../../styles/GlobalStyles';
 import { PrimaryButton } from '../../components/Buttons/PrimaryButton';
 import ProductListItem from '../../components/Lists/ProductList'; 
-import TextBox from '../../components/Forms/TextBox';
 
 // Importer Ionicons
 import Ionicons from 'react-native-vector-icons/Ionicons'; 
@@ -36,6 +35,16 @@ const SalesScreen = () => {
     setProducts(productList);
   };
 
+  // Funktion til at display en besked efter listen er blevet opdateret
+  const opdaterListe = async () => {
+    try {
+        await fetchProducts(); // kalder fetchProducts
+        Alert.alert("Opdateret,", "Liste af donationer blev succesfuld opdateret");
+    } catch (error) {
+        Alert.alert("Fejl", "Liste kunne ikke opdateret: " + error.message);
+    }
+};
+
   useEffect(() => {
     fetchProducts();
   }, []);
@@ -45,7 +54,7 @@ const SalesScreen = () => {
     if (auth.currentUser) {
       const buyerUID = auth.currentUser.uid;
       if (buyerUID === sellerUID) {
-        Alert.alert("Error", "You cannot buy your own product.");
+        Alert.alert("Fejl", "Du kan ikke hente dine egne produkter.");
         return;
       }
 
@@ -57,9 +66,9 @@ const SalesScreen = () => {
         status: 'pending'
       });
 
-      Alert.alert("Request Sent", "Your request to buy this product has been sent.");
+      Alert.alert("Anmodning sendt", "Du anmoder om at afhente denne donation.");
     } else {
-      Alert.alert("Error", "You must be logged in to send a buy request.");
+      Alert.alert("Fejl", "Du skal være logget ind."); // Errorhandling, bør aldrig kunne ske
     }
   };
 
@@ -127,7 +136,7 @@ const SalesScreen = () => {
          {/* Opdateringsknap */}
          <TouchableOpacity 
           style={globalStyles.primaryButton} 
-          onPress={fetchProducts}>
+          onPress={opdaterListe}>
           <Ionicons name="refresh-outline" size={30} color="#333" style={globalStyles.reloadIcon} />
         </TouchableOpacity>
       </View>

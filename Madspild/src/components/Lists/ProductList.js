@@ -10,8 +10,8 @@ const ProductListItem = ({ item, onPress }) => (
       <Image source={{ uri: item.imageUrl }} style={styles.image} />
     )}
     <Text>Udløbsdato: {item.expirationDate}</Text>
+    {item.pickupDate && <Text>Afhentningsdato: {item.pickupDate}</Text>}  
     <Text>Kan hentes på adressen: {item.address}</Text>
-    {item.note && <Text>Note: {item.note}</Text>}
     <PrimaryButton title="Anmod om produkt" onPress={onPress} />
   </View>
 );

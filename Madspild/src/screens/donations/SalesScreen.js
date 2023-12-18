@@ -74,17 +74,15 @@ const SalesScreen = () => {
 
   
 
-  // Funktion til at definere, hvordan hvert produkt skal vises i FlatList
   const renderProduct = ({ item }) => (
     <View>
       <ProductListItem 
         item={item}
         onPress={() => handleBuyRequest(item.id, item.userUID)}
-        // Tilføj til produktlisten
         name={item.name}
         expirationDate={item.expirationDate}
         address={item.address}
-        note={item.note}
+        pickupDate={item.pickupDate}  
         imageUrl={item.imageUrl}
       />
     </View>

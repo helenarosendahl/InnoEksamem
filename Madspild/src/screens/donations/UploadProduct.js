@@ -1,7 +1,9 @@
 // Importerer nødvendige React Native komponenter
 import React, { useState } from 'react';
-import { View, Alert, Image } from 'react-native';
+import { ScrollView, View, Alert, Image, TouchableOpacity, TextInput } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
+import { Calendar } from 'react-native-calendars';
+
 
 // Importerer funktioner og auth fra Firebase
 import { getFirestore, collection, addDoc } from 'firebase/firestore';
@@ -14,19 +16,32 @@ import { PrimaryButton } from '../../components/Buttons/PrimaryButton';
 import { globalStyles } from '../../styles/GlobalStyles';
 import TextBox from '../../components/Forms/TextBox';
 
+
 // Funktionen for UploadProduct
 const UploadProduct = () => {
   // State til inputfelter og billedet URI
   const [productName, setProductName] = useState('');
-  const [expirationDate, setExpirationDate] = useState(''); // skal helst ændres til en datepicker af en art, men kan ikke få dem til at virke 
+  const [isCalendarVisible, setIsCalendarVisible] = useState(false);
+  const [calendarType, setCalendarType] = useState(null); // New state to track which calendar is active
+  const [expirationDate, setExpirationDate] = useState('');
+  const [pickupDate, setPickupDate] = useState('');
   const [address, setAddress] = useState('');
-  const [note, setNote] = useState('');
   const [imageUri, setImageUri] = useState('');
   const [uploadedImageUrl, setUploadedImageUrl] = useState(null);
 
   // Firestore reference
   const db = getFirestore();
   const productsRef = collection(db, "products");
+
+  const handleDayPress = (day) => {
+    if (calendarType === 'expiration') {
+        setExpirationDate(day.dateString);
+    } else if (calendarType === 'pickup') {
+        setPickupDate(day.dateString);
+    }
+    setIsCalendarVisible(false);
+    setCalendarType(null);
+};
 
    // Firebase Auth for at hente userUID
    const auth = getAuth();
@@ -123,12 +138,17 @@ const takePicture = async () => {
       return;
     }
 
+    if (!productName || !expirationDate || !address || !imageUri) {
+      Alert.alert("Fejl", "Udfyld alle obligatoriske felter.");
+      return;
+  }
+
     // Efter produktet er blevet uploadet, genopfriskes siden og værdierne nulstilles 
     const resetForm = () => {
       setProductName('');
       setExpirationDate(new Date()); 
       setAddress('');
-      setNote('');
+      setPickupDate('');
       setImageUri('');
       setUploadedImageUrl(null);
     };
@@ -141,7 +161,7 @@ const takePicture = async () => {
           name: productName,
           expirationDate,
           address,
-          note,
+          pickupDate,
           location,
           imageUrl, 
           userUID
@@ -158,6 +178,7 @@ const takePicture = async () => {
 
   // Returnerer selve viewet for UploadProduct
   return (
+    <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}>
     <View style={globalStyles.container}>
       <TextBox text="Doner dine overskydende madvarer - Du hjælper med at reducere madspild, gør en god gerning, og optjener point du kan bruges hos vores sponsorer! 🍏🍇🥝 " />
       <CustomTextInput
@@ -165,16 +186,35 @@ const takePicture = async () => {
         value={productName}
         onChangeText={setProductName}
       />
-      <CustomTextInput
-        placeholder="Evt. kommentarer, og afhentningsdato?"
-        value={note}
-        onChangeText={setNote}
-      />
-      <CustomTextInput
-        placeholder="Udløbsdato"
-        value={expirationDate}
-        onChangeText={setExpirationDate}
-      />
+        {/* Expiration Date Input */}
+        <TouchableOpacity onPress={() => {setIsCalendarVisible(true); setCalendarType('expiration');}}>
+                    <CustomTextInput
+                        placeholder="Udløbsdato"
+                        value={expirationDate}
+                        editable={false}
+                        // Add your text input styles here
+                    />
+                </TouchableOpacity>
+
+                {/* Pickup Date Input */}
+                <TouchableOpacity onPress={() => {setIsCalendarVisible(true); setCalendarType('pickup');}}>
+                    <CustomTextInput
+                        placeholder="Afhentningsdato (Valgfrit)"
+                        value={pickupDate}
+                        editable={false}
+                        // Add your text input styles here
+                    />
+                </TouchableOpacity>
+
+                {isCalendarVisible && (
+                    <Calendar
+                        onDayPress={handleDayPress}
+                        markedDates={{
+                            [calendarType === 'expiration' ? expirationDate : pickupDate]: {selected: true, selectedColor: 'blue'}
+                        }}
+                    />
+                )}
+
       <CustomTextInput
         placeholder="Adresse"
         value={address}
@@ -184,6 +224,8 @@ const takePicture = async () => {
       {imageUri && <Image source={{ uri: imageUri }} style={{ width: 100, height: 100 }} />}
       <PrimaryButton title="Send din donation!" onPress={handleProductUpload} />
     </View>
+    </ScrollView>
+
   );
 };
 

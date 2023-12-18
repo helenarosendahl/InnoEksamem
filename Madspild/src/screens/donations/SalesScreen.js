@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { View, FlatList, Alert, Image, TouchableOpacity, Text} from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 
+
 // Importerer funktioner og auth fra Firebase
 import { getFirestore, collection, getDocs, addDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth'; 
@@ -61,6 +62,8 @@ const SalesScreen = () => {
       Alert.alert("Error", "You must be logged in to send a buy request.");
     }
   };
+
+  
 
   // Funktion til at definere, hvordan hvert produkt skal vises i FlatList
   const renderProduct = ({ item }) => (

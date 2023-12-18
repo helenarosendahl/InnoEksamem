@@ -73,7 +73,34 @@ const UploadProduct = () => {
     }
 };
 
+// Funktion til at tage et billede inde i appen, bygger på expo-image-picker
+const takePicture = async () => {
+  // anmoder om kamera adgang
+  const { status } = await ImagePicker.requestCameraPermissionsAsync();
+  if (status !== 'granted') {
+      Alert.alert('Adgang afvist');
+      return;
+  }
+
+  // Starter launchCameraAsync
+  let result = await ImagePicker.launchCameraAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+  });
+
+  // Håndtering af billedet
+  if (!result.cancelled) {
+      const image = result.assets ? result.assets[0] : null;
+      if (image) {
+          setImageUri(image.uri);
+      }
+  }
+};
+
+
   // Funktion til at uploade billedet til Firebase Storage
+  
   const uploadImage = async () => {
     if (!imageUri || !userUID) return null;
 
@@ -87,6 +114,7 @@ const UploadProduct = () => {
     await uploadBytes(storageRef, blob);
     return await getDownloadURL(storageRef);
   };
+
 
   // Funktion, der håndterer upload af produkt til databasen
   const handleProductUpload = async () => {
@@ -152,7 +180,7 @@ const UploadProduct = () => {
         value={address}
         onChangeText={setAddress}
       />
-      <PrimaryButton title="Upload billede" onPress={selectImage} />
+<PrimaryButton title="Tag et billede af din donation" onPress={takePicture} />
       {imageUri && <Image source={{ uri: imageUri }} style={{ width: 100, height: 100 }} />}
       <PrimaryButton title="Send din donation!" onPress={handleProductUpload} />
     </View>

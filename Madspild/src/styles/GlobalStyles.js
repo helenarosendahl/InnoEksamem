@@ -2,7 +2,7 @@
 
 // tilføj flere farver herfra: https://reactnative.dev/docs/colors
 export const colors = {
-  lightGreen: '#90ee90', // Light green
+  lightGreen: '#4d814a', // Light green
   darkGreen: '#00563B', // Dark green 
   white: '#FFFFFF', // White
   grey: '#808080', // Grey 
@@ -17,17 +17,37 @@ export const globalStyles = {
     padding: 20,
     backgroundColor: colors.white,
   },
+  settingscontainer: {
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+  },
+  set_buttonText: {
+    color: 'black', // Tekstfarve for knappen
+    textAlign: 'center',
+    fontSize: 18,
+  },
+  buttonContainer: {
+    flex: 1,
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    marginTop: 30, // Tilføjer topmargin
+    marginLeft: 20, // Tilføjer venstremargin
+  },
+  buttonContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   text: {
     color: colors.black,
-    fontSize: 16,
+    fontSize: 17,
     textAlign: 'center',
   },
   button: {
-    padding: 10,
+    padding: 15,
     borderRadius: 5,
     marginBottom: 15, //mellemrum mellem knapperne
-    
   },
+  
   card: {
     borderRadius: 10,
     shadowColor: colors.black,
@@ -41,7 +61,7 @@ export const globalStyles = {
   input: {
     borderWidth: 1,
     borderColor: colors.grey,
-    padding: 10,
+    padding: 15,
     borderRadius: 5,
     marginBottom: 15,
   },
@@ -90,20 +110,20 @@ export const globalStyles = {
   pointsContainer: { // Bruges på xxxOffers.js
     position: 'absolute',
     top: 0,
-    right: 10,
+    left: '50%',
     backgroundColor: 'pink',
     padding: 10,
     borderRadius: 10,
-    borderColor: 'black',
+    borderColor: 'white',
     borderWidth: 2,
     zIndex: 1, 
   },
   offersContainer: { // Bruges på xxxOffers.js
     flex: 0.3, 
-    backgroundColor: 'lightgreen',
+    backgroundColor: 'white',
     borderRadius: 10,
     borderWidth: 2,
-    borderColor: 'black',
+    borderColor: 'white',
     height: 300,
   },
   offersContentContainer: { // Bruges på xxxOffers.js

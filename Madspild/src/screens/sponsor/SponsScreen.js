@@ -28,7 +28,7 @@ const SponsScreen = ({ navigation }) => {
       return (
         <View style={globalStyles.container}>
           <ScrollView>
-            <TextBox text="Vores sponsorer, som gør det muligt at drive denne applikation. Se hvilke produkter du kan købe, med dine optjente point!" />
+            <TextBox text="Vores sponsorer, som gør det muligt at drive For Godt Til Skrot. Se hvilke produkter du kan få hos dem med dine optjente point!" />
         
             {sponsors.map((sponsor) => (
               <SponsorItem 

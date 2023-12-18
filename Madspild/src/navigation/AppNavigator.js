@@ -6,7 +6,8 @@ import UploadProduct from '../screens/donations/UploadProduct';
 import UserProfile from '../screens/profile/UserProfile'; 
 import SponsScreen from '../screens/sponsor/SponsScreen'; 
 import { createStackNavigator } from '@react-navigation/stack';
-import UpdateUserProfile from '../screens/profile/UpdateUserProfile'; 
+import UpdateUserProfile from '../screens/profile/UpdateUserProfile';
+import UserMainProfile from '../screens/profile/UserMainProfile'; 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 // Tilbud fra sponsorer
@@ -35,6 +36,7 @@ function SponsStackScreen() {
 function ProfileStackScreen() {
   return (
     <SponsStack.Navigator>
+      <SponsStack.Screen name="UserMainProfile" component={UserMainProfile} options={{ headerShown: false }}/>
         <SponsStack.Screen name="UserProfile" component={UserProfile} options={{ headerShown: false }}/>
        <SponsStack.Screen name="UpdateUserProfile" component={UpdateUserProfile} options={{ headerShown: false }}/>
     </SponsStack.Navigator>

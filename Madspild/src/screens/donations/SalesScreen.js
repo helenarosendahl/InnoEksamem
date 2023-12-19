@@ -131,8 +131,8 @@ const SalesScreen = () => {
   return (
     <View style={globalStyles.container}>
       <View style={styles.buttonContainer}>
-        <PrimaryButton title="Alle donationer" onPress={() => setViewMode('list')} />
-        <PrimaryButton title="Google Maps" onPress={() => setViewMode('map')} />
+        <PrimaryButton title="Liste" onPress={() => setViewMode('list')} />
+        <PrimaryButton title="Kort" onPress={() => setViewMode('map')} />
          {/* Opdateringsknap */}
          <TouchableOpacity 
           style={globalStyles.primaryButton} 

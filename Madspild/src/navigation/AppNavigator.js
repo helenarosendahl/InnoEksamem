@@ -65,7 +65,7 @@ const AppNavigator = () => {
             case 'Donationer':
               iconName = 'ios-basket-outline';
               break;
-            case 'Profil':
+            case 'Mig':
               iconName = 'ios-person-outline';
               break;
             case 'Sponsorer':
@@ -83,7 +83,7 @@ const AppNavigator = () => {
         <Tab.Screen name="Anmodninger" component={RequestScreen} />
         <Tab.Screen name="Doner mad" component={UploadProduct} />
         <Tab.Screen name="Donationer" component={SalesScreen} />
-        <Tab.Screen name="Profil" component={ProfileStackScreen} />
+        <Tab.Screen name="Mig" component={ProfileStackScreen} />
         <Tab.Screen name="Sponsorer" component={SponsStackScreen}/>
       </Tab.Navigator>
   );

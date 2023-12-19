@@ -89,7 +89,7 @@ const UpdateUserProfile = () => {
       const downloadURL = await getDownloadURL(storageRef);
       console.log('Download URL:', downloadURL);
       setUserProfile(prevState => ({ ...prevState, photoURL: downloadURL }));
-      Alert.alert('Succes!', 'Dit billede er uploadet. Du ser fantastisk');
+      Alert.alert('Succes!', 'Dit billede er uploadet. Du ser fantastisk ud!');
 
     } catch (error) {
       console.error('Error uploading image:', error);
@@ -123,7 +123,7 @@ const UpdateUserProfile = () => {
           {userProfile.photoURL && (
             <Image source={{ uri: userProfile.photoURL }} style={globalStyles.image} />
           )}
-          <PrimaryButton title="Save Profile" onPress={handleSave} />
+          <PrimaryButton title="Gem mine ændringer" onPress={handleSave} />
         </View>
       </ScrollView>
     </KeyboardAvoidingView>

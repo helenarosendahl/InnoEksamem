@@ -17,6 +17,13 @@ export const globalStyles = {
     padding: 20,
     backgroundColor: colors.white,
   },
+  title: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    color: '#00563B',
+    textAlign: 'center',
+  },
+  
   settingscontainer: {
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
@@ -46,6 +53,9 @@ export const globalStyles = {
     padding: 15,
     borderRadius: 5,
     marginBottom: 15, //mellemrum mellem knapperne
+    paddingVertical: 15, // Øger den vertikale padding
+  paddingHorizontal: 60,
+    
   },
   
   card: {
@@ -72,6 +82,7 @@ export const globalStyles = {
     borderRadius: 10,
     borderWidth: 2,
     borderColor: "#006400",
+    
   },
   sponsorLogo: {
     width: 280,
@@ -137,6 +148,24 @@ export const globalStyles = {
     borderColor: '#006400',
     marginVertical: 10,
   },
+
+  ProfileInfoContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#FFFFFF',
+    padding: 15,
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: 'white',
+    marginVertical: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+
   linkText: { // Hvis vi laver et link
     color: 'blue',
     textDecorationLine: 'underline',

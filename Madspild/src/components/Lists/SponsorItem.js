@@ -9,7 +9,7 @@ const SponsorItem = ({ sponsor, onPress }) => (
       <Image source={sponsor.logoUrl} style={globalStyles.sponsorLogo} />
       <Text style={globalStyles.sponsorHeadText}>{sponsor.name}</Text>
       <Text style={globalStyles.sponsorText}>{sponsor.description}</Text>
-      <PrimaryButton title={`Se tilbuddene fra ${sponsor.name}`} onPress={onPress} />
+      <PrimaryButton title={`Se kuponer fra ${sponsor.name}`} onPress={onPress} />
     </View>
   );
 

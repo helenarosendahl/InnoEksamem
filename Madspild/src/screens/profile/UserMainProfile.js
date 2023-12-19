@@ -38,7 +38,7 @@ const UserMainProfile = ({ navigation }) => {
   return (
     <View style={[globalStyles.container, globalStyles.settingscontainer]}>
   
-      <Text style={styles.title}>SE, HVOR STOR EN FORSKEL DU GØR</Text>
+      <Text style={globalStyles.title}>SE, HVOR STOR EN FORSKEL DU GØR</Text>
 
       <View style={styles.statsContainer}>
         <View style={styles.statBox}>
@@ -102,12 +102,7 @@ const styles = StyleSheet.create({
   button: {
     marginBottom: 30,
   },
-  title: {
-    fontSize: 15,
-    fontWeight: 'bold',
-    color: '#00563B',
-    textAlign: 'center',
-  },
+ 
  
   statsContainer: {
     flexDirection: 'row',

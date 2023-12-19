@@ -103,7 +103,7 @@ const JoeOffers = () => {
 
 
       <TextBox
-  text="Velkommen til vores tilbud til brugere af 'For Godt Til Skrot'! Her har vi samlet et nøje udvalg af vores produkter, som kan bestilles og afhentes i en af vores mange caféer. For at indløse dine points hos os, skal du bruge vores App. Hvis du ikke allerede har den, kan den downloades "
+  text="Velkommen til vores kuponer til brugere af 'For Godt Til Skrot'! Her har vi samlet et nøje udvalg af vores produkter, som kan bestilles og afhentes i en af vores mange caféer. For at indløse dine points hos os, skal du bruge vores App. Hvis du ikke allerede har den, kan den downloades "
   linkText="her."
   linkUrl='https://apps.apple.com/dk/app/joe-the-juice/id1347116229?_branch_match_id=1258168894973534393&utm_source=Website&utm_campaign=Loyalty&utm_medium=URL&_branch_referrer=H4sIAAAAAAAAA8soKSkottLXz8pPTcxLKclIzSrNTE7VSywo0MvJzMvWN3I3KirNDispMwYAZNL9rioAAAA%3D'
 />      

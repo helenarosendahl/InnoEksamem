@@ -222,7 +222,7 @@ const takePicture = async () => {
       />
 <PrimaryButton title="Tag et billede af din donation" onPress={takePicture} />
       {imageUri && <Image source={{ uri: imageUri }} style={{ width: 100, height: 100 }} />}
-      <PrimaryButton title="Send din donation!" onPress={handleProductUpload} />
+      <PrimaryButton title="Opret din donation!" onPress={handleProductUpload} />
     </View>
     </ScrollView>
 

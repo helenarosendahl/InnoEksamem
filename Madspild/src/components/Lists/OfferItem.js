@@ -10,7 +10,7 @@ const OfferItem = ({ offer, onRedeem }) => (
       <Text style={[globalStyles.text, globalStyles.offerName]}>{offer.name}</Text>
       <Text style={globalStyles.text}>{offer.description}</Text>
       <Text style={globalStyles.text}>Points: {offer.points}</Text>
-      <PrimaryButton title="Brug tilbud!" onPress={() => onRedeem(offer)} />
+      <PrimaryButton title="Brug dine point" onPress={() => onRedeem(offer)} />
     </View>
   );
 

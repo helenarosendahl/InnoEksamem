@@ -3,7 +3,7 @@ import { ScrollView, View, Text, Image, StyleSheet, TouchableOpacity } from 'rea
 import { getAuth } from 'firebase/auth';
 import { getFirestore, doc, getDoc, collection, query, where, getDocs } from 'firebase/firestore';
 import { getStorage, ref, getDownloadURL } from 'firebase/storage';
-import TextBox from '../../components/Forms/TextBox'; 
+import TextBoxProfile from '../../components/Forms/TextBox'; 
 import { PrimaryButton } from '../../components/Buttons/PrimaryButton';
 import { globalStyles } from '../../styles/GlobalStyles';
 import Ionicons from 'react-native-vector-icons/Ionicons'; // Importer Ionicons
@@ -71,7 +71,7 @@ useEffect(() => {
   return (
     <ScrollView style={globalStyles.container}>
       <View style={styles.headerContainer}>
-        <Text style={styles.title}>Din profil</Text>
+        <Text style={globalStyles.title}>Mine oplysninger</Text>
 
         <View style={{ flexDirection: 'row', justifyContent: 'flex-end'}}>
         {/* Rediger profilknap */}
@@ -98,11 +98,24 @@ useEffect(() => {
           <Text>Intet profilbillede. Upload et!</Text>
         )}
       </View>
-      <TextBox text={`Adresse: ${userProfile.address || 'Not available'}`} />
-      <TextBox text={`Om mig: ${userProfile.biography || 'Not available'}`} />
-      <TextBox text={`Navn: ${userProfile.name || 'Not available'}`} />
+     
+      <View style={globalStyles.ProfileInfoContainer}>
+      <Text>Navn</Text>
+      <Text>{userProfile.name || 'Not available'}</Text>
+    </View>
+    
+      <View style={globalStyles.ProfileInfoContainer}>
+      <Text>Adresse</Text>
+      <Text>{userProfile.address || 'Not available'}</Text>
+    </View>
 
-      <PrimaryButton title={showDiscountCodes ? "Skjul rabatkoder" : "Dine rabatkoder"} onPress={toggleDiscountCodes} />
+    <View style={globalStyles.ProfileInfoContainer}>
+      <Text>Om mig</Text>
+      <Text>{userProfile.biography || 'Not available'}</Text>
+    </View>
+
+
+      <PrimaryButton title={showDiscountCodes ? "Skjul rabatkoder" : "Mine kuponer"} onPress={toggleDiscountCodes} />
 
       {showDiscountCodes && (
         <View style={globalStyles.offersContainer}>
@@ -138,6 +151,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 5,
   },
+
 });
 
 

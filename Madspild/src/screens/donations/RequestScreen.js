@@ -65,7 +65,7 @@ useEffect(() => {
   fetchRequests();
 }, [auth, db]); // Added dependencies here
 
-  // Funktion til håndtering af svar på anmodninger (acceptere eller afvise)
+// Funktion til håndtering af svar på anmodninger (acceptere eller afvise)
 const handleRequestResponse = async (requestId, isAccepted) => {
   const batch = writeBatch(db);
 
@@ -73,14 +73,31 @@ const handleRequestResponse = async (requestId, isAccepted) => {
   const requestDocRef = doc(db, "buyRequests", requestId);
 
   if (isAccepted) {
-    // Hvis anmodningen accepteres, opdateres sælgerens point
     const requestData = requests.find(req => req.id === requestId);
     if (requestData) {
       const userDocRef = doc(db, "users", requestData.sellerUID);
+      const productDocRef = doc(db, "products", requestData.productId);
+
+
+       // Hent produkt detaljer
+  const productSnap = await getDoc(productDocRef);
+  if (productSnap.exists()) {
+    // Hent information fra produkt og flyt til buyRequests
+    batch.update(requestDocRef, { 
+      status: 'accepted',
+      productName: productSnap.data().name,
+      pickupDate: productSnap.data().pickupDate,
+      address: productSnap.data().address
+    });
+
+      // Opdater sælgerens point
       batch.update(userDocRef, { points: increment(50) });
 
-      // Opdaterer status på anmodningen til 'accepted'
+      // Opdater status på anmodningen til 'accepted'
       batch.update(requestDocRef, { status: 'accepted' });
+
+      // Slet det tilhørende produkt
+      batch.delete(productDocRef);
     }
   } else {
     // Hvis anmodningen afvises, opdater status til 'declined'
@@ -89,12 +106,10 @@ const handleRequestResponse = async (requestId, isAccepted) => {
 
   await batch.commit();
 
-  // Viser en besked baseret på om anmodningen blev accepteret eller afvist
   Alert.alert(isAccepted ? "Accepted" : "Declined", `Request has been ${isAccepted ? 'accepted' : 'declined'}.`);
 
-  // Opdater listen for at reflektere ændringerne
   fetchRequests(); // Re-fetch the requests to update the list
-};
+}};
   // Funktion til at definere, hvordan hver anmodning skal vises i FlatList
   const renderItem = ({ item }) => (
     <RequestItem 

@@ -1,11 +1,11 @@
 // Importerer nødvendige React Native komponenter
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, } from 'react';
 import { View, FlatList, Alert, Image, TouchableOpacity, TextInput} from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 
 
 // Importerer funktioner og auth fra Firebase
-import { getFirestore, collection, getDocs, addDoc } from 'firebase/firestore';
+import { getFirestore, collection, getDocs, addDoc, getDoc, doc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth'; 
 
 // Importerer komponenter og stilarter
@@ -57,28 +57,45 @@ const SalesScreen = () => {
 
 
 
-    // Funktion til håndtering af købsanmodning
-  const handleBuyRequest = async (productId, sellerUID) => {
-    if (auth.currentUser) {
-      const buyerUID = auth.currentUser.uid;
-      if (buyerUID === sellerUID) {
-        Alert.alert("Fejl", "Du kan ikke hente dine egne produkter.");
+   // Funktion til håndtering af købsanmodning
+const handleBuyRequest = async (productId, sellerUID) => {
+  if (auth.currentUser) {
+    const buyerUID = auth.currentUser.uid;
+    if (buyerUID === sellerUID) {
+      Alert.alert("Fejl", "Du kan ikke hente dine egne produkter.");
+      return;
+    }
+
+    try {
+      // Fetch the product details
+      const productDocRef = doc(db, "products", productId);
+      const productSnap = await getDoc(productDocRef);
+
+      if (!productSnap.exists()) {
+        Alert.alert("Fejl", "Produktet findes ikke.");
         return;
       }
+
+      const productData = productSnap.data();
 
       // Opretter en købsanmodning i Firestore
       await addDoc(buyRequestsRef, {
         productId: productId,
         buyerUID: buyerUID,
         sellerUID: sellerUID,
-        status: 'pending'
+        status: 'pending',
+        address: productData.address,
+        pickupDate: productData.pickupDate,
+        productName: productData.name 
       });
-
       Alert.alert("Anmodning sendt", "Du anmoder om at afhente denne donation.");
-    } else {
-      Alert.alert("Fejl", "Du skal være logget ind."); // Errorhandling, bør aldrig kunne ske
+    } catch (error) {
+      Alert.alert("Fejl", "Noget gik galt: " + error.message);
     }
-  };
+  } else {
+    Alert.alert("Fejl", "Du skal være logget ind."); // Error handling
+  }
+};
 
   
 

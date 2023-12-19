@@ -13,8 +13,7 @@ import PickUpDate from '../screens/donations/PickUpDate'
 
 // Tilbud fra sponsorer
 import JoeOffers from '../screens/sponsor/offerings/JoeOffers'
-import AldiOffers from '../screens/sponsor/offerings/AldiOffers'
-import CofocoOffers from '../screens/sponsor/offerings/CofocoOffers'
+import ZokuOffers from '../screens/sponsor/offerings/ZokuOffers'
 
 
 const SponsStack = createStackNavigator();
@@ -26,8 +25,7 @@ function SponsStackScreen() {
     <SponsStack.Navigator>
       <SponsStack.Screen name="SponsScreen" component={SponsScreen} options={{ headerShown: false }}/> 
       <SponsStack.Screen name="JoeOffers" component={JoeOffers} options={{ headerTitle: 'Joe & The Juice' }}  />
-      <SponsStack.Screen name="AldiOffers" component={AldiOffers} options={{ headerTitle: 'Aldi Danmark' }} />
-      <SponsStack.Screen name="CofocoOffers" component={CofocoOffers} options={{ headerTitle: 'Cofoco' }} />
+      <SponsStack.Screen name="ZokuOffers" component={ZokuOffers} options={{ headerTitle: 'ZOKU' }}  />
       <SponsStack.Screen name="UpdateUserProfile" component={UpdateUserProfile}/>
 
     </SponsStack.Navigator>

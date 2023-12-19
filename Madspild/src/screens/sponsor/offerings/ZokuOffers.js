@@ -6,7 +6,7 @@ import OfferItem from '../../../components/Lists/OfferItem';
 import { globalStyles } from '../../../styles/GlobalStyles';
 import TextBox from '../../../components/Forms/TextBox'; 
 
-const JoeOffers = () => {
+const ZokuOffers = () => {
   const [userPoints, setUserPoints] = useState(0);
   const db = getFirestore();
   const auth = getAuth();
@@ -14,25 +14,19 @@ const JoeOffers = () => {
   const offerings = [
     {
       id: 1,
-      image: require('../../../assets/offers/joe-kaffid.jpg'), 
-      name: 'Double Espresso',
+      image: require('../../../assets/offers/Cappucino.jpg'), 
+      name: 'Cappucino',
       description: 'Fra en solcelledrevet, fuldt økologisk kaffefarm.',
       points: 50, // hvor mange point produktet koster
     },
     {
       id: 2,
-      image: require('../../../assets/offers/greenTea.jpg'), 
-      name: 'Grøn Mandarin Te',
-      description: 'Økologisk Te',
+      image: require('../../../assets/offers/Americano.jpg'), 
+      name: 'Americano',
+      description: 'Fra en solcelledrevet, fuldt økologisk kaffefarm.',
       points: 50, // // hvor mange point produktet koster
     },
-    {
-      id: 3,
-      image: require('../../../assets/offers/gingerShot.jpg'), 
-      name: 'Ingefær shot',
-      description: 'Med økologisk æble og ingefær',
-      points: 50, // hvor mange point produktet koster
-    },
+   
   ];
 
   const saveDiscountCode = async (code, productName) => {
@@ -103,9 +97,9 @@ const JoeOffers = () => {
 
 
       <TextBox
-  text="Velkommen til vores kuponer til brugere af 'For Godt Til Skrot'! Her har vi samlet et nøje udvalg af vores produkter, som kan bestilles og afhentes i en af vores mange caféer. For at indløse dine points hos os, skal du bruge vores App. Hvis du ikke allerede har den, kan den downloades "
+  text="Velkommen til vores kuponer til brugere af 'For Godt Til Skrot'! Her har vi samlet et nøje udvalg af vores produkter, som kan afhentes i vores restaurant. For at se vores initiativer til bæredygtighed, læs med "
   linkText="her."
-  linkUrl='https://apps.apple.com/dk/app/joe-the-juice/id1347116229?_branch_match_id=1258168894973534393&utm_source=Website&utm_campaign=Loyalty&utm_medium=URL&_branch_referrer=H4sIAAAAAAAAA8soKSkottLXz8pPTcxLKclIzSrNTE7VSywo0MvJzMvWN3I3KirNDispMwYAZNL9rioAAAA%3D'
+  linkUrl='https://livezoku.com/sustainability/'
 />      
 
       <ScrollView 
@@ -127,4 +121,4 @@ const JoeOffers = () => {
 };
 
 
-export default JoeOffers;
+export default ZokuOffers;

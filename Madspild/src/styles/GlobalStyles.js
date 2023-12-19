@@ -100,16 +100,17 @@ export const globalStyles = {
     textAlign: 'left',
     color: colors.black,
   },
+ 
   offerBox: { 
     width: 250, 
     height: 300,
     marginHorizontal: 10,
     padding: 10,
-    backgroundColor: 'pink', 
+    backgroundColor: colors.mintGreen, 
     borderRadius: 10, 
     alignItems: 'center', 
-
   },
+
   offerImage: {
     width: '100%',
     height: 150,
@@ -123,10 +124,10 @@ export const globalStyles = {
     position: 'absolute',
     top: 0,
     left: '50%',
-    backgroundColor: 'pink',
+    backgroundColor: colors.mintGreen,
     padding: 10,
     borderRadius: 10,
-    borderColor: 'white',
+    borderColor: colors.darkGreen,
     borderWidth: 2,
     zIndex: 1, 
   },

@@ -186,23 +186,21 @@ const takePicture = async () => {
         value={productName}
         onChangeText={setProductName}
       />
-        {/* Expiration Date Input */}
+        {/* Udløbsdato */}
         <TouchableOpacity onPress={() => {setIsCalendarVisible(true); setCalendarType('expiration');}}>
                     <CustomTextInput
                         placeholder="Udløbsdato"
                         value={expirationDate}
                         editable={false}
-                        // Add your text input styles here
                     />
                 </TouchableOpacity>
 
-                {/* Pickup Date Input */}
+                {/* Afhentningsdato */}
                 <TouchableOpacity onPress={() => {setIsCalendarVisible(true); setCalendarType('pickup');}}>
                     <CustomTextInput
                         placeholder="Afhentningsdato (Valgfrit)"
                         value={pickupDate}
                         editable={false}
-                        // Add your text input styles here
                     />
                 </TouchableOpacity>
 

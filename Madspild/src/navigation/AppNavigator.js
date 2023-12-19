@@ -38,7 +38,7 @@ function ProfileStackScreen() {
     <SponsStack.Navigator>
       <SponsStack.Screen name="UserMainProfile" component={UserMainProfile} options={{ headerShown: false }}/>
         <SponsStack.Screen name="UserProfile" component={UserProfile} options={{ headerShown: false }}/>
-       <SponsStack.Screen name="UpdateUserProfile" component={UpdateUserProfile} options={{ headerShown: false }}/>
+       <SponsStack.Screen name="UpdateUserProfile" component={UpdateUserProfile} options={{ headerTitle: 'Rediger din profil'  }}/>
     </SponsStack.Navigator>
   );
 }

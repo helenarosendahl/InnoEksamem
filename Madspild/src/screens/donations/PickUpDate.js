@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, FlatList, Text } from 'react-native';
+import { View, FlatList, } from 'react-native';
 import { getFirestore, collection, query, where, getDocs, doc, getDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { globalStyles } from '../../styles/GlobalStyles';
@@ -16,49 +16,55 @@ const PickUpDate = () => {
                 const q = query(collection(db, "buyRequests"), where("status", "==", "accepted"));
                 const querySnapshot = await getDocs(q);
                 let requests = [];
-
+    
                 for (const docSnap of querySnapshot.docs) {
                     const requestData = docSnap.data();
                     if (requestData.buyerUID === auth.currentUser.uid || requestData.sellerUID === auth.currentUser.uid) {
-                        const productDocRef = doc(db, "products", requestData.productId);
+                        // Hente navne på donator/afhenter
                         const buyerDocRef = doc(db, "users", requestData.buyerUID);
                         const sellerDocRef = doc(db, "users", requestData.sellerUID);
-
-                        const [productSnap, buyerSnap, sellerSnap] = await Promise.all([
-                            getDoc(productDocRef),
+    
+                        const [buyerSnap, sellerSnap] = await Promise.all([
                             getDoc(buyerDocRef),
                             getDoc(sellerDocRef)
                         ]);
-
-                        if (productSnap.exists() && buyerSnap.exists() && sellerSnap.exists()) {
-                            requests.push({
-                                id: docSnap.id,
-                                productName: productSnap.data().name,
-                                pickupDate: productSnap.data().pickupDate,
-                                address: productSnap.data().address,
-                                buyerName: buyerSnap.data().name,
-                                sellerName: sellerSnap.data().name,
-                            });
+    
+                        let buyerName = '', sellerName = '';
+                        if (buyerSnap.exists()) {
+                            buyerName = buyerSnap.data().name;
                         }
+                        if (sellerSnap.exists()) {
+                            sellerName = sellerSnap.data().name;
+                        }
+    
+                        requests.push({
+                            id: docSnap.id,
+                            productName: requestData.productName,
+                            pickupDate: requestData.pickupDate,
+                            address: requestData.address,
+                            buyerUID: requestData.buyerUID,
+                            sellerUID: requestData.sellerUID,
+                            buyerName: buyerName,
+                            sellerName: sellerName
+                        });
                     }
                 }
-
+    
                 setAcceptedRequests(requests);
             }
         };
-
+    
         fetchAcceptedRequests();
-    }, []);
-
+    }, [auth, db]);
+    
     const renderRequestItem = ({ item }) => {
-        const message = item.buyerName === auth.currentUser.displayName ? 
-            `You will pick up ${item.productName} at ${item.pickupDate}` : 
-            `${item.buyerName} afhenter ${item.productName} d. ${item.pickupDate} på addressen ${item.address} `;
-
-        return (
-            <TextBox text={message} />
-        );
+        const message = item.buyerUID === auth.currentUser.uid ? 
+            `Afhent '${item.productName}' D. ${item.pickupDate} på addressen ${item.address}` : 
+            `${item.sellerName} afhenter donationen '${item.productName}' D. ${item.pickupDate} på addressen ${item.address}`;
+    
+        return <TextBox text={message} />;
     };
+
 
     return (
         <View style={globalStyles.container}>

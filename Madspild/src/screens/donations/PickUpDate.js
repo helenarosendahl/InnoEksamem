@@ -60,7 +60,7 @@ const PickUpDate = () => {
     const renderRequestItem = ({ item }) => {
         const message = item.buyerUID === auth.currentUser.uid ? 
             `Afhent '${item.productName}' D. ${item.pickupDate} på addressen ${item.address}` : 
-            `${item.sellerName} afhenter donationen '${item.productName}' D. ${item.pickupDate} på addressen ${item.address}`;
+            `${item.buyerName} afhenter donationen '${item.productName}' D. ${item.pickupDate} på addressen ${item.address}`;
     
         return <TextBox text={message} />;
     };

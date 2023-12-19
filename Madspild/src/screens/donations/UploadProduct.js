@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { ScrollView, View, Alert, Image, TouchableOpacity, TextInput } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-//import { Calendar } from 'react-native-calendars';
+import { Calendar } from 'react-native-calendars';
 
 
 // Importerer funktioner og auth fra Firebase

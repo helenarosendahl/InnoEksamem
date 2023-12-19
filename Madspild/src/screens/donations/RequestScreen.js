@@ -11,6 +11,8 @@ import RequestItem from '../../components/Lists/RequestItem';
 import { globalStyles }  from '../../styles/GlobalStyles';
 import  TextBox  from '../../components/Forms/TextBox'
 import { PrimaryButton } from '../../components/Buttons/PrimaryButton';
+import UpdateButton from '../../components/Buttons/UpdateButton';
+
 
 
 
@@ -22,48 +24,43 @@ const RequestScreen = ( { navigation } ) => {
   const db = getFirestore();
   const auth = getAuth();
 
-  // useEffect-hook bruges til at hente og opdatere anmodningerne
-useEffect(() => {
-  // Funktion til asynkront at hente og opdatere anmodningerne
+  // Define the fetchRequests function
   const fetchRequests = async () => {
     if (auth.currentUser) {
-      // Opretter en query for at filtrere anmodninger baseret på sælgerens user id og status 'pending'
-      const q = query(
-        collection(db, "buyRequests"), 
-        where("sellerUID", "==", auth.currentUser.uid),
-        where("status", "==", "pending")
-      );
-      const querySnapshot = await getDocs(q);
-      const fetchedRequests = [];
-  
-      // Går gennem hvert dokument og henter relaterede data
-      for (const docSnap of querySnapshot.docs) {
-        const requestData = docSnap.data();
-        const productDocRef = doc(db, "products", requestData.productId);
-        const userDocRef = doc(db, "users", requestData.buyerUID);
-  
-        const productSnap = await getDoc(productDocRef);
-        const userSnap = await getDoc(userDocRef);
-  
-        // Hvis både produktet og brugeren eksisterer, tilføjes anmodningen til listen
-        if (productSnap.exists() && userSnap.exists()) {
-          fetchedRequests.push({
-            id: docSnap.id,
-            productName: productSnap.data().name,
-            buyerName: userSnap.data().name,
-            ...requestData
-          });
+        const q = query(
+            collection(db, "buyRequests"), 
+            where("sellerUID", "==", auth.currentUser.uid),
+            where("status", "==", "pending")
+        );
+        const querySnapshot = await getDocs(q);
+        const fetchedRequests = [];
+
+        for (const docSnap of querySnapshot.docs) {
+            const requestData = docSnap.data();
+            const productDocRef = doc(db, "products", requestData.productId);
+            const userDocRef = doc(db, "users", requestData.buyerUID);
+
+            const productSnap = await getDoc(productDocRef);
+            const userSnap = await getDoc(userDocRef);
+
+            if (productSnap.exists() && userSnap.exists()) {
+                fetchedRequests.push({
+                    id: docSnap.id,
+                    productName: productSnap.data().name,
+                    buyerName: userSnap.data().name,
+                    ...requestData
+                });
+            }
         }
-      }
-  
-      // Opdaterer med de hentede anmodninger
-      setRequests(fetchedRequests);
+
+        setRequests(fetchedRequests);
     }
-  };
-  
-  // Kalder funktionen til hentning af anmodninger
-  fetchRequests();
-}, [auth, db]); // Added dependencies here
+};
+
+// useEffect to fetch requests initially
+useEffect(() => {
+    fetchRequests();
+}, [auth, db]);
 
 // Funktion til håndtering af svar på anmodninger (acceptere eller afvise)
 const handleRequestResponse = async (requestId, isAccepted) => {
@@ -128,7 +125,7 @@ const handleRequestResponse = async (requestId, isAccepted) => {
     <View style={globalStyles.container}>
       <TextBox text='Her kan du se de anmodninger du er blevet tilsendt, fra andre brugere som er interesseret i at hente dine donationer. Når du accepterer en donation, får du 50 Point som du kan bruge på vores sponsorside. 🍏🫒🥬' />
       {/* FlatList til at vise anmodninger */}
-      <FlatList
+      <FlatList 
         data={requests}
         renderItem={renderItem}
         keyExtractor={item => item.id}
@@ -137,6 +134,9 @@ const handleRequestResponse = async (requestId, isAccepted) => {
         title="Se dine afhentningstidspunkter"
         onPress={navigateToPickUpDates}
       />
+
+<UpdateButton onPress={fetchRequests} />
+
     </View>
   );
 };

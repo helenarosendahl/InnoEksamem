@@ -13,6 +13,8 @@ import { getAuth } from 'firebase/auth';
 // Importerer brugerdefinerede komponenter og stilarter
 import { CustomTextInput } from '../../components/Forms/TextInput';
 import { PrimaryButton } from '../../components/Buttons/PrimaryButton';
+import { SecondaryButton } from '../../components/Buttons/SecondaryButton';
+
 import { globalStyles } from '../../styles/GlobalStyles';
 import TextBox from '../../components/Forms/TextBox';
 
@@ -220,7 +222,7 @@ const takePicture = async () => {
       />
 <PrimaryButton title="Tag et billede af din donation" onPress={takePicture} />
       {imageUri && <Image source={{ uri: imageUri }} style={{ width: 100, height: 100 }} />}
-      <PrimaryButton title="Opret din donation!" onPress={handleProductUpload} />
+      <SecondaryButton title="Opret din donation!" onPress={handleProductUpload} />
     </View>
     </ScrollView>
 

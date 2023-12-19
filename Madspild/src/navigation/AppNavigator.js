@@ -29,7 +29,6 @@ function SponsStackScreen() {
       <SponsStack.Screen name="AldiOffers" component={AldiOffers} options={{ headerTitle: 'Aldi Danmark' }} />
       <SponsStack.Screen name="CofocoOffers" component={CofocoOffers} options={{ headerTitle: 'Cofoco' }} />
       <SponsStack.Screen name="UpdateUserProfile" component={UpdateUserProfile}/>
-      <SponsStack.Screen name="PickUpDate" component={PickUpDate}/>
 
     </SponsStack.Navigator>
   );
@@ -42,8 +41,6 @@ function ProfileStackScreen() {
       <SponsStack.Screen name="UserMainProfile" component={UserMainProfile} options={{ headerShown: false }}/>
         <SponsStack.Screen name="UserProfile" component={UserProfile} options={{ headerShown: false }}/>
        <SponsStack.Screen name="UpdateUserProfile" component={UpdateUserProfile} options={{ headerTitle: 'Rediger din profil'  }}/>
-       <SponsStack.Screen name="PickUpDate" component={PickUpDate} />
-
     </SponsStack.Navigator>
   );
 }
@@ -53,7 +50,7 @@ function DonationStackScreen() {
   return (
     <SponsStack.Navigator>
       <SponsStack.Screen name="RequestScreen" component={RequestScreen} options={{ headerShown: false }}/>
-       <SponsStack.Screen name="PickUpDate" component={PickUpDate} />
+       <SponsStack.Screen name="PickUpDate" component={PickUpDate} options={{ headerTitle: 'Afhentningstidspunkter'  }} />
     </SponsStack.Navigator>
   );
 }

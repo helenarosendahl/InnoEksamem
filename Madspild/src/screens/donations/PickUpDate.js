@@ -5,7 +5,6 @@ import { getAuth } from 'firebase/auth';
 import { globalStyles } from '../../styles/GlobalStyles';
 import  TextBox  from '../../components/Forms/TextBox'
 
-
 const PickUpDate = () => {
     const [acceptedRequests, setAcceptedRequests] = useState([]);
     const db = getFirestore();
@@ -54,7 +53,7 @@ const PickUpDate = () => {
     const renderRequestItem = ({ item }) => {
         const message = item.buyerName === auth.currentUser.displayName ? 
             `You will pick up ${item.productName} at ${item.pickupDate}` : 
-            `${item.buyerName} will pick up ${item.productName} at ${item.pickupDate}`;
+            `${item.buyerName} afhenter ${item.productName} d. ${item.pickupDate} på addressen ${item.address} `;
 
         return (
             <TextBox text={message} />

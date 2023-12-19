@@ -1,6 +1,6 @@
 // Importerer nødvendige React Native komponenter
 import React, { useState, useEffect } from 'react';
-import { View, FlatList, Alert, Button } from 'react-native';
+import { View, FlatList, Alert } from 'react-native';
 
 // Importerer funktioner og auth fra Firebase
 import {  getFirestore, collection, query, where, getDocs, doc, writeBatch, getDoc, increment} from 'firebase/firestore';
@@ -10,6 +10,9 @@ import { getAuth } from 'firebase/auth';
 import RequestItem from '../../components/Lists/RequestItem';
 import { globalStyles }  from '../../styles/GlobalStyles';
 import  TextBox  from '../../components/Forms/TextBox'
+import { PrimaryButton } from '../../components/Buttons/PrimaryButton';
+
+
 
 // Funktionen for RequestScreen
 const RequestScreen = ( { navigation } ) => {
@@ -115,8 +118,8 @@ const handleRequestResponse = async (requestId, isAccepted) => {
         renderItem={renderItem}
         keyExtractor={item => item.id}
       />
-      <Button
-        title="Go to Pick Up Dates"
+      <PrimaryButton
+        title="Se dine afhentningstidspunkter"
         onPress={navigateToPickUpDates}
       />
     </View>

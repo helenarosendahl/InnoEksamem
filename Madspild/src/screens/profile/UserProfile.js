@@ -6,7 +6,8 @@ import { getStorage, ref, getDownloadURL } from 'firebase/storage';
 import TextBoxProfile from '../../components/Forms/TextBox'; 
 import { PrimaryButton } from '../../components/Buttons/PrimaryButton';
 import { globalStyles } from '../../styles/GlobalStyles';
-import Ionicons from 'react-native-vector-icons/Ionicons'; // Importer Ionicons
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import UpdateButton from '../../components/Buttons/UpdateButton';
 
 
 const UserProfile = ({ navigation }) => {
@@ -68,6 +69,14 @@ useEffect(() => {
     setShowDiscountCodes(!showDiscountCodes);
   };
 
+  const UpdateButton = ({ onPress, iconName, iconSize, iconColor, style }) => {
+    return (
+      <TouchableOpacity style={style} onPress={onPress}>
+        <Ionicons name={iconName} size={iconSize} color={iconColor} />
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <ScrollView style={globalStyles.container}>
       <View style={styles.headerContainer}>
@@ -78,18 +87,20 @@ useEffect(() => {
         <TouchableOpacity 
         style={globalStyles.primaryButton} 
         onPress={navigateToUpdateProfile}>
-        <Ionicons name="create-outline" size={30} color="#333" style={globalStyles.editIcon} />
+        <Ionicons name="create-outline" size={30} style={globalStyles.editIcon} />
         </TouchableOpacity>
 
         <View style={{ marginRight: 10 }} />
 
         {/* Opdateringsknap */}
-        <TouchableOpacity 
-          style={globalStyles.primaryButton} 
-          onPress={fetchUserProfile}>
-          <Ionicons name="refresh-outline" size={30} color="#333" style={globalStyles.reloadIcon} />
-        </TouchableOpacity>
-        </View>
+        <UpdateButton 
+    onPress={fetchUserProfile}
+    iconName="refresh-outline"
+    iconSize={30}
+    iconColor="gray"
+    style={globalStyles.reloadIcon}
+  />
+</View>
       </View>
       <View style={styles.imageContainer}>
         {photoURL ? (

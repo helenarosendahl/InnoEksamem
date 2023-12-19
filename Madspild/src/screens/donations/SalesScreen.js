@@ -1,6 +1,6 @@
 // Importerer nødvendige React Native komponenter
 import React, { useState, useEffect } from 'react';
-import { View, FlatList, Alert, Image, TouchableOpacity, Text} from 'react-native';
+import { View, FlatList, Alert, Image, TouchableOpacity, TextInput} from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 
 
@@ -8,19 +8,20 @@ import MapView, { Marker } from 'react-native-maps';
 import { getFirestore, collection, getDocs, addDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth'; 
 
-// Importerer brugerdefinerede komponenter og stilarter
+// Importerer komponenter og stilarter
 import { globalStyles } from '../../styles/GlobalStyles';
 import { PrimaryButton } from '../../components/Buttons/PrimaryButton';
 import ProductListItem from '../../components/Lists/ProductList'; 
+import SearchBar from '../../components/SearchBar/SearchBar';
+import UpdateButton from '../../components/Buttons/UpdateButton';
 
-// Importer Ionicons
-import Ionicons from 'react-native-vector-icons/Ionicons'; 
 
 // Funktionen for SalesScreen
 const SalesScreen = () => {
   // Deklarerer variabler for produkter og visningstilstand (list eller map)
   const [products, setProducts] = useState([]);
   const [viewMode, setViewMode] = useState('list'); 
+  const [searchQuery, setSearchQuery] = useState('');
 
   // Henter Firestore og Authentication instanser fra Firebase
   const db = getFirestore();
@@ -48,6 +49,13 @@ const SalesScreen = () => {
   useEffect(() => {
     fetchProducts();
   }, []);
+
+   // Filtrer produkter baseret på søgestrengen
+   const filteredProducts = products.filter(product => 
+    product.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+
 
     // Funktion til håndtering af købsanmodning
   const handleBuyRequest = async (productId, sellerUID) => {
@@ -126,22 +134,29 @@ const SalesScreen = () => {
   );
 
   // Returnerer selve viewet for SalesScreen
+  // Returnerer selve viewet for SalesScreen
   return (
     <View style={globalStyles.container}>
-      <View style={styles.buttonContainer}>
-        <PrimaryButton title="Liste" onPress={() => setViewMode('list')} />
-        <PrimaryButton title="Kort" onPress={() => setViewMode('map')} />
-         {/* Opdateringsknap */}
-         <TouchableOpacity 
-          style={globalStyles.primaryButton} 
-          onPress={opdaterListe}>
-          <Ionicons name="refresh-outline" size={30} color="#333" style={globalStyles.reloadIcon} />
-        </TouchableOpacity>
+      {/* Integration af SearchBar komponenten */}
+      <View style={styles.searchAndUpdateContainer}>
+      <SearchBar 
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+      />
+      <UpdateButton onPress={opdaterListe} />
       </View>
-      {/* Betinget rendering af enten FlatList eller MapView baseret på viewMode */}
+
+      <View style={styles.buttonContainer}>
+      <PrimaryButton title="Liste" onPress={() => setViewMode('list')} />
+      <PrimaryButton title="Kort" onPress={() => setViewMode('map')} />
+    </View>
+
+      
+
+      {/* Betinget rendering af FlatList eller MapView baseret på viewMode */}
       {viewMode === 'list' ? (
         <FlatList
-          data={products}
+          data={filteredProducts} // Brug den filtrerede produktliste
           renderItem={renderProduct}
           keyExtractor={item => item.id}
         />
@@ -174,6 +189,13 @@ const styles = {
     width: '100%',
     height: '100%',
   },
+  searchAndUpdateContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start', // Ændret fra 'space-between' til 'flex-start'
+    alignItems: 'center',
+    paddingHorizontal: 10,
+  },
+  
 };
 
 // Eksporterer SalesScreen-komponenten som standard

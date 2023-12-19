@@ -5,7 +5,7 @@ export const colors = {
   lightGreen: '#4d814a', // Light green
   darkGreen: '#00563B', // Dark green 
   white: '#FFFFFF', // White
-  grey: '#808080', // Grey 
+  gray: 'gray', // Grey 
   black: '#000000', // Black
 };
 
@@ -70,7 +70,7 @@ export const globalStyles = {
   },
   input: {
     borderWidth: 1,
-    borderColor: colors.grey,
+    borderColor: colors.gray,
     padding: 15,
     borderRadius: 5,
     marginBottom: 15,
@@ -180,11 +180,13 @@ export const globalStyles = {
     marginBottom: 5,
     marginTop:2,
     marginLeft: 5,
+    color:colors.gray
   },
   editIcon: {
     marginRight: 5,
     marginBottom: 5,
-    marginTop:2,
+    marginTop:1,
     marginLeft: 5,
+    color:colors.gray
   },
 };

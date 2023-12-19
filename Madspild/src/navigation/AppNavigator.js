@@ -9,6 +9,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import UpdateUserProfile from '../screens/profile/UpdateUserProfile';
 import UserMainProfile from '../screens/profile/UserMainProfile'; 
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import PickUpDate from '../screens/donations/PickUpDate'
 
 // Tilbud fra sponsorer
 import JoeOffers from '../screens/sponsor/offerings/JoeOffers'
@@ -28,6 +29,7 @@ function SponsStackScreen() {
       <SponsStack.Screen name="AldiOffers" component={AldiOffers} options={{ headerTitle: 'Aldi Danmark' }} />
       <SponsStack.Screen name="CofocoOffers" component={CofocoOffers} options={{ headerTitle: 'Cofoco' }} />
       <SponsStack.Screen name="UpdateUserProfile" component={UpdateUserProfile}/>
+
     </SponsStack.Navigator>
   );
 }
@@ -39,6 +41,16 @@ function ProfileStackScreen() {
       <SponsStack.Screen name="UserMainProfile" component={UserMainProfile} options={{ headerShown: false }}/>
         <SponsStack.Screen name="UserProfile" component={UserProfile} options={{ headerShown: false }}/>
        <SponsStack.Screen name="UpdateUserProfile" component={UpdateUserProfile} options={{ headerTitle: 'Rediger din profil'  }}/>
+    </SponsStack.Navigator>
+  );
+}
+
+// Stack til screens omhandlende profil
+function DonationStackScreen() {
+  return (
+    <SponsStack.Navigator>
+      <SponsStack.Screen name="RequestScreen" component={RequestScreen} options={{ headerShown: false }}/>
+       <SponsStack.Screen name="PickUpDate" component={PickUpDate} options={{ headerTitle: 'Afhentningstidspunkter'  }} />
     </SponsStack.Navigator>
   );
 }
@@ -80,7 +92,7 @@ const AppNavigator = () => {
         tabBarActiveTintColor: '#00563B', // Farvet ikon når man trykker på det
         tabBarInactiveTintColor: 'gray', // Default grå når der ikke er trykket på ikon
       })}> 
-        <Tab.Screen name="Anmodninger" component={RequestScreen} />
+        <Tab.Screen name="Anmodninger" component={DonationStackScreen} />
         <Tab.Screen name="Doner mad" component={UploadProduct} />
         <Tab.Screen name="Donationer" component={SalesScreen} />
         <Tab.Screen name="Mig" component={ProfileStackScreen} />

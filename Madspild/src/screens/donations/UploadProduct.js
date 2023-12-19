@@ -22,7 +22,7 @@ const UploadProduct = () => {
   // State til inputfelter og billedet URI
   const [productName, setProductName] = useState('');
   const [isCalendarVisible, setIsCalendarVisible] = useState(false);
-  const [calendarType, setCalendarType] = useState(null); // New state to track which calendar is active
+  const [calendarType, setCalendarType] = useState(null);
   const [expirationDate, setExpirationDate] = useState('');
   const [pickupDate, setPickupDate] = useState('');
   const [address, setAddress] = useState('');
@@ -47,7 +47,7 @@ const UploadProduct = () => {
    const auth = getAuth();
    const userUID = auth.currentUser ? auth.currentUser.uid : null;
 
-   // API key - virkelig dårlig sikkerhedsmæssigt at have den liggende her, så vi skal måske lige undersøge om der er smartere måde at gemme den på
+   // API key -  dårlig sikkerhedsmæssigt at have den liggende her, så vi skal måske lige undersøge om der er smartere måde at gemme den på
   const GEOCODING_API_KEY = 'AIzaSyCfV3r616nHsjc68xFRkAlNCQlz8XZDKRw';
 
   // Funktion til at oversætte en adresse til koordinater ved hjælp af Google Maps Geocoding API

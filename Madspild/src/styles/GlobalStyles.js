@@ -59,16 +59,6 @@ export const globalStyles = {
     
   },
   
-  card: {
-    borderRadius: 10,
-    shadowColor: colors.black,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    elevation: 3,
-    backgroundColor: colors.white,
-    
-  },
   input: {
     borderWidth: 1,
     borderColor: colors.gray,
@@ -76,7 +66,7 @@ export const globalStyles = {
     borderRadius: 5,
     marginBottom: 15,
   },
-  sponsorItem: {
+  ContentBox: {
     padding: 20,
     marginVertical: 20,
     backgroundColor: '#e8f4ea', // Lysegrøn

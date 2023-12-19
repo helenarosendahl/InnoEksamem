@@ -123,7 +123,7 @@ const handleRequestResponse = async (requestId, isAccepted) => {
   // Returnerer viewet for requestScreen
   return (
     <View style={globalStyles.container}>
-      <TextBox text='Her kan du se de anmodninger du er blevet tilsendt, fra andre brugere som er interesseret i at hente dine donationer. Når du accepterer en donation, får du 50 Point som du kan bruge på vores sponsorside. 🍏🫒🥬' />
+      <TextBox text=' Når du accepterer en anmodning, får du 50 Point som du kan bruge på vores sponsorside. 🍏🫒🥬' />
       {/* FlatList til at vise anmodninger */}
       <FlatList 
         data={requests}

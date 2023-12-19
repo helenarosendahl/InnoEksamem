@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, ScrollView, Text, Image, Button, StyleSheet } from 'react-native';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
-import SponsorItem from '../../components/Lists/SponsorItem';
+import ContentBox from '../../components/Lists/ContentBox';
 import { globalStyles } from '../../styles/GlobalStyles';
 import TextBox from '../../components/Forms/TextBox';
 
@@ -23,7 +23,7 @@ const SponsScreen = ({ navigation }) => {
             <TextBox text="Vores sponsorer, som gør det muligt at drive For Godt Til Skrot. Se hvilke produkter du kan få hos dem med dine optjente point!" />
         
             {sponsors.map((sponsor) => (
-              <SponsorItem 
+              <ContentBox 
                 key={sponsor.id} 
                 sponsor={sponsor} 
                 onPress={() => navigation.navigate(sponsor.component)} 

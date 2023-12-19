@@ -1,11 +1,11 @@
-// src/components/SponsorItem.js
+// src/components/ContentBox.js
 import React from 'react';
 import { View, Text, Image } from 'react-native';
 import { PrimaryButton } from '../Buttons/PrimaryButton';
 import { globalStyles } from '../../styles/GlobalStyles';
 
-const SponsorItem = ({ sponsor, onPress }) => (
-    <View style={globalStyles.sponsorItem}>
+const ContentBox = ({ sponsor, onPress }) => (
+    <View style={globalStyles.ContentBox}>
       <Image source={sponsor.logoUrl} style={globalStyles.sponsorLogo} />
       <Text style={globalStyles.sponsorHeadText}>{sponsor.name}</Text>
       <Text style={globalStyles.sponsorText}>{sponsor.description}</Text>
@@ -13,4 +13,4 @@ const SponsorItem = ({ sponsor, onPress }) => (
     </View>
   );
 
-export default SponsorItem;
+export default ContentBox;

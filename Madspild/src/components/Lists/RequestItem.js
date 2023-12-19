@@ -4,7 +4,7 @@ import { PrimaryButton } from '../Buttons/PrimaryButton';
 import { globalStyles, colors } from '../../styles/GlobalStyles';
 
 const RequestItem = ({ item, onAccept, onDecline }) => (
-    <View style={[globalStyles.card, styles.lightGreenBox]}>
+    <View style={[globalStyles.card, globalStyles.ContentBox]}>
       <Text style={[globalStyles.text, styles.textWithMargin]}>Anmodning om din donation: {item.productName}</Text>
       <Text style={[globalStyles.text, styles.textWithMargin]}>Navn på afhenter: {item.buyerName}</Text>
       <PrimaryButton title="Accepter" onPress={() => onAccept(item.id)} />
@@ -13,10 +13,7 @@ const RequestItem = ({ item, onAccept, onDecline }) => (
   );
   
   const styles = StyleSheet.create({
-    lightGreenBox: {
-      backgroundColor: colors.lightGreen,
-      borderWidth: 2,
-    },
+    
     textWithMargin: {
       marginBottom: 10, 
     },

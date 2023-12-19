@@ -4,7 +4,7 @@ import { PrimaryButton } from '../Buttons/PrimaryButton';
 import { globalStyles } from '../../styles/GlobalStyles';
  
 const ProductListItem = ({ item, onPress }) => (
-  <View style={globalStyles.sponsorItem}>
+  <View style={globalStyles.ContentBox}>
     <Text style={styles.title}>{item.name}</Text>
     {item.imageUrl && (
       <Image source={{ uri: item.imageUrl }} style={styles.image} />

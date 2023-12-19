@@ -1,168 +1,141 @@
 import React, { useState, useEffect } from 'react';
-import { ScrollView, View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
-import { getAuth } from 'firebase/auth';
-import { getFirestore, doc, getDoc, collection, query, where, getDocs } from 'firebase/firestore';
-import { getStorage, ref, getDownloadURL } from 'firebase/storage';
-import TextBoxProfile from '../../components/Forms/TextBox'; 
-import { PrimaryButton } from '../../components/Buttons/PrimaryButton';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { globalStyles } from '../../styles/GlobalStyles';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import UpdateButton from '../../components/Buttons/UpdateButton';
+import Ionicons from 'react-native-vector-icons/Ionicons'; // Importer Ionicons
 
 
 const UserProfile = ({ navigation }) => {
-  const [photoURL, setPhotoURL] = useState(null);
-  const [userProfile, setUserProfile] = useState({
-    address: '',
-    biography: '',
-    name: '',
-  });
-  const [discountCodes, setDiscountCodes] = useState([]);
-  const [showDiscountCodes, setShowDiscountCodes] = useState(false);
 
-  const auth = getAuth();
-  const firestore = getFirestore();
-  const user = auth.currentUser;
+  
+    const handleMyOrders = () => {
+        navigation.navigate('SupportScreen')
+      };
+    
+    const handleBlog = () => {
+        navigation.navigate('SupportScreen')
+      };
 
- // Funktion til at indlæse brugerprofil og billede
- const fetchUserProfile = async () => {
-  if (user) {
-    const storage = getStorage();
-    const imageRef = ref(storage, `profile_pictures/${user.uid}`);
-    try {
-      const url = await getDownloadURL(imageRef);
-      setPhotoURL(url);
-    } catch (error) {
-      console.error("Error fetching image URL:", error);
-    }
 
-    const userDocRef = doc(firestore, "users", user.uid);
-    const docSnap = await getDoc(userDocRef);
-    if (docSnap.exists()) {
-      setUserProfile(docSnap.data());
-    }
-  }
-};
+    const handleSupportCenter = () => {
+        navigation.navigate('SupportScreen')
+      };
+    
 
-useEffect(() => {
-  fetchUserProfile();
-}, [user]);
-
-  const navigateToUpdateProfile = () => {
-    navigation.navigate('UpdateUserProfile'); // Bruger route name som string
+  const navigateToUserSettings = () => {
+    navigation.navigate('UserSettings'); // Bruger route name som string
   };
 
-  const fetchDiscountCodes = async () => {
-    if (user) {
-      const q = query(collection(firestore, "discountCodes"), where("userUID", "==", user.uid));
-      const querySnapshot = await getDocs(q);
-      const fetchedCodes = querySnapshot.docs.map(doc => doc.data());
-      setDiscountCodes(fetchedCodes);
-      setShowDiscountCodes(true);
-    }
-  };
 
-  const toggleDiscountCodes = async () => {
-    if (!showDiscountCodes) {
-      await fetchDiscountCodes();
-    }
-    setShowDiscountCodes(!showDiscountCodes);
-  };
-
-  const UpdateButton = ({ onPress, iconName, iconSize, iconColor, style }) => {
-    return (
-      <TouchableOpacity style={style} onPress={onPress}>
-        <Ionicons name={iconName} size={iconSize} color={iconColor} />
-      </TouchableOpacity>
-    );
-  };
 
   return (
-    <ScrollView style={globalStyles.container}>
-      <View style={styles.headerContainer}>
-        <Text style={globalStyles.title}>Mine oplysninger</Text>
+    <View style={[globalStyles.container, globalStyles.settingscontainer]}>
+  
+      <Text style={globalStyles.title}>SE, HVOR STOR EN FORSKEL DU GØR</Text>
 
-        <View style={{ flexDirection: 'row', justifyContent: 'flex-end'}}>
-        {/* Rediger profilknap */}
-        <TouchableOpacity 
-        style={globalStyles.primaryButton} 
-        onPress={navigateToUpdateProfile}>
-        <Ionicons name="create-outline" size={30} style={globalStyles.editIcon} />
+      <View style={styles.statsContainer}>
+        <View style={styles.statBox}>
+          <Text style={styles.orderCount}>3</Text>
+          <Ionicons name="cart-outline" size={24} color="#00563B" />
+        </View>
+        <View style={styles.statBox}>
+          <Text style={styles.kgSaved}>8 kg</Text>
+          <Ionicons name="leaf-outline" size={24} color="#00563B" />
+        </View>
+      </View>
+    
+  
+      <View style={[globalStyles.buttonContainer, styles.buttonContainer]}>
+        <TouchableOpacity onPress={handleMyOrders} style={[globalStyles.set_button, styles.button]}>
+          <View style={globalStyles.buttonContent}>
+            <Ionicons name="receipt-outline" size={24} color="#00563B" />
+            <Text style={globalStyles.set_buttonText}>Mine afhentninger</Text>
+          </View>
         </TouchableOpacity>
 
-        <View style={{ marginRight: 10 }} />
-
-        {/* Opdateringsknap */}
-        <UpdateButton 
-    onPress={fetchUserProfile}
-    iconName="refresh-outline"
-    iconSize={30}
-    iconColor="gray"
-    style={globalStyles.reloadIcon}
-  />
-</View>
+        <TouchableOpacity onPress={handleMyOrders} style={[globalStyles.set_button, styles.button]}>
+          <View style={globalStyles.buttonContent}>
+            <Ionicons name="heart-outline" size={24} color="#00563B" />
+            <Text style={globalStyles.set_buttonText}>Mine donationer</Text>
+          </View>
+        </TouchableOpacity>
+  
+        <TouchableOpacity onPress={handleSupportCenter} style={[globalStyles.set_button, styles.button]}>
+          <View style={globalStyles.buttonContent}>
+            <Ionicons name="help-circle-outline" size={24} color="#00563B" />
+            <Text style={globalStyles.set_buttonText}>Support center</Text>
+          </View>
+        </TouchableOpacity>
+  
+        <TouchableOpacity onPress={handleBlog} style={[globalStyles.set_button, styles.button]}>
+          <View style={globalStyles.buttonContent}>
+            <Ionicons name="newspaper-outline" size={24} color="#00563B" />
+            <Text style={globalStyles.set_buttonText}>Blog</Text>
+          </View>
+        </TouchableOpacity>
+  
+        <TouchableOpacity onPress={navigateToUserSettings} style={[globalStyles.set_button, styles.button]}>
+          <View style={globalStyles.buttonContent}>
+            <Ionicons name="settings-outline" size={24} color="#00563B" />
+            <Text style={globalStyles.set_buttonText}>Indstillinger</Text>
+          </View>
+        </TouchableOpacity>
       </View>
-      <View style={styles.imageContainer}>
-        {photoURL ? (
-          <Image source={{ uri: photoURL }} style={styles.image} />
-        ) : (
-          <Text>Intet profilbillede. Upload et!</Text>
-        )}
-      </View>
-     
-      <View style={globalStyles.ProfileInfoContainer}>
-      <Text>Navn</Text>
-      <Text>{userProfile.name || 'Not available'}</Text>
+  
     </View>
-    
-      <View style={globalStyles.ProfileInfoContainer}>
-      <Text>Adresse</Text>
-      <Text>{userProfile.address || 'Not available'}</Text>
-    </View>
-
-    <View style={globalStyles.ProfileInfoContainer}>
-      <Text>Om mig</Text>
-      <Text>{userProfile.biography || 'Not available'}</Text>
-    </View>
-
-
-      <PrimaryButton title={showDiscountCodes ? "Skjul rabatkoder" : "Mine kuponer"} onPress={toggleDiscountCodes} />
-
-      {showDiscountCodes && (
-        <View style={globalStyles.offersContainer}>
-          {discountCodes.map((code, index) => (
-            <TextBox key={index} text={`Produkt: ${code.productName}, Kode: ${code.code}`} />
-          ))}
-        </View>
-      )}
-    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  title: {
-    fontSize: 30,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginVertical: 5,
-  },
-  imageContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginVertical: 10,
-  },
-  image: {
-    width: 150,
-    height: 150,
-    borderRadius: 75, // Gør billedet cirkulært
-  },
-  headerContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: 5,
+
+  buttonContainer: {
+    marginLeft: 0, 
   },
 
+  button: {
+    marginBottom: 30,
+  },
+ 
+ 
+  statsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    paddingVertical: 10
+  },
+  statBox: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#e8f4ea', 
+    padding: 10,
+    borderRadius: 10,
+    marginHorizontal: 20, 
+    width: 150,
+    // Tilføjelse af skygge
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    // For at skyggen vises på Android:
+    elevation: 5,
+  },
+  orderCount: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 5,
+  },
+  kgSaved: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 5,
+  },
+   container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#4d814a'
+  },
 });
 
 

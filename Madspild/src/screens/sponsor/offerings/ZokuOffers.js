@@ -87,7 +87,6 @@ const ZokuOffers = () => {
     }
   };
 
- 
 
   return (
     <View style={globalStyles.container}>

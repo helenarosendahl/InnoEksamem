@@ -1,13 +1,13 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import RequestScreen from '../screens/donations/RequestScreen'; 
-import SalesScreen from '../screens/donations/SalesScreen'; 
-import UploadProduct from '../screens/donations/UploadProduct'; 
-import UserProfile from '../screens/profile/UserProfile'; 
+import DonationsScreen from '../screens/donations/DonationsScreen'; 
+import UploadDonationScreen from '../screens/donations/UploadDonationScreen'; 
+import UserSettings from '../screens/profile/UserSettings'; 
 import SponsScreen from '../screens/sponsor/SponsScreen'; 
 import { createStackNavigator } from '@react-navigation/stack';
-import UpdateUserProfile from '../screens/profile/UpdateUserProfile';
-import UserMainProfile from '../screens/profile/UserMainProfile'; 
+import UpdateProfile from '../screens/profile/UpdateProfile';
+import UserProfile from '../screens/profile/UserProfile'; 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import PickUpDate from '../screens/donations/PickUpDate'
 
@@ -17,6 +17,8 @@ import ZokuOffers from '../screens/sponsor/offerings/ZokuOffers'
 
 
 const SponsStack = createStackNavigator();
+const ProfileStack = createStackNavigator();
+const DonationStack = createStackNavigator();
 
 
 // stacks til screens omhandlende sponsor
@@ -26,7 +28,7 @@ function SponsStackScreen() {
       <SponsStack.Screen name="SponsScreen" component={SponsScreen} options={{ headerShown: false }}/> 
       <SponsStack.Screen name="JoeOffers" component={JoeOffers} options={{ headerTitle: 'Joe & The Juice' }}  />
       <SponsStack.Screen name="ZokuOffers" component={ZokuOffers} options={{ headerTitle: 'ZOKU' }}  />
-      <SponsStack.Screen name="UpdateUserProfile" component={UpdateUserProfile}/>
+      <SponsStack.Screen name="UpdateProfile" component={UpdateProfile}/>
 
     </SponsStack.Navigator>
   );
@@ -35,25 +37,25 @@ function SponsStackScreen() {
 // Stack til screens omhandlende profil
 function ProfileStackScreen() {
   return (
-    <SponsStack.Navigator>
-      <SponsStack.Screen name="UserMainProfile" component={UserMainProfile} options={{ headerShown: false }}/>
-        <SponsStack.Screen name="UserProfile" component={UserProfile} options={{ headerShown: false }}/>
-       <SponsStack.Screen name="UpdateUserProfile" component={UpdateUserProfile} options={{ headerTitle: 'Rediger din profil'  }}/>
-    </SponsStack.Navigator>
+    <ProfileStack.Navigator>
+      <ProfileStack.Screen name="UserProfile" component={UserProfile} options={{ headerShown: false }}/>
+        <ProfileStack.Screen name="UserSettings" component={UserSettings} options={{ headerShown: false }}/>
+       <ProfileStack.Screen name="UpdateProfile" component={UpdateProfile} options={{ headerTitle: 'Rediger din profil'  }}/>
+    </ProfileStack.Navigator>
   );
 }
 
 // Stack til screens omhandlende profil
 function DonationStackScreen() {
   return (
-    <SponsStack.Navigator>
-      <SponsStack.Screen name="RequestScreen" component={RequestScreen} options={{ headerShown: false }}/>
-       <SponsStack.Screen name="PickUpDate" component={PickUpDate} options={{ headerTitle: 'Afhentningstidspunkter'  }} />
-    </SponsStack.Navigator>
+    <DonationStack.Navigator>
+      <DonationStack.Screen name="RequestScreen" component={RequestScreen} options={{ headerShown: false }}/>
+       <DonationStack.Screen name="PickUpDate" component={PickUpDate} options={{ headerTitle: 'Afhentningstidspunkter'  }} />
+    </DonationStack.Navigator>
   );
 }
 
-// tabs til screens i bunden - initialroute er salesscreen
+// tabs til screens i bunden - initialroute er DonationsScreen
 const Tab = createBottomTabNavigator();
 
 const AppNavigator = () => {
@@ -91,8 +93,8 @@ const AppNavigator = () => {
         tabBarInactiveTintColor: 'gray', // Default grå når der ikke er trykket på ikon
       })}> 
         <Tab.Screen name="Anmodninger" component={DonationStackScreen} />
-        <Tab.Screen name="Doner mad" component={UploadProduct} />
-        <Tab.Screen name="Donationer" component={SalesScreen} />
+        <Tab.Screen name="Doner mad" component={UploadDonationScreen} />
+        <Tab.Screen name="Donationer" component={DonationsScreen} />
         <Tab.Screen name="Mig" component={ProfileStackScreen} />
         <Tab.Screen name="Sponsorer" component={SponsStackScreen}/>
       </Tab.Navigator>

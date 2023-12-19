@@ -1,6 +1,6 @@
 // Importerer nødvendige React Native komponenter
 import React, { useState, useEffect, } from 'react';
-import { View, FlatList, Alert, Image, TouchableOpacity, TextInput} from 'react-native';
+import { View, FlatList, Alert} from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 
 
@@ -16,8 +16,8 @@ import SearchBar from '../../components/SearchBar/SearchBar';
 import UpdateButton from '../../components/Buttons/UpdateButton';
 
 
-// Funktionen for SalesScreen
-const SalesScreen = () => {
+// Funktionen for DonationsScreen
+const DonationsScreen = () => {
   // Deklarerer variabler for produkter og visningstilstand (list eller map)
   const [products, setProducts] = useState([]);
   const [viewMode, setViewMode] = useState('list'); 
@@ -36,15 +36,6 @@ const SalesScreen = () => {
     setProducts(productList);
   };
 
-  // Funktion til at display en besked efter listen er blevet opdateret
-  const opdaterListe = async () => {
-    try {
-        await fetchProducts(); // kalder fetchProducts
-        Alert.alert("Opdateret,", "Liste af donationer blev succesfuld opdateret");
-    } catch (error) {
-        Alert.alert("Fejl", "Liste kunne ikke opdateret: " + error.message);
-    }
-};
 
   useEffect(() => {
     fetchProducts();
@@ -132,7 +123,7 @@ const handleBuyRequest = async (productId, sellerUID) => {
         // Opdater rigtig lokation
         if (!product.location || !isFinite(product.location.lat) || !isFinite(product.location.lng)) {
           console.error("Invalid location for product:", product.name);
-          return null; // Skip rendering af denne marker
+          return null; // Hvis lokationen ikke findes så laver vi ikke en markering på kortet
         }
 
         // Returnerer en Marker-komponent for hvert produkt
@@ -150,8 +141,8 @@ const handleBuyRequest = async (productId, sellerUID) => {
     </MapView>
   );
 
-  // Returnerer selve viewet for SalesScreen
-  // Returnerer selve viewet for SalesScreen
+  // Returnerer selve viewet for DonationsScreen
+  // Returnerer selve viewet for DonationsScreen
   return (
     <View style={globalStyles.container}>
       {/* Integration af SearchBar komponenten */}
@@ -160,7 +151,7 @@ const handleBuyRequest = async (productId, sellerUID) => {
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
       />
-      <UpdateButton onPress={opdaterListe} />
+      <UpdateButton onPress={fetchProducts} />
       </View>
 
       <View style={styles.buttonContainer}>
@@ -215,5 +206,5 @@ const styles = {
   
 };
 
-// Eksporterer SalesScreen-komponenten som standard
-export default SalesScreen;
+// Eksporterer DonationsScreen-komponenten som standard
+export default DonationsScreen;

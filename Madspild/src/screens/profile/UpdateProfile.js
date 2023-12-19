@@ -11,8 +11,8 @@ import { SecondaryButton } from '../../components/Buttons/SecondaryButton';
 import AppLogo from '../../components/Logo/AppLogo';
 import { globalStyles } from '../../styles/GlobalStyles';
 
-const UpdateUserProfile = () => {
-  const [userProfile, setUserProfile] = useState({
+const UpdateProfile = () => {
+  const [UserSettings, setUserSettings] = useState({
     biography: '',
     address: '',
     name: '', 
@@ -25,33 +25,33 @@ const UpdateUserProfile = () => {
 
   useEffect(() => {
     if (user) {
-      setUserProfile(prevState => ({ ...prevState, userUID: user.uid }));
+      setUserSettings(prevState => ({ ...prevState, userUID: user.uid }));
     }
   }, [user]);
 
   const userDocRef = doc(firestore, "users", user.uid);
 
   useEffect(() => {
-    const fetchUserProfile = async () => {
+    const fetchUserSettings = async () => {
       const docSnap = await getDoc(userDocRef);
       if (docSnap.exists()) {
     
-        if (!userProfile.name && !userProfile.biography && !userProfile.address) {
-          setUserProfile({ ...docSnap.data(), userUID: user.uid });
+        if (!UserSettings.name && !UserSettings.biography && !UserSettings.address) {
+          setUserSettings({ ...docSnap.data(), userUID: user.uid });
         }
       }
     };
 
-    fetchUserProfile();
+    fetchUserSettings();
   }, [userDocRef, user.uid]);
 
   const handleInputChange = (name, value) => {
-    setUserProfile({ ...userProfile, [name]: value });
+    setUserSettings({ ...UserSettings, [name]: value });
   };
 
   const handleSave = async () => {
     try {
-      await setDoc(userDocRef, userProfile);
+      await setDoc(userDocRef, UserSettings);
       Alert.alert('Succes!', 'Dine oplysninger er opdateret');
     } catch (error) {
       alert('Fejl:', error.message);
@@ -88,7 +88,7 @@ const UpdateUserProfile = () => {
   
       const downloadURL = await getDownloadURL(storageRef);
       console.log('Download URL:', downloadURL);
-      setUserProfile(prevState => ({ ...prevState, photoURL: downloadURL }));
+      setUserSettings(prevState => ({ ...prevState, photoURL: downloadURL }));
       Alert.alert('Succes!', 'Dit billede er uploadet. Du ser fantastisk ud!');
 
     } catch (error) {
@@ -103,26 +103,26 @@ const UpdateUserProfile = () => {
     >
       <ScrollView>
         <View style={globalStyles.innerContainer}>
-          <AppLogo source={require('../../assets/logos/appLogo.png')} />
+        {UserSettings.photoURL && (
+            <Image source={{ uri: UserSettings.photoURL }} style={globalStyles.image} />
+          )}
           <CustomTextInput
             placeholder="Name"
-            value={userProfile.name}
+            value={UserSettings.name}
             onChangeText={(text) => handleInputChange('name', text)}
           />
           <CustomTextInput
             placeholder="Biography"
-            value={userProfile.biography}
+            value={UserSettings.biography}
             onChangeText={(text) => handleInputChange('biography', text)}
           />
           <CustomTextInput
             placeholder="Address"
-            value={userProfile.address}
+            value={UserSettings.address}
             onChangeText={(text) => handleInputChange('address', text)}
           />
           <SecondaryButton title="Upload billede af dig selv" onPress={selectImage} />
-          {userProfile.photoURL && (
-            <Image source={{ uri: userProfile.photoURL }} style={globalStyles.image} />
-          )}
+          
           <PrimaryButton title="Gem mine ændringer" onPress={handleSave} />
         </View>
       </ScrollView>
@@ -130,5 +130,5 @@ const UpdateUserProfile = () => {
   );
 };
 
-export default UpdateUserProfile;
+export default UpdateProfile;
 

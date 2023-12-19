@@ -130,12 +130,13 @@ const handleRequestResponse = async (requestId, isAccepted) => {
         renderItem={renderItem}
         keyExtractor={item => item.id}
       />
+      <UpdateButton onPress={fetchRequests} />
       <PrimaryButton
         title="Se dine afhentningstidspunkter"
         onPress={navigateToPickUpDates}
       />
 
-<UpdateButton onPress={fetchRequests} />
+
 
     </View>
   );

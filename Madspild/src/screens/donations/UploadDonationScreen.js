@@ -19,8 +19,8 @@ import { globalStyles } from '../../styles/GlobalStyles';
 import TextBox from '../../components/Forms/TextBox';
 
 
-// Funktionen for UploadProduct
-const UploadProduct = () => {
+// Funktionen for UploadDonationScreen
+const UploadDonationScreen = () => {
   // State til inputfelter og billedet URI
   const [productName, setProductName] = useState('');
   const [isCalendarVisible, setIsCalendarVisible] = useState(false);
@@ -178,7 +178,7 @@ const takePicture = async () => {
     }
   };
 
-  // Returnerer selve viewet for UploadProduct
+  // Returnerer selve viewet for UploadDonationScreen
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}>
     <View style={globalStyles.container}>
@@ -229,5 +229,5 @@ const takePicture = async () => {
   );
 };
 
-// Eksporterer UploadProduct-komponenten som standard
-export default UploadProduct;
+// Eksporterer UploadDonationScreen-komponenten som standard
+export default UploadDonationScreen;

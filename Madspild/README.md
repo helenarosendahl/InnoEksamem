@@ -11,3 +11,8 @@ Koden vil kunne køre, men et produkt vil ikke kunne uploades, da database-tabel
 # Kør følgende: 
 1. sudo npm install
 2. npm start / npx expo start
+
+I kan logge ind med kredentialerne:
+email: Test@test.dk (husk stort T)
+kode: TESTTEST (ALL CAPS)
+På denne bruger ligger der allerede en anmodning til en donation. 

@@ -1,17 +1,22 @@
+// Importerer nødvendige React Native komponenter
 import React, { useState, useEffect } from 'react';
 import { View, Image, Alert, KeyboardAvoidingView, ScrollView, Platform } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
+
+// Importerer funktioner og auth fra Firebase
 import { getAuth } from 'firebase/auth';
 import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
-import * as ImagePicker from 'expo-image-picker';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+
+// Importerer brugerdefinerede komponenter og styles
 import { CustomTextInput } from '../../components/Forms/TextInput';
 import { BoldButtonDark } from '../../components/Buttons/BoldButton';
 import { SecondaryButton } from '../../components/Buttons/SecondaryButton';
-
 import AppLogo from '../../components/Logo/AppLogo';
 import { globalStyles } from '../../styles/GlobalStyles';
 
 const UpdateProfile = () => {
+  // State til brugerens indstillinger
   const [UserSettings, setUserSettings] = useState({
     biography: '',
     address: '',
@@ -19,23 +24,28 @@ const UpdateProfile = () => {
     userUID: ''
   });
 
+  // Firebase-auth
   const auth = getAuth();
   const firestore = getFirestore();
   const user = auth.currentUser;
 
+  // Sætter brugerens aktuelle UID, når brugeren er logget ind
   useEffect(() => {
     if (user) {
       setUserSettings(prevState => ({ ...prevState, userUID: user.uid }));
     }
   }, [user]);
 
+  // Reference til brugerens Firestore bruger
   const userDocRef = doc(firestore, "users", user.uid);
 
+  // Henter brugerens indstillinger fra Firestore
   useEffect(() => {
     const fetchUserSettings = async () => {
       const docSnap = await getDoc(userDocRef);
       if (docSnap.exists()) {
     
+        // Opdaterer indstillinger, hvis de ikke allerede er opdateret
         if (!UserSettings.name && !UserSettings.biography && !UserSettings.address) {
           setUserSettings({ ...docSnap.data(), userUID: user.uid });
         }
@@ -45,10 +55,12 @@ const UpdateProfile = () => {
     fetchUserSettings();
   }, [userDocRef, user.uid]);
 
+  // Funktion til at håndtere ændringer i inputfelter
   const handleInputChange = (name, value) => {
     setUserSettings({ ...UserSettings, [name]: value });
   };
 
+  // Funktion til at gemme brugerens opdaterede indstillinger
   const handleSave = async () => {
     try {
       await setDoc(userDocRef, UserSettings);
@@ -58,6 +70,7 @@ const UpdateProfile = () => {
     }
   };
 
+  // Funktion til at vælge og uploade et profilbillede
   const selectImage = async () => {
     try {
       const result = await ImagePicker.launchImageLibraryAsync({
@@ -75,6 +88,7 @@ const UpdateProfile = () => {
     }
   };
 
+  // Funktion til at uploade et billede til Firebase Storage
   const uploadImage = async (uri) => {
     if (!user) return;
   
@@ -96,6 +110,7 @@ const UpdateProfile = () => {
     }
   };
 
+  // Det brugeren ser ved UpdateProfile
   return (
     <KeyboardAvoidingView 
       style={globalStyles.container}
@@ -131,4 +146,3 @@ const UpdateProfile = () => {
 };
 
 export default UpdateProfile;
-

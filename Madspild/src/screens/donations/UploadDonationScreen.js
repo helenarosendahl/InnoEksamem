@@ -10,7 +10,7 @@ import { getFirestore, collection, addDoc } from 'firebase/firestore';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { getAuth } from 'firebase/auth';
 
-// Importerer brugerdefinerede komponenter og stilarter
+// Importerer brugerdefinerede komponenter og styles
 import { CustomTextInput } from '../../components/Forms/TextInput';
 import { SecondaryButton } from '../../components/Buttons/SecondaryButton';
 import { BoldButtonDark } from '../../components/Buttons/BoldButton';

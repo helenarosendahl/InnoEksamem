@@ -8,7 +8,7 @@ import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 // Importerer Firebase-konfiguration fra firebaseConfig-fil
 import firebaseApp from '../../../firebaseConfig';
 
-// Importerer brugerdefinerede komponenter og stilarter
+// Importerer brugerdefinerede komponenter og styles
 import { CustomTextInput } from '../../components/Forms/TextInput';
 import { BoldButtonDark } from '../../components/Buttons/BoldButton';
 import { SecondaryButton } from '../../components/Buttons/SecondaryButton';

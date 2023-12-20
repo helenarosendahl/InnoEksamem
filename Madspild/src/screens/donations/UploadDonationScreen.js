@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { ScrollView, View, Alert, Image, TouchableOpacity, TextInput } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-//import { Calendar } from 'react-native-calendars';
+import { Calendar } from 'react-native-calendars'; // UDKOMMENTER PÅ IOS
 
 
 // Importerer funktioner og auth fra Firebase
@@ -74,6 +74,7 @@ const UploadDonationScreen = () => {
   };
 
   // Funktion til at vælge et billede fra brugerens enhed ved hjælp af Expo ImagePicker
+  /* Fravælges, men beholdes
   const selectImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -89,7 +90,7 @@ const UploadDonationScreen = () => {
         }
     }
 };
-
+*/
 // Funktion til at tage et billede inde i appen, bygger på expo-image-picker
 const takePicture = async () => {
   // anmoder om kamera adgang

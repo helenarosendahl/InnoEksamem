@@ -8,7 +8,7 @@ import MapView, { Marker } from 'react-native-maps';
 import { getFirestore, collection, getDocs, addDoc, getDoc, doc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth'; 
 
-// Importerer komponenter og stilarter
+// Importerer komponenter og styles
 import { globalStyles } from '../../styles/GlobalStyles';
 import { PrimaryButton } from '../../components/Buttons/PrimaryButton';
 import ProductListItem from '../../components/Lists/ProductList'; 

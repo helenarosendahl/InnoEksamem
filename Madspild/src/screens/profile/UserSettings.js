@@ -1,8 +1,13 @@
+// Importerer nødvendige React Native komponenter
 import React, { useState, useEffect } from 'react';
 import { ScrollView, View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+
+// Importerer funktioner og auth fra Firebase
 import { getAuth } from 'firebase/auth';
 import { getFirestore, doc, getDoc, collection, query, where, getDocs } from 'firebase/firestore';
 import { getStorage, ref, getDownloadURL } from 'firebase/storage';
+
+// Importerer brugerdefinerede komponenter og styles
 import { PrimaryButton } from '../../components/Buttons/PrimaryButton';
 import { globalStyles } from '../../styles/GlobalStyles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -10,15 +15,21 @@ import TextBox from '../../components/Forms/TextBox';
 
 
 const UserSettings = ({ navigation }) => {
+  // Til opbevaring af brugerens profilbillede URL
   const [photoURL, setPhotoURL] = useState(null);
+  // Til opbevaring af brugerens oplysninger
   const [UserSettings, setUserSettings] = useState({
     address: '',
     biography: '',
     name: '',
   });
+  // Til opbevaring af brugerens rabatkoder
   const [discountCodes, setDiscountCodes] = useState([]);
+
+  // Til at styre visning/skjul af rabatkoder
   const [showDiscountCodes, setShowDiscountCodes] = useState(false);
 
+  // Firebase authentication og firestore 
   const auth = getAuth();
   const firestore = getFirestore();
   const user = auth.currentUser;
@@ -43,31 +54,40 @@ const UserSettings = ({ navigation }) => {
   }
 };
 
+// Udføres ved opstart for at indlæse brugeroplysninger
 useEffect(() => {
   fetchUserSettings();
 }, [user]);
 
+  // Navigationsfunktion til skærm for opdatering af brugerprofil
   const navigateToUpdateProfile = () => {
     navigation.navigate('UpdateProfile'); // Bruger route name som string
   };
 
+  // Funktion til at indlæse brugerens rabatkoder fra firestore
   const fetchDiscountCodes = async () => {
     if (user) {
+      // Query til at hente rabatkoder for den aktuelle bruger
       const q = query(collection(firestore, "discountCodes"), where("userUID", "==", user.uid));
       const querySnapshot = await getDocs(q);
+      // Gem rabatkoder og vis dem
       const fetchedCodes = querySnapshot.docs.map(doc => doc.data());
       setDiscountCodes(fetchedCodes);
       setShowDiscountCodes(true);
     }
   };
 
+  // Funktion til at skifte mellem visning/skjul af rabatkoder
   const toggleDiscountCodes = async () => {
+    // Hvis rabatkoder ikke er vist, skal de indlæses først
     if (!showDiscountCodes) {
       await fetchDiscountCodes();
     }
+    // Skift visning/skjul af rabatkoder
     setShowDiscountCodes(!showDiscountCodes);
   };
 
+  // Genbrugelig komponent til en opdateringsknap med ikon
   const UpdateButton = ({ onPress, iconName, iconSize, iconColor, style }) => {
     return (
       <TouchableOpacity style={style} onPress={onPress}>
@@ -76,6 +96,7 @@ useEffect(() => {
     );
   };
 
+  // Returnerer det brugeren ser ved UserSettings
   return (
     <ScrollView style={globalStyles.container}>
       <View style={styles.headerContainer}>
@@ -124,9 +145,10 @@ useEffect(() => {
       <Text>{UserSettings.biography || 'Not available'}</Text>
     </View>
 
-
+      {/* Knap til at vise/skjule rabatkoder */}
       <PrimaryButton title={showDiscountCodes ? "Skjul rabatkoder" : "Mine kuponer"} onPress={toggleDiscountCodes} />
 
+      {/* Visning af rabatkoder, hvis de er vist og ikke skjult */}
       {showDiscountCodes && (
         <View style={globalStyles.offersContainer}>
           {discountCodes.map((code, index) => (

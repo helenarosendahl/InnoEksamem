@@ -1,11 +1,15 @@
+// Importerer nødvendige React Native komponenter
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+
+// Importerer globalStyles
 import { globalStyles } from '../../styles/GlobalStyles';
-import Ionicons from 'react-native-vector-icons/Ionicons'; // Importer Ionicons
 
+// Importer Ionicons
+import Ionicons from 'react-native-vector-icons/Ionicons'; 
 
+// Navigation på UserProfile
 const UserProfile = ({ navigation }) => {
-
   
     const handleMyOrders = () => {
         navigation.navigate('SupportScreen')
@@ -26,7 +30,7 @@ const UserProfile = ({ navigation }) => {
   };
 
 
-
+  // Det brugeren ser på UserProfile
   return (
     <View style={[globalStyles.container, globalStyles.settingscontainer]}>
   

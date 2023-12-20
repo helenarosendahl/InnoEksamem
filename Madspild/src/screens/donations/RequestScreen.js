@@ -123,7 +123,7 @@ const handleRequestResponse = async (requestId, isAccepted) => {
   // Returnerer viewet for requestScreen
   return (
     <View style={globalStyles.container}>
-      <TextBox text=' Når du accepterer en anmodning, får du 50 Point som du kan bruge på vores sponsorside. 🍏🫒🥬' />
+      <TextBox text=' Når du accepterer en anmodning på en donation, modtager du 50 Point, som du kan bruge på vores sponsorside. 🍏🫒🥬' />
       {/* FlatList til at vise anmodninger */}
       <FlatList 
         data={requests}
@@ -132,7 +132,7 @@ const handleRequestResponse = async (requestId, isAccepted) => {
       />
       <UpdateButton onPress={fetchRequests} />
       <PrimaryButton
-        title="Se dine afhentningstidspunkter"
+        title="Se dine accepterede anmodninger"
         onPress={navigateToPickUpDates}
       />
 

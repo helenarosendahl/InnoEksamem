@@ -5,7 +5,7 @@ import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
 import * as ImagePicker from 'expo-image-picker';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { CustomTextInput } from '../../components/Forms/TextInput';
-import { PrimaryButton } from '../../components/Buttons/PrimaryButton';
+import { BoldButtonDark } from '../../components/Buttons/BoldButton';
 import { SecondaryButton } from '../../components/Buttons/SecondaryButton';
 
 import AppLogo from '../../components/Logo/AppLogo';
@@ -123,7 +123,7 @@ const UpdateProfile = () => {
           />
           <SecondaryButton title="Upload billede af dig selv" onPress={selectImage} />
           
-          <PrimaryButton title="Gem mine ændringer" onPress={handleSave} />
+          <BoldButtonDark title="Gem mine ændringer" onPress={handleSave} />
         </View>
       </ScrollView>
     </KeyboardAvoidingView>

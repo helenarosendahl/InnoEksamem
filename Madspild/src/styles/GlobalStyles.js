@@ -98,7 +98,16 @@ export const globalStyles = {
     padding: 10,
     backgroundColor: colors.mintGreen, 
     borderRadius: 10, 
-    alignItems: 'center', 
+    alignItems: 'center',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    // For at skyggen vises på Android:
+    elevation: 5,
   },
 
   offerImage: {

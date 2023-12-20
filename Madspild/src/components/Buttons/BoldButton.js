@@ -4,11 +4,11 @@ import { globalStyles, colors } from '../../styles/GlobalStyles';
 
 
 
-export const PrimaryButton = ({ title, onPress }) => (
+export const BoldButtonDark = ({ title, onPress }) => (
   <TouchableOpacity
     onPress={onPress}
     style={[globalStyles.button, { backgroundColor: colors.darkGreen }]}
   >
-    <Text style={{ textAlign: 'center',  color: colors.white }}>{title} </Text>
+    <Text style={{ textAlign: 'center',  color: colors.white, fontWeight: 'bold' }}>{title} </Text>
   </TouchableOpacity>
 );

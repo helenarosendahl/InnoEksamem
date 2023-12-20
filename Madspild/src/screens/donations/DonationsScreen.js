@@ -10,7 +10,7 @@ import { getAuth } from 'firebase/auth';
 
 // Importerer komponenter og stilarter
 import { globalStyles } from '../../styles/GlobalStyles';
-import { PrimaryButton } from '../../components/Buttons/PrimaryButton';
+import { BoldButtonDark } from '../../components/Buttons/BoldButton';
 import ProductListItem from '../../components/Lists/ProductList'; 
 import SearchBar from '../../components/SearchBar/SearchBar';
 import UpdateButton from '../../components/Buttons/UpdateButton';
@@ -155,8 +155,8 @@ const handleBuyRequest = async (productId, sellerUID) => {
       </View>
 
       <View style={styles.buttonContainer}>
-      <PrimaryButton title="Liste" onPress={() => setViewMode('list')} />
-      <PrimaryButton title="Kort" onPress={() => setViewMode('map')} />
+      <BoldButtonDark title="Liste" onPress={() => setViewMode('list')} />
+      <BoldButtonDark title="Kort" onPress={() => setViewMode('map')} />
     </View>
 
       

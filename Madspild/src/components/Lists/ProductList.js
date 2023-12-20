@@ -12,7 +12,7 @@ const ProductListItem = ({ item, onPress }) => (
     <Text>Udløbsdato: {item.expirationDate}</Text>
     {item.pickupDate && <Text>Afhentningsdato: {item.pickupDate}</Text>}  
     <Text>Kan hentes på adressen: {item.address}</Text>
-    <PrimaryButton title="Anmod om produkt" onPress={onPress} />
+    <PrimaryButton title="Anmod om donation" onPress={onPress} />
   </View>
 );
 

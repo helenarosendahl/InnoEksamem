@@ -10,7 +10,7 @@ import firebaseApp from '../../../firebaseConfig';
 
 // Importerer brugerdefinerede komponenter og stilarter
 import { CustomTextInput } from '../../components/Forms/TextInput';
-import { PrimaryButton } from '../../components/Buttons/PrimaryButton';
+import { BoldButtonDark } from '../../components/Buttons/BoldButton';
 import { SecondaryButton } from '../../components/Buttons/SecondaryButton';
 import { globalStyles } from '../../styles/GlobalStyles';
 import AppLogo from '../../components/Logo/AppLogo';
@@ -60,7 +60,7 @@ const LoginScreen = ({ navigation }) => {
             secureTextEntry
           />
           {/* Knap til at udføre login-handling */}
-          <PrimaryButton title="Log ind" onPress={handleLogin} />
+          <BoldButtonDark title="Log ind" onPress={handleLogin} />
           {/* Knap til at udføre signup-handling */}
           <SecondaryButton 
             title="Ikke allerede bruger? Tilmeld dig her!" 

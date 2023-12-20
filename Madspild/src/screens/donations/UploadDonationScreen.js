@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { ScrollView, View, Alert, Image, TouchableOpacity, TextInput } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import { Calendar } from 'react-native-calendars';
+//import { Calendar } from 'react-native-calendars';
 
 
 // Importerer funktioner og auth fra Firebase
@@ -12,8 +12,8 @@ import { getAuth } from 'firebase/auth';
 
 // Importerer brugerdefinerede komponenter og stilarter
 import { CustomTextInput } from '../../components/Forms/TextInput';
-import { PrimaryButton } from '../../components/Buttons/PrimaryButton';
 import { SecondaryButton } from '../../components/Buttons/SecondaryButton';
+import { BoldButtonDark } from '../../components/Buttons/BoldButton';
 
 import { globalStyles } from '../../styles/GlobalStyles';
 import TextBox from '../../components/Forms/TextBox';
@@ -220,9 +220,9 @@ const takePicture = async () => {
         value={address}
         onChangeText={setAddress}
       />
-<PrimaryButton title="Tag et billede af din donation" onPress={takePicture} />
+<SecondaryButton title="Tag et billede af din donation" onPress={takePicture} />
       {imageUri && <Image source={{ uri: imageUri }} style={{ width: 100, height: 100 }} />}
-      <SecondaryButton title="Opret din donation" onPress={handleProductUpload} />
+      <BoldButtonDark title="Opret din donation" onPress={handleProductUpload}  />
     </View>
     </ScrollView>
 

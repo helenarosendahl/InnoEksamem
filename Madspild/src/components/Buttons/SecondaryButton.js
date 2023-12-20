@@ -8,6 +8,6 @@ export const SecondaryButton = ({ title, onPress }) => (
     onPress={onPress}
     style={[globalStyles.button, { backgroundColor: colors.mintGreen }]}
   >
-    <Text style={{ color: colors.black }}>{title}</Text>
+    <Text style={{ textAlign: 'center', color: colors.black }}>{title}</Text>
   </TouchableOpacity>
 );

@@ -16,7 +16,7 @@ const JoeOffers = () => {
       id: 1,
       image: require('../../../assets/offers/joe-kaffid.jpg'), 
       name: 'Double Espresso',
-      description: 'Fra en solcelledrevet, fuldt økologisk kaffefarm.',
+      description: 'Fra en solcelledrevet, fuldt økologisk kaffefarm',
       points: 50, // hvor mange point produktet koster
     },
     {

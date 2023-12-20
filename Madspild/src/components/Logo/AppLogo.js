@@ -1,4 +1,4 @@
-// src/components/Logo/Image/AppLogo.js
+// Importerer nødvendige React Native komponenter
 import React from 'react';
 import { Image, View } from 'react-native';
 

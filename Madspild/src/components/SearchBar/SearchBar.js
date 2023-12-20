@@ -1,9 +1,14 @@
+// Importerer nødvendige React Native komponenter
 import React from 'react';
 import { View, TextInput, StyleSheet } from 'react-native';
+
+// Importerer Ionicons for at anvende deres ikoner
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
+// Definerer en funktionel komponent kaldet SearchBar, der modtager searchQuery og setSearchQuery som props
 const SearchBar = ({ searchQuery, setSearchQuery }) => {
   return (
+    // Et view der viser brugerne TextInput og Ionicons (ikon)
     <View style={styles.container}>
       <TextInput
         style={styles.searchBar}
@@ -21,6 +26,7 @@ const SearchBar = ({ searchQuery, setSearchQuery }) => {
   );
 };
 
+// Styles for the search bar
 const styles = StyleSheet.create({
   container: {
     marginBottom: 15,
@@ -35,15 +41,16 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
    paddingRight: -10,
-    paddingLeft: 35, // Make room for the icon inside the search bar
+    paddingLeft: 35, 
     fontSize: 17,
     
   },
   icon: {
-    position: 'absolute', // Position the icon over the text input field
-    left: 10, // Distance from the left edge of the search bar
-    zIndex: 1, // Ensures the icon is above the text input (if needed)
+    position: 'absolute', 
+    left: 10, 
+    zIndex: 1, 
   },
 });
 
+// Eksporterer SearchBar som standard eksport for at gøre den tilgængelig i andre dele af koden
 export default SearchBar;

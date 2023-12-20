@@ -6,7 +6,7 @@ import OfferItem from '../../../components/Lists/OfferItem';
 import { globalStyles } from '../../../styles/GlobalStyles';
 import TextBox from '../../../components/Forms/TextBox'; 
 
-const ZokuOffers = () => {
+const NordicOffers = () => {
   const [userPoints, setUserPoints] = useState(0);
   const db = getFirestore();
   const auth = getAuth();
@@ -14,17 +14,10 @@ const ZokuOffers = () => {
   const offerings = [
     {
       id: 1,
-      image: require('../../../assets/offers/Cappucino.jpg'), 
-      name: 'Cappucino',
-      description: 'Fra en solcelledrevet, fuldt økologisk kaffefarm',
-      points: 50, // hvor mange point produktet koster
-    },
-    {
-      id: 2,
-      image: require('../../../assets/offers/Americano.jpg'), 
-      name: 'Americano',
-      description: 'Fra en solcelledrevet, fuldt økologisk kaffefarm',
-      points: 50, // // hvor mange point produktet koster
+      image: require('../../../assets/offers/Vegetable.jpg'), 
+      name: 'Grøntsagskasse',
+      description: 'Håndplukkede grøntssager, som får lov til at modne helt på planterne, da det får den bedste smag frem',
+      points: 500, // hvor mange point produktet koster
     },
    
   ];
@@ -96,9 +89,9 @@ const ZokuOffers = () => {
 
 
       <TextBox
-  text="Her har vi samlet et nøje udvalg af vores produkter, som kan afhentes i vores restaurant. For at se vores initiativer til bæredygtighed, læs med "
+  text="Vi tilbyder afhentnig af en grøntsagskasse. For at læse om vores kamp mod madspild, læs med "
   linkText="her."
-  linkUrl='https://livezoku.com/sustainability/'
+  linkUrl='https://nordicgreens.dk/madspild/'
 />      
 
       <ScrollView 
@@ -120,4 +113,4 @@ const ZokuOffers = () => {
 };
 
 
-export default ZokuOffers;
+export default NordicOffers;

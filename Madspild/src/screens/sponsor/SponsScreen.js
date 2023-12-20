@@ -14,7 +14,9 @@ const SponsScreen = ({ navigation }) => {
 
     const sponsors = [
         { id: 1, component: "JoeOffers", name: "Joe & the Juice", logoUrl: require('../../assets/logos/joeLogo.png'), description: "Joe & the Juice cares about leaving the Planet in a better state than we found it in therefore reducing our impact on the environment. Not only in our stores, but making it easier for our customers to recycle our products through our Recycling Loop. We'll stay committed to our 2% Food Waste Score by continuing to make everything fresh to order." },
-        { id: 2, component: "ZokuOffers", name: "ZOKU", logoUrl: require('../../assets/logos/ZokuLogo.png'), description: "At our core, we’re passionate about caring for our people and for our planet. We’re not perfect, but we’re always striving to “B the Change”." },
+        { id: 2, component: "ZokuOffers", name: "ZOKU", logoUrl: require('../../assets/logos/ZokuLogo.png'), description: "At our core, we’re passionate about caring for our people and for our planet. We’re not perfect, but we’re always striving to “B the Change." },
+        { id: 3, component: "NordicOffers", name: "Nordic Greens", logoUrl: require('../../assets/logos/NG-logo.png'), description: "En af vores mærkesager er kampen om at nedbringe madspildet. Vi er medstiftere af Danmark mod Madspild, hvor målet er at halvere madaffaldet i fødevarebranchen inden 2030. Faktisk har danskerne allerede reddet mange ”grimme” grøntsager fra madspildsdøden. Det har resulteret i, at vi har nået FN’s Verdensmål nr. 12 om at reducere madspildet med 50% allerede 10 år før målsætningen – det er da meget godt gået." },
+     
       ];
 
       return (

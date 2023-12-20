@@ -1,8 +1,10 @@
+// Importerer nødvendige React Native komponenter
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { PrimaryButton } from '../Buttons/PrimaryButton';
 import { globalStyles } from '../../styles/GlobalStyles';
  
+// Definerer en komponent kaldet ProductListItem, som viser info omkring donationerne 
 const ProductListItem = ({ item, onPress }) => (
   <View style={globalStyles.ContentBox}>
     <Text style={styles.title}>{item.name}</Text>
@@ -16,6 +18,7 @@ const ProductListItem = ({ item, onPress }) => (
   </View>
 );
 
+// Definerer styles
 const styles = StyleSheet.create({
   item: {
     backgroundColor: '#e8f4ea',
@@ -40,4 +43,5 @@ const styles = StyleSheet.create({
   },
 });
 
+// Eksporterer ProductListItem som standard for at gøre den tilgængelig i andre dele af koden.
 export default ProductListItem;

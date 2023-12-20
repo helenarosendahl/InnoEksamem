@@ -1,15 +1,20 @@
+// Importerer nødvendige React Native komponenter
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
+
+// Importerer screens fra forskellige moduler
 import RequestScreen from '../screens/donations/RequestScreen'; 
 import DonationsScreen from '../screens/donations/DonationsScreen'; 
 import UploadDonationScreen from '../screens/donations/UploadDonationScreen'; 
 import UserSettings from '../screens/profile/UserSettings'; 
 import SponsScreen from '../screens/sponsor/SponsScreen'; 
-import { createStackNavigator } from '@react-navigation/stack';
 import UpdateProfile from '../screens/profile/UpdateProfile';
 import UserProfile from '../screens/profile/UserProfile'; 
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import PickUpDate from '../screens/donations/PickUpDate'
+
+// Importerer Ionicons for at anvende deres ikoner
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 // Tilbud fra sponsorer
 import JoeOffers from '../screens/sponsor/offerings/JoeOffers'
@@ -17,13 +22,13 @@ import ZokuOffers from '../screens/sponsor/offerings/ZokuOffers'
 import NordicOffers from '../screens/sponsor/offerings/NordicOffers'
 
 
-
+// Opretter separate stakke (stacks)
 const SponsStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
 const DonationStack = createStackNavigator();
 
 
-// stacks til screens omhandlende sponsor
+// Funktion til at oprette stakken for sponsor-relaterede skærme
 function SponsStackScreen() {
   return (
     <SponsStack.Navigator>
@@ -37,7 +42,7 @@ function SponsStackScreen() {
   );
 }
 
-// Stack til screens omhandlende profil
+// Funktion til at oprette stakken for profil-relaterede skærme
 function ProfileStackScreen() {
   return (
     <ProfileStack.Navigator>
@@ -48,7 +53,7 @@ function ProfileStackScreen() {
   );
 }
 
-// Stack til screens omhandlende profil
+// Funktion til at oprette stakken for donations-relaterede skærme
 function DonationStackScreen() {
   return (
     <DonationStack.Navigator>
@@ -58,9 +63,10 @@ function DonationStackScreen() {
   );
 }
 
-// tabs til screens i bunden - initialroute er DonationsScreen
+// Opretter en bundnavigation (bottom tab navigator) med ikoner
 const Tab = createBottomTabNavigator();
 
+// Funktion til at oprette selve app-navigatoren
 const AppNavigator = () => {
   return (
       <Tab.Navigator initialRouteName='Donationer' screenOptions={({ route }) => ({
@@ -104,4 +110,5 @@ const AppNavigator = () => {
   );
 };
 
+// Eksporterer AppNavigator som standard eksport for at gøre den tilgængelig i andre dele af koden
 export default AppNavigator;

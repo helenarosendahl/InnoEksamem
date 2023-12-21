@@ -1,5 +1,5 @@
 # OBS
-Vi oplever desværre, at react natives calendar plugin kun virker på Android, og fungerer på IOS. Vi har afprøvet forskellige andre metoder og moduler, herunder DateTimerPicker, dog uden held.
+Vi oplever desværre, at react natives calendar plugin kun virker på Android, og ikke fungerer på IOS. Vi har afprøvet forskellige andre metoder og moduler, herunder DateTimerPicker, dog uden held.
 
 Hvis koden køres fra en Android enhed, vil hele koden køre optimalt.
 
